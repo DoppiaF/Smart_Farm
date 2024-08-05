@@ -7,7 +7,7 @@ public class animale {
     private int peso;
     private boolean sesso;
     private String razza;
-    private String tipoAlimentazione;
+    private String tipoAlimentazione;  //foreign key riferita a Magazzino
     private String nomeStalla;
     private LocalDateTime data_nascita;
     private LocalDateTime data_ingresso;
@@ -15,6 +15,7 @@ public class animale {
     private LocalDateTime data_morte;
     private LocalDateTime data_vaccino;
 
+    //costruttori, getter e setter
     public Animale(int id_animale, int peso, 
             boolean sesso, String razza, String tipoAlimentazione, 
             String nomeStalla, LocalDateTime data_nascita, 

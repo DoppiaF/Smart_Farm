@@ -1,3 +1,5 @@
+
+
 public class listino {
     
     private String tipo_prodotto;
@@ -24,5 +26,5 @@ public class listino {
         this.prezzo = prezzo;
     }
 
-    
+
 }

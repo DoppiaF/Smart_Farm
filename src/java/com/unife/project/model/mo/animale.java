@@ -16,13 +16,12 @@ public class animale {
     private LocalDateTime data_vaccino;
 
     //costruttori, getter e setter
-    public Animale(int id_animale, int peso, 
+    public Animale(int peso, 
             boolean sesso, String razza, String tipoAlimentazione, 
             String nomeStalla, LocalDateTime data_nascita, 
             LocalDateTime data_ingresso, LocalDateTime data_uscita, 
             LocalDateTime data_morte, LocalDateTime data_vaccino) {
-        
-        this.id_animale = id_animale;
+                
         this.peso = peso;
         this.sesso = sesso;
         this.razza = razza;

@@ -1,6 +1,8 @@
 package com.unife.project.model.mo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class irrigazione {
     private int id_impostazione;
@@ -9,17 +11,15 @@ public class irrigazione {
     private boolean auto;
     private String stato;
     private int litri_usati;
+    private List<Cisterna> cisterne = new ArrayList<>(); //lista cisterne associate (relazione N:M)
 
     public irrigazione(
-            int id_impostazione, 
             LocalDateTime data_inizio, 
             int durata, 
             boolean auto, 
             String stato, 
             int litri_usati) {
 
-
-        this.id_impostazione = id_impostazione;
         this.data_inizio = data_inizio;
         this.durata = durata;
         this.auto = auto;
@@ -75,8 +75,11 @@ public class irrigazione {
         this.litri_usati = litri_usati;
     }
 
-    
+    public List<Cisterna> getCisterne() {
+        return cisterne;
+    }
 
-
-
+    public void setCisterne(List<Cisterna> cisterne) {
+        this.cisterne = cisterne;
+    }
 }

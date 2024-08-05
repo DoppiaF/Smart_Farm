@@ -14,6 +14,7 @@ public class animale {
     private LocalDateTime data_uscita;
     private LocalDateTime data_morte;
     private LocalDateTime data_vaccino;
+    private List<Prodotto> prodotti = new ArrayList<>();    //foreign key riferita a lista prodotti
 
     //costruttori, getter e setter
     public Animale(int peso, 
@@ -120,5 +121,14 @@ public class animale {
     
     public void setData_vaccino(LocalDateTime data_vaccino) {
         this.data_vaccino = data_vaccino;
+    }
+
+
+    public List<Prodotto> getProdotti() {
+        return prodotti;
+    }
+
+    public void setProdotti(List<Prodotto> prodotti) {
+        this.prodotti = prodotti;
     }
 }

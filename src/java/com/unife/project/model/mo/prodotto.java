@@ -8,12 +8,14 @@ public class prodotto {
     private String tipoProdotto;  //FK per listino prezzi
     private LocalDateTime dataProduzione;
     private LocalDateTime dataScadenza;
+    private List<Animale> animali = new ArrayList<>();    //FK riferita a Animale
 
-    public prodotto(int id_prodotto, int quantita, String tipoProdotto, LocalDateTime dataProduzione) {
+    public prodotto(int id_prodotto, int quantita, String tipoProdotto, LocalDateTime dataProduzione, LocalDateTime dataScadenza) {
         this.id_prodotto = id_prodotto;
         this.quantita = quantita;
         this.tipoProdotto = tipoProdotto;
-        this.dataProduzione = dataProduzione;
+        this.dataProduzione = dataProduzione; 
+        this.dataScadenza = dataScadenza;
     }
 
     public int getId_prodotto() {
@@ -56,7 +58,13 @@ public class prodotto {
         this.dataScadenza = dataScadenza;
     }
 
+    public List<Animale> getAnimali() {
+        return animali;
+    }
 
+    public void setAnimali(List<Animale> animali) {
+        this.animali = animali;
+    }
 
 
 }

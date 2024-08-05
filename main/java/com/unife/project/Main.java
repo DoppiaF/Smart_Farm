@@ -1,4 +1,4 @@
-package Smart_Farm.main.java.com.university.project;
+package com.unife.project;
 
 import javax.swing.*;
 

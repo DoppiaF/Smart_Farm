@@ -1,4 +1,4 @@
-package com.university.project.mo;
+package com.unife.project.mo;
 
 public class utente {
     private int id;

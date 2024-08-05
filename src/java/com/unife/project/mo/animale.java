@@ -1,4 +1,6 @@
-package SMART_FARM.main.java.com.unife.project.mo;
+package SMART_FARM.src.java.com.unife.project.mo;
+
+import java.time.LocalDateTime;
 
 public class animale {
     private int id_animale;

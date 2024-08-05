@@ -1,4 +1,6 @@
-package com.unife.project.mo;
+package SMART_FARM.src.java.com.unife.project.mo;
+
+import java.time.LocalDateTime;
 
 public class utente {
     private int id;

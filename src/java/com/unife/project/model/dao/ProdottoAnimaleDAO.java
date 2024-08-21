@@ -30,6 +30,12 @@ public class ProdottoAnimaleDAO implements GenericDAO<ProdottoAnimale> {
     }
 
     @Override
+    public void deleteById(int id) {
+        prodottoAnimaleList.removeIf(prodottoAnimale -> prodottoAnimale.getId() == id);
+    }
+
+
+    @Override
     public ProdottoAnimale findById(int id) {
         for (ProdottoAnimale prodottoAnimale : prodottoAnimaleList) {
             if (prodottoAnimale.getId_prodotto() == id) {

@@ -2,8 +2,9 @@ package com.unife.project.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class DatabaseConnectionTest {
 
@@ -11,15 +12,14 @@ public class DatabaseConnectionTest {
     public void testDatabaseConnection() {
         try {
             Connection connection = DatabaseConnection.getConnection();
-            assertNotNull("Connessione al database fallita!", connection);
+            assertNotNull(connection, "Connessione al database fallita!");
             if (connection != null) {
                 System.out.println("Connessione al database riuscita!");
                 connection.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Puoi anche aggiungere un'asserzione per fallire il test in caso di eccezione
-            org.junit.Assert.fail("Eccezione durante la connessione al database: " + e.getMessage());
+            fail("Eccezione durante la connessione al database: " + e.getMessage());
         }
     }
 }

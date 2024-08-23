@@ -1,6 +1,6 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +11,22 @@ public class Animale {
     private String razza;
     private String tipoAlimentazione;  //foreign key riferita a Magazzino
     private String nomeStalla;
-    private LocalDateTime data_nascita;
-    private LocalDateTime data_ingresso;
-    private LocalDateTime data_uscita;
-    private LocalDateTime data_morte;
-    private LocalDateTime data_vaccino;
+    private LocalDate data_nascita;
+    private LocalDate data_ingresso;
+    private LocalDate data_uscita;
+    private LocalDate data_morte;
+    private LocalDate data_vaccino;
     private List<Prodotto> prodotti = new ArrayList<>();    //foreign key riferita a lista prodotti
 
     //costruttori, getter e setter
+    public Animale() {
+    }
+
     public Animale(int peso, 
             boolean sesso, String razza, String tipoAlimentazione, 
-            String nomeStalla, LocalDateTime data_nascita, 
-            LocalDateTime data_ingresso, LocalDateTime data_uscita, 
-            LocalDateTime data_morte, LocalDateTime data_vaccino) {
+            String nomeStalla, LocalDate data_nascita, 
+            LocalDate data_ingresso, LocalDate data_uscita, 
+            LocalDate data_morte, LocalDate data_vaccino) {
                 
         this.peso = peso;
         this.sesso = sesso;
@@ -85,43 +88,43 @@ public class Animale {
         this.nomeStalla = nomeStalla;
     }
     
-    public LocalDateTime getData_nascita() {
+    public LocalDate getData_nascita() {
         return data_nascita;
     }
     
-    public void setData_nascita(LocalDateTime data_nascita) {
+    public void setData_nascita(LocalDate data_nascita) {
         this.data_nascita = data_nascita;
     }
     
-    public LocalDateTime getData_ingresso() {
+    public LocalDate getData_ingresso() {
         return data_ingresso;
     }
     
-    public void setData_ingresso(LocalDateTime data_ingresso) {
+    public void setData_ingresso(LocalDate data_ingresso) {
         this.data_ingresso = data_ingresso;
     }
     
-    public LocalDateTime getData_uscita() {
+    public LocalDate getData_uscita() {
         return data_uscita;
     }
     
-    public void setData_uscita(LocalDateTime data_uscita) {
+    public void setData_uscita(LocalDate data_uscita) {
         this.data_uscita = data_uscita;
     }
     
-    public LocalDateTime getData_morte() {
+    public LocalDate getData_morte() {
         return data_morte;
     }
     
-    public void setData_morte(LocalDateTime data_morte) {
+    public void setData_morte(LocalDate data_morte) {
         this.data_morte = data_morte;
     }
     
-    public LocalDateTime getData_vaccino() {
+    public LocalDate getData_vaccino() {
         return data_vaccino;
     }
     
-    public void setData_vaccino(LocalDateTime data_vaccino) {
+    public void setData_vaccino(LocalDate data_vaccino) {
         this.data_vaccino = data_vaccino;
     }
 

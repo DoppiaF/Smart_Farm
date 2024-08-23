@@ -4,10 +4,19 @@ import com.unife.project.model.mo.Irrigazione;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
 
 public class IrrigazioneDAO implements GenericDAO<Irrigazione> {
     private List<Irrigazione> irrigazioni = new ArrayList<>();
     private int idCounter = 1;
+
+    //database connection
+    private Connection connection;
+
+    //costruttore, utilizzato da DAOFactory
+    public IrrigazioneDAO(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public void save(Irrigazione irrigazione) {

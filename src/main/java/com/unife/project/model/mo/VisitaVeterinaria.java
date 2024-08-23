@@ -78,4 +78,16 @@ public class VisitaVeterinaria {
     }
 
 
+    @Override
+    public String toString() {
+        return "VisitaVeterinaria{" +
+                "data=" + data +
+                ", diagnosi='" + diagnosi + '\'' +
+                ", identificativoAnimale=" + identificativoAnimale +
+                ", prossimaVisita=" + prossimaVisita +
+                ", nomeVeterinario='" + nomeVeterinario + '\'' +
+                ", cognomeVeterinario='" + cognomeVeterinario + '\'' +
+                ", curaPrescritta='" + curaPrescritta + '\'' +
+                '}';
+    }
 }

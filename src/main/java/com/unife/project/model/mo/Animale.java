@@ -133,4 +133,20 @@ public class Animale {
     public void setProdotti(List<Prodotto> prodotti) {
         this.prodotti = prodotti;
     }
+
+    @Override
+    public String toString() {
+        return "Animale{" +
+                "id=" + id_animale +
+                ", peso=" + peso +
+                ", razza='" + razza + '\'' +
+                ", tipoAlimentazione=" + tipoAlimentazione + '\'' +
+                ", nomeStalla='" + nomeStalla + '\'' +
+                ", data_nascita=" + data_nascita + '\'' +
+                ", data_ingresso=" + data_ingresso + '\'' +
+                ", data_uscita=" + data_uscita + '\'' +
+                ", data_morte=" + data_morte + '\'' +
+                ", data_vaccino=" + data_vaccino + '\'' +
+                '}';
+    }
 }

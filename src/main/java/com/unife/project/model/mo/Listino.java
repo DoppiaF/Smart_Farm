@@ -26,5 +26,9 @@ public class Listino {
         this.prezzo = prezzo;
     }
 
+    @Override
+    public String toString() {
+        return "Listino{tipo_prodotto='" + tipo_prodotto + "', prezzo=" + prezzo + '}';
+    }
 
 }

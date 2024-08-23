@@ -35,5 +35,8 @@ public class Magazzino {
         this.prezzo_kg = prezzo_kg;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Magazzino{tipoMangime='" + tipoMangime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
+    }
 }

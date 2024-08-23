@@ -8,8 +8,9 @@ public class Piantagione {
     private String Stato;
     private int numZone;
     private boolean concimazione;
-    private int id_irrigazione; //FK di irrigazione
     private boolean raccolta;
+    private int id_irrigazione; //FK di irrigazione
+    
 
     public Piantagione(int id, String tipoPianta, int area, String stato, int numZone, boolean concimazione, int id_irrigazione, boolean raccolta) {
         this.id = id;
@@ -87,6 +88,16 @@ public class Piantagione {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Piantagione{id=" + id + 
+            ", tipoPianta='" + tipoPianta + 
+            "', area=" + area + 
+            ", Stato='" + Stato + 
+            "', numZone=" + numZone + 
+            ", concimazione=" + concimazione +
+            ", raccolta=" + raccolta 
+            + '}';
+    }
 
 }

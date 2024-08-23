@@ -52,7 +52,6 @@ public class Cisterna {
                 "id=" + id +
                 ", capacita=" + capacita +
                 ", quantita=" + quantita +
-                ", irrigazioni=" + irrigazioni +
                 '}';
     }
 

@@ -105,6 +105,19 @@ public class Zona {
         this.id_piantagione = id_piantagione;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Zona{" +
+                "coordX=" + coordX +
+                ", coordY=" + coordY +
+                ", portataSensore=" + portataSensore +
+                ", statoTerreno='" + statoTerreno + '\'' +
+                ", sensoreIluminazione=" + sensoreIluminazione +
+                ", sensoreUmidita=" + sensoreUmidita +
+                ", sensoreTemperatura=" + sensoreTemperatura +
+                ", sensorePH=" + sensorePH +
+                ", sensoreVento=" + sensoreVento +
+                '}';
+    }
 
 }

@@ -7,9 +7,9 @@ import java.util.List;
 public class Prodotto {
     private int id_prodotto;
     private int quantita;
-    private String tipoProdotto;  //FK per listino prezzi
     private LocalDateTime dataProduzione;
-    private LocalDateTime dataScadenza;
+    private LocalDateTime dataScadenza; 
+    private String tipoProdotto;  //FK per listino prezzi
     private List<Animale> animali = new ArrayList<>();    //FK riferita a Animale
 
     public Prodotto(int id_prodotto, int quantita, String tipoProdotto, LocalDateTime dataProduzione, LocalDateTime dataScadenza) {
@@ -69,4 +69,12 @@ public class Prodotto {
     }
 
 
+    @Override
+    public String toString() {
+        return "Prodotto{id_prodotto=" + id_prodotto + 
+        ", quantita=" + quantita + 
+        ", dataProduzione=" + dataProduzione + 
+        ", dataScadenza=" + dataScadenza +
+        '}';
+    }
 }

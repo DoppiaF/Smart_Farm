@@ -8,8 +8,8 @@ public class Raccolta {
     private int quantita;
     private LocalDateTime dataRaccolta;
     private String stato;
-    private int operatore; //FK di utente
     private String macchinario;
+    private int operatore; //FK di utente
     private int id_piantagione; //FK di piantagione
 
     public Raccolta(int id_raccolta, String tipoPianta, int quantita, LocalDateTime dataRaccolta, String stato, int operatore, String macchinario, int id_piantagione) {
@@ -87,5 +87,15 @@ public class Raccolta {
         this.id_piantagione = id_piantagione;
     }
 
-    
+ 
+    @Override
+    public String toString() {
+        return "Raccolta{id_raccolta=" + id_raccolta + 
+        ", tipoPianta='" + tipoPianta + 
+        "', quantita=" + quantita + 
+        ", dataRaccolta=" + dataRaccolta + 
+        ", stato='" + stato + 
+        "', macchinario='" + macchinario + 
+        "'}";
+    }
 }

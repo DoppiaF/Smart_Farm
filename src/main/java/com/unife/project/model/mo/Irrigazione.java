@@ -82,4 +82,18 @@ public class Irrigazione {
     public void setCisterne(List<Cisterna> cisterne) {
         this.cisterne = cisterne;
     }
+
+    @Override
+    public String toString() {
+        return "Irrigazione{" +
+                "id_impostazione=" + id_impostazione +
+                ", data_inizio=" + data_inizio +
+                ", durata=" + durata +
+                ", auto=" + auto +
+                ", stato='" + stato + '\'' +
+                ", litri_usati=" + litri_usati +
+                '}';
+    }
+    
+
 }

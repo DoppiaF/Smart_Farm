@@ -58,6 +58,9 @@ public class Stalla {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Stalla{etichettaStalla='" + etichettaStalla + "', capienza=" + capienza + ", razza='" + razza + "', oraPranzo=" + oraPranzo + ", oraCena=" + oraCena + '}';
+    }
 
 }

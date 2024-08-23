@@ -106,4 +106,18 @@ public class Utente {
     public void setRuolo_admin(Boolean ruolo_admin) {
         this.ruolo_admin = ruolo_admin;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{id=" + id + 
+               ", userName='" + userName + '\'' + 
+               ", email='" + email + '\'' + 
+               ", createTime=" + createTime + 
+               ", dataNascita=" + dataNascita + 
+               ", ruolo_raccolta=" + ruolo_raccolta + 
+               ", ruolo_irrigazione=" + ruolo_irrigazione + 
+               ", ruolo_pastore=" + ruolo_pastore + 
+               ", ruolo_admin=" + ruolo_admin + 
+               '}';
+    }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AnimaleDAOImpl implements AnimaleDAO {
@@ -55,19 +56,55 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
         }catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Errore nell'aggiornamento di un animale " + animale.getId_animale())
+            System.out.println("Errore nell'aggiornamento di un animale " + animale.getId_animale());
         }
     }
 
     @Override
     public void delete(Animale animale) {
-        //da implementare
+        String sql = "DELETE FROM animale WHERE id_animale = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, animale.getId_animale());
+            int rowsDeleted = ps.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("L'animale è stato eliminato correttamente!");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nell'eliminazione di un animale " );
+        }
     }
 
     @Override
     public Animale findById(int id) {
+        String sql = "SELECT * FROM animale WHERE id_animale = ?";
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1,id);
+            
+            try (ResultSet rs = ps.executeQuery()){
+                if (rs.next()) {
+                    Animale animale = new Animale(rs.getInt("peso"),
+                        rs.getBoolean("sesso"),
+                        rs.getString("razza"),
+                        rs.getString("tipoAlimentazione"),
+                        rs.getString("nomeStalla"),
+                        rs.getDate("data_nascita").toLocalDate(),
+                        rs.getDate("data_ingresso").toLocalDate(),
+                        rs.getDate("data_uscita").toLocalDate(),
+                        rs.getDate("data_morte").toLocalDate(),
+                        rs.getDate("data_vaccino").toLocalDate());
+                    return animale;
+                } else {
+                    System.out.println("Animale non trovato");
+                }
+            } 
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca di un animale " + id);
+        }
         return null;
-        //da implementare
     }
 
     @Override

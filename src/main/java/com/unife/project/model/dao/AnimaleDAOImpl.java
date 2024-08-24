@@ -27,14 +27,15 @@ public class AnimaleDAOImpl implements AnimaleDAO {
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, animale.getPeso());
-            ps.setString(2, animale.getRazza());
-            ps.setString(3, animale.getTipoAlimentazione());
-            ps.setString(4, animale.getNomeStalla());
-            ps.setObject(5, animale.getData_nascita());
-            ps.setObject(6, animale.getData_ingresso());
-            ps.setObject(7, animale.getData_uscita());
-            ps.setObject(8, animale.getData_morte());
-            ps.setObject(9, animale.getData_vaccino());
+            ps.setString(2, String.valueOf(animale.getSesso()));
+            ps.setString(3, animale.getRazza());
+            ps.setString(4, animale.getTipoAlimentazione());
+            ps.setString(5, animale.getNomeStalla());
+            ps.setObject(6, animale.getData_nascita());
+            ps.setObject(7, animale.getData_ingresso());
+            ps.setObject(8, animale.getData_uscita());
+            ps.setObject(9, animale.getData_morte());
+            ps.setObject(10, animale.getData_vaccino());
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Un nuovo animale è stato inserito correttamente!");
@@ -53,7 +54,18 @@ public class AnimaleDAOImpl implements AnimaleDAO {
                     "WHERE id_animale = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
+            ps.setInt(1, animale.getPeso());
+            ps.setString(2, String.valueOf(animale.getSesso()));
+            ps.setString(3, animale.getRazza());
+            ps.setString(4, animale.getTipoAlimentazione());
+            ps.setString(5, animale.getNomeStalla());
+            ps.setObject(6, animale.getData_nascita());
+            ps.setObject(7, animale.getData_ingresso());
+            ps.setObject(8, animale.getData_uscita());
+            ps.setObject(9, animale.getData_morte());
+            ps.setObject(10, animale.getData_vaccino());
+            ps.setInt(11, animale.getId_animale());
+            ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nell'aggiornamento di un animale " + animale.getId_animale());
@@ -86,7 +98,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     Animale animale = new Animale(rs.getInt("peso"),
-                        rs.getBoolean("sesso"),
+                        rs.getString("sesso").charAt(0),
                         rs.getString("razza"),
                         rs.getString("tipoAlimentazione"),
                         rs.getString("nomeStalla"),

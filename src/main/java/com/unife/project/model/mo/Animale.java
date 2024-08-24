@@ -7,7 +7,7 @@ import java.util.List;
 public class Animale {
     private int id_animale;
     private int peso;
-    private boolean sesso;
+    private char sesso;
     private String razza;
     private String tipoAlimentazione;  //foreign key riferita a Magazzino
     private String nomeStalla;
@@ -23,7 +23,7 @@ public class Animale {
     }
 
     public Animale(int peso, 
-            boolean sesso, String razza, String tipoAlimentazione, 
+            char sesso, String razza, String tipoAlimentazione, 
             String nomeStalla, LocalDate data_nascita, 
             LocalDate data_ingresso, LocalDate data_uscita, 
             LocalDate data_morte, LocalDate data_vaccino) {
@@ -56,11 +56,11 @@ public class Animale {
         this.peso = peso;
     }
     
-    public boolean isSesso() {
+    public char getSesso() {
         return sesso;
     }
     
-    public void setSesso(boolean sesso) {
+    public void setSesso(char sesso) {
         this.sesso = sesso;
     }
     

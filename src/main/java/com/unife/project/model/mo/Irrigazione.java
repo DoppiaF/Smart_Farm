@@ -15,6 +15,10 @@ public class Irrigazione {
     private int litri_usati;
     private List<Cisterna> cisterne = new ArrayList<>(); //lista cisterne associate (relazione N:M)
 
+    //costruttore vuoto per il dao
+    public Irrigazione() {
+    }
+
     public Irrigazione(
             LocalDate data_inizio,
             LocalTime ora_inizio, 

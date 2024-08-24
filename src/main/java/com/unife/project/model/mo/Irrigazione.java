@@ -1,12 +1,14 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Irrigazione {
     private int id_impostazione;
-    private LocalDateTime data_inizio;
+    private LocalDate data_inizio;
+    private LocalTime ora_inizio;
     private int durata;
     private boolean auto;
     private String stato;
@@ -14,13 +16,15 @@ public class Irrigazione {
     private List<Cisterna> cisterne = new ArrayList<>(); //lista cisterne associate (relazione N:M)
 
     public Irrigazione(
-            LocalDateTime data_inizio, 
+            LocalDate data_inizio,
+            LocalTime ora_inizio, 
             int durata, 
             boolean auto, 
             String stato, 
             int litri_usati) {
 
         this.data_inizio = data_inizio;
+        this.ora_inizio = ora_inizio;
         this.durata = durata;
         this.auto = auto;
         this.stato = stato;
@@ -35,12 +39,20 @@ public class Irrigazione {
         this.id_impostazione = id_impostazione;
     }
 
-    public LocalDateTime getData_inizio() {
+    public LocalDate getData_inizio() {
         return data_inizio;
     }
 
-    public void setData_inizio(LocalDateTime data_inizio) {
+    public void setData_inizio(LocalDate data_inizio) {
         this.data_inizio = data_inizio;
+    }
+
+    public LocalTime getOra_inizio() {
+        return ora_inizio;
+    }
+
+    public void setOra_inizio(LocalTime ora_inizio) {
+        this.ora_inizio = ora_inizio;
     }
 
     public int getDurata() {
@@ -88,6 +100,7 @@ public class Irrigazione {
         return "Irrigazione{" +
                 "id_impostazione=" + id_impostazione +
                 ", data_inizio=" + data_inizio +
+                ", ora_inizio=" + ora_inizio +
                 ", durata=" + durata +
                 ", auto=" + auto +
                 ", stato='" + stato + '\'' +

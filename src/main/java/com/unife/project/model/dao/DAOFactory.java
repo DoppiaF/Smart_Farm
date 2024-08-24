@@ -22,7 +22,7 @@ public class DAOFactory {
         }
     }
 
-    public static GenericDAO getAnimaleDAO() {
+    public static AnimaleDAO getAnimaleDAO() {
         return new AnimaleDAOImpl(connection);
     }
 

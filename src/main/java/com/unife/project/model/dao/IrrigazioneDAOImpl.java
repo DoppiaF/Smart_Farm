@@ -1,6 +1,6 @@
 package com.unife.project.model.dao;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
+//import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 import com.unife.project.model.mo.Irrigazione;
 
 import java.util.ArrayList;

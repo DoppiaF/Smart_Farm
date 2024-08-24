@@ -47,7 +47,16 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public void update(Animale animale) {
-        //da implementare
+        String sql ="UPDATE animale" +
+                    "SET peso = ?, sesso = ?, razza = ?, tipoAlimentazione = ?, nomeStalla = ?, data_nascita = ?, data_ingresso = ?, data_uscita = ?, data_morte = ?, data_vaccino = ?" + 
+                    "WHERE id_animale = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nell'aggiornamento di un animale " + animale.getId_animale())
+        }
     }
 
     @Override

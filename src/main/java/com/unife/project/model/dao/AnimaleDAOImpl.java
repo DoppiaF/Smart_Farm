@@ -1,5 +1,6 @@
 package com.unife.project.model.dao;
 
+import com.mysql.cj.conf.url.FailoverDnsSrvConnectionUrl;
 import com.unife.project.model.mo.Animale;
 
 import java.util.ArrayList;
@@ -121,7 +122,35 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public List<Animale> findAll() {
+        String sql = "SELECT * FROM animale";
+        ArrayList<Animale> animali = new ArrayList<Animale>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()==false) System.out.println("Non sono stati trovati animali");
+                else{
+                    while (rs.next()){
+                        Animale animale = new Animale(rs.getInt("peso"),
+                            rs.getString("sesso").charAt(0),
+                            rs.getString("razza"),
+                            rs.getString("tipoAlimentazione"),
+                            rs.getString("nomeStalla"),
+                            rs.getDate("data_nascita").toLocalDate(),
+                            rs.getDate("data_ingresso").toLocalDate(),
+                            rs.getDate("data_uscita").toLocalDate(),
+                            rs.getDate("data_morte").toLocalDate(),
+                            rs.getDate("data_vaccino").toLocalDate());
+
+                        animali.add(animale);
+                        
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero delle informazioni di tutti gli animali");
+        }
         return animali;
-        //da implementare
     }
 }

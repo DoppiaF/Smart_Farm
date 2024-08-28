@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Irrigazione {
-    private int id_impostazione;
+    private int id_irrigazione;
     private LocalDate data_inizio;
     private LocalTime ora_inizio;
     private int durata;
@@ -35,12 +35,12 @@ public class Irrigazione {
         this.litri_usati = litri_usati;
     }
 
-    public int getId_impostazione() {
-        return id_impostazione;
+    public int getId_irrigazione() {
+        return id_irrigazione;
     }
 
-    public void setId_impostazione(int id_impostazione) {
-        this.id_impostazione = id_impostazione;
+    public void setId_irrigazione(int id_irrigazione) {
+        this.id_irrigazione = id_irrigazione;
     }
 
     public LocalDate getData_inizio() {
@@ -102,7 +102,7 @@ public class Irrigazione {
     @Override
     public String toString() {
         return "Irrigazione{" +
-                "id_impostazione=" + id_impostazione +
+                "id_irrigazione=" + id_irrigazione +
                 ", data_inizio=" + data_inizio +
                 ", ora_inizio=" + ora_inizio +
                 ", durata=" + durata +

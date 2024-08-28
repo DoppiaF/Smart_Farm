@@ -12,8 +12,8 @@ public class Prodotto {
     private String tipoProdotto;  //FK per listino prezzi
     private List<Animale> animali = new ArrayList<>();    //FK riferita a Animale
 
-    public Prodotto(int id_prodotto, int quantita, String tipoProdotto, LocalDateTime dataProduzione, LocalDateTime dataScadenza) {
-        this.id_prodotto = id_prodotto;
+    public Prodotto(/*int id_prodotto,*/ int quantita, String tipoProdotto, LocalDateTime dataProduzione, LocalDateTime dataScadenza) {
+        //this.id_prodotto = id_prodotto;
         this.quantita = quantita;
         this.tipoProdotto = tipoProdotto;
         this.dataProduzione = dataProduzione; 

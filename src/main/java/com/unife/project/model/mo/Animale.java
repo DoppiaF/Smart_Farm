@@ -152,4 +152,11 @@ public class Animale {
                 ", data_vaccino=" + data_vaccino + '\'' +
                 '}';
     }
+
+
+    //esempi di query per animale
+    /*INSERT INTO animale (peso, sesso, razza, data_nascita, tipo_alimentazione, 
+    nome_stalla,  data_ingresso, data_uscita, data_morte, data_vaccino) 
+    VALUES (100, 'M', 'frisona', '2020-01-01', 'granoturco', 'stalla-A', 
+    '2021-01-01', null, null, '2021-01-01');*/
 }

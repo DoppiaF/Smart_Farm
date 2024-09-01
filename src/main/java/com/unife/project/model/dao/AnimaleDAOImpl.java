@@ -1,6 +1,6 @@
 package com.unife.project.model.dao;
 
-import com.mysql.cj.conf.url.FailoverDnsSrvConnectionUrl;
+//import com.mysql.cj.conf.url.FailoverDnsSrvConnectionUrl;
 import com.unife.project.model.mo.Animale;
 
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 public class AnimaleDAOImpl implements AnimaleDAO {
     private List<Animale> animali = new ArrayList<>();
-    //private int idCounter = 1;  //non serve, l'id è generato dal database
 
     //database connection details
     private Connection connection;

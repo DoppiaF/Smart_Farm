@@ -5,13 +5,14 @@ import com.unife.project.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
-    private List<ProdottoAnimale> prodottiAnimali = new ArrayList<>();
+    private List<ProdottoAnimale> prodottiAnimali = null;
 
     private Connection connection;
 
@@ -50,18 +51,37 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
     @Override
     public void delete(ProdottoAnimale prodottoAnimale) {
-        // Implementazione del metodo delete
+        // Implementazione del metodo delete non serve. Ho aggiornamento a cascata
+        System.out.println("ProdottoAnimaleDAOImpl.delete() chiamato. To be implemented");
     }
 
     @Override
-    public ProdottoAnimale findById(int id) {
-        // Implementazione del metodo findById
+    public ProdottoAnimale findById(int id_animale) {
+        // Implementazione del metodo findById non serve.
+        System.out.println("ProdottoAnimaleDAOImpl.findById() chiamato. To be implemented");
         return null;
     }
 
     @Override
     public List<ProdottoAnimale> findAll() {
-        // Implementazione del metodo findAll
-        return null;
+        String sql = "SELECT * FROM prodotto_animale";
+        prodottiAnimali = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+            try( ResultSet rs = ps.executeQuery()){
+                while (ps.getResultSet().next()) {
+                    ProdottoAnimale prodottoAnimale = new ProdottoAnimale(
+                            ps.getResultSet().getInt("id_prodotto"),
+                            ps.getResultSet().getInt("id_animale")
+                    );
+                    prodottiAnimali.add(prodottoAnimale);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero dei prodotti animali");
+        }
+
+        return prodottiAnimali;
     }
 }

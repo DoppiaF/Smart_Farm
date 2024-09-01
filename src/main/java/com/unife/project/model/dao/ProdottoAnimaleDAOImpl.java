@@ -69,12 +69,12 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             try( ResultSet rs = ps.executeQuery()){
-                while (ps.getResultSet().next()) {
-                    ProdottoAnimale prodottoAnimale = new ProdottoAnimale(
-                            ps.getResultSet().getInt("id_prodotto"),
-                            ps.getResultSet().getInt("id_animale")
-                    );
-                    prodottiAnimali.add(prodottoAnimale);
+                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali"); }
+                else{
+                    while(rs.next()){
+                        ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));
+                        prodottiAnimali.add(prodottoAnimale);
+                    }
                 }
             }
         } catch (SQLException e) {

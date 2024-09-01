@@ -14,8 +14,7 @@ import com.unife.project.model.mo.Prodotto;
 
 
 public class ProdottoDAOImpl implements ProdottoDAO{
-    private List<Prodotto> prodotti = new ArrayList<>();
-    //private int idCounter = 1;
+    private List<Prodotto> prodotti = null;
 
     private Connection connection;
 
@@ -104,7 +103,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
     @Override
     public List<Prodotto> findAll() {
         String sql = "SELECT * FROM prodotto";
-        ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
+        prodotti = new ArrayList<Prodotto>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){

@@ -84,4 +84,51 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
         return prodottiAnimali;
     }
+
+    @Override
+    public List<ProdottoAnimale> findById_animale(int id_animale) {
+        String sql = "SELECT * FROM prodotto_animale WHERE id_animale = ?";
+        prodottiAnimali = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id_animale);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali per l'animale con id " + id_animale); }
+                else{
+                    while(rs.next()){
+                        ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));
+                        prodottiAnimali.add(prodottoAnimale);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero dei prodotti animali per l'animale con id " + id_animale);
+
+        }
+    return prodottiAnimali;
+    }
+
+    @Override
+    public List<ProdottoAnimale> findById_prodotto(int id_prodotto) {
+        String sql = "SELECT * FROM prodotto_animale WHERE id_prodotto = ?";
+        prodottiAnimali = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id_prodotto);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali per il prodotto con id " + id_prodotto); }
+                else{
+                    while(rs.next()){
+                        ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));
+                        prodottiAnimali.add(prodottoAnimale);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero dei prodotti animali per il prodotto con id " + id_prodotto);
+        }
+        return prodottiAnimali;
+    }
 }

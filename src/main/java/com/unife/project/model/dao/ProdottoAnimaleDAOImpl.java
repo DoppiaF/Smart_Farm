@@ -44,7 +44,8 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
     @Override
     public void update(ProdottoAnimale prodottoAnimale) {
-        // Implementazione del metodo update
+        // come metodo save, non serve implementare il metodo update per ProdottoAnimale
+        System.out.println("ProdottoAnimaleDAOImpl.update() chiamato. To be implemented");
     }
 
     @Override

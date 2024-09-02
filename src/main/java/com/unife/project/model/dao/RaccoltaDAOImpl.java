@@ -2,7 +2,6 @@ package com.unife.project.model.dao;
 
 import java.util.List;
 
-import com.unife.project.model.mo.Cisterna;
 import com.unife.project.model.mo.Raccolta;
 
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RaccoltaDAOImpl implements RaccoltaDAO{
+    private List<Raccolta> raccolte = null;
     private Connection connection;
 
     public RaccoltaDAOImpl(Connection connection){
@@ -92,14 +92,16 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
-                    Raccolta raccolta = new Raccolta();
-                    /*Raccolta raccolta = new Raccolta(rs.getString("tipoPianta"),
-                        rs.getInt("quantita"),
-                        rs.getDate("data_raccolta"),
+                    Raccolta raccolta = new Raccolta(
+                        rs.getInt("id_raccolta"),
+                        rs.getString("tipo_pianta"),
+                        rs.getInt("quantità"),
+                        rs.getDate("data_raccolta").toLocalDate(),
                         rs.getString("stato"),
                         rs.getInt("operatore"),
                         rs.getString("macchinario"),
-                        rs.getInt("id_piantagione"));*/
+                        rs.getInt("id_piantagione")
+                    );
 
                     return raccolta;
                 } else {
@@ -115,8 +117,35 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
 
     @Override
     public List<Raccolta> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        String sql = "SELECT * FROM raccolta";
+        raccolte = new ArrayList<Raccolta>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()==false) System.out.println("Non sono state trovate raccolte");
+                else{
+                    while (rs.next()) {
+                        Raccolta raccolta = new Raccolta(
+                            rs.getInt("id_raccolta"),
+                            rs.getString("tipo_pianta"),
+                            rs.getInt("quantità"),
+                            rs.getDate("data_raccolta").toLocalDate(),
+                            rs.getString("stato"),
+                            rs.getInt("operatore"),
+                            rs.getString("macchinario"),
+                            rs.getInt("id_piantagione")
+                        );
+                        raccolte.add(raccolta);
+                    }
+                } 
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni di tutte le raccolte");
+        }
+        return raccolte;
     }
     
 

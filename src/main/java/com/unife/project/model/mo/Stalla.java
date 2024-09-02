@@ -9,6 +9,9 @@ public class Stalla {
     private LocalTime oraPranzo;
     private LocalTime oraCena;
 
+    public Stalla(){
+    }
+
     public Stalla(String etichettaStalla, int capienza, String razza, LocalTime oraPranzo, LocalTime oraCena) {
         this.etichettaStalla = etichettaStalla;
         this.capienza = capienza;

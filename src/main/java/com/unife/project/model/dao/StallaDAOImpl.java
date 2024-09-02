@@ -100,7 +100,7 @@ public class StallaDAOImpl implements StallaDAO{
                         rs.getString("razza"),
                         rs.getTime("ora_pranzo").toLocalTime(),
                         rs.getTime("ora_cena").toLocalTime()
-                    )
+                    );
                     return stalla;
                 } else {
                     System.out.println("Stalla non trovata");

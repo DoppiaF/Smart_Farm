@@ -73,7 +73,6 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void delete(VisitaVeterinaria visitaVeterinaria) {
-        // TODO Auto-generated method stub
         String sql = "DELETE FROM visitaVeterinaria WHERE data = ? and identificativoAnimale = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setObject(1, visitaVeterinaria.getData());
@@ -90,15 +89,12 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public VisitaVeterinaria findById(int id) {
-        // TODO Auto-generated method stub
-        System.out.println("Metodo non implementato. utilizzare findByDataAndIdentificativoAnimale");
+        System.out.println("Metodo non implementato. utilizzare findByDataAndIdentificativoAnimale()");
         return null;
     }
 
     @Override
     public List<VisitaVeterinaria> findAll() {
-        // TODO Auto-generated method stub
-
         visiteVeterinarie = new ArrayList<VisitaVeterinaria>();
 
         String sql = "SELECT * FROM visitaVeterinaria";

@@ -90,7 +90,7 @@ public class ListinoDAOImpl implements ListinoDAO{
             e.printStackTrace();
             System.out.println("Errore nell'inserimento di un prodotto");
         }
-        return null;
+        return listini;
     }
 
     @Override

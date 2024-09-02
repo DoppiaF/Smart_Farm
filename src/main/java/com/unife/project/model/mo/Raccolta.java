@@ -3,7 +3,7 @@ package com.unife.project.model.mo;
 import java.time.LocalDate;
 
 public class Raccolta {
-    private int id_raccolta;
+    private int id_raccolta;    //PK
     private String tipoPianta;
     private int quantita;
     private LocalDate dataRaccolta;

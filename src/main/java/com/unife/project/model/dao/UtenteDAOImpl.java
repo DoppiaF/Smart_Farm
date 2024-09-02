@@ -90,8 +90,6 @@ public class UtenteDAOImpl implements UtenteDAO{
 
     @Override
     public Utente findById(int id) {
-        // TODO Auto-generated method stub
-
         String sql = "SELECT * FROM utente WHERE id_utente = ?";
         try ( PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

@@ -50,6 +50,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
             ps.setInt(1, magazzino.getQuantita());
             ps.setFloat(2, magazzino.getPrezzo_kg());
             ps.setString(3, magazzino.getTipoMangime());
+
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -75,8 +76,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
 
     @Override
     public Magazzino findById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        throw new UnsupportedOperationException("Unimplemented method 'findById'. usare findByTipoMangime");
     }
 
     public Magazzino findByTipoMangime(String tipoMangime){

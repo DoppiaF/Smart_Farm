@@ -65,7 +65,10 @@ public class AnimaleDAOImpl implements AnimaleDAO {
             ps.setObject(9, animale.getData_morte());
             ps.setObject(10, animale.getData_vaccino());
             ps.setInt(11, animale.getId_animale());
-            ps.executeUpdate();
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("L'animale è stato aggiornato correttamente!");
+            }
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nell'aggiornamento di un animale " + animale.getId_animale());

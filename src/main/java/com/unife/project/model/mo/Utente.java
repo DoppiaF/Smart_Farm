@@ -8,12 +8,17 @@ public class Utente {
     private String userName;
     private String password;
     private String email;
-    private Timestamp createTime;
+    private Timestamp createTime;   //data di creazione dell'utente, riempita automaticamente dal database
     private LocalDate dataNascita;
     private Boolean ruolo_raccolta;
     private Boolean ruolo_irrigazione;
     private Boolean ruolo_pastore;
     private Boolean ruolo_admin;
+
+
+    //costruttore vuoto
+    public Utente() {
+    }
 
     public Utente(int id, String userName, String password, String email, Timestamp createTime, LocalDate dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
         this.id = id;

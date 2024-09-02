@@ -21,7 +21,6 @@ public class ListinoDAOImpl implements ListinoDAO{
 
     @Override
     public void save(Listino listino) {
-        // TODO Auto-generated method stub
         String sql = "INSERT INTO listino (tipo_prodotto, prezzo) VALUES (?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -40,7 +39,6 @@ public class ListinoDAOImpl implements ListinoDAO{
 
     @Override
     public void update(Listino listino) {
-        // TODO Auto-generated method stub
         String sql = "UPDATE listino SET prezzo = ? WHERE tipo_prodotto = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -58,8 +56,6 @@ public class ListinoDAOImpl implements ListinoDAO{
 
     @Override
     public void delete(Listino listino) {
-        // TODO Auto-generated method stub
-
         String sql = "DELETE FROM listino WHERE tipo_prodotto = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, listino.getTipo_prodotto());
@@ -75,8 +71,6 @@ public class ListinoDAOImpl implements ListinoDAO{
 
     @Override
     public List<Listino> findAll() {
-        // TODO Auto-generated method stub
-
         listini = new ArrayList<Listino>();
         String sql = "SELECT * FROM listino";
 

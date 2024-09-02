@@ -1,17 +1,17 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class VisitaVeterinaria {
-    private LocalDateTime data;     //PK
+    private LocalDate data;     //PK
     private String diagnosi;
     private int identificativoAnimale; //FK di animale  //PK
-    private LocalDateTime prossimaVisita;
+    private LocalDate prossimaVisita;
     private String nomeVeterinario;
     private String cognomeVeterinario;
     private String curaPrescritta;
 
-    public VisitaVeterinaria(LocalDateTime data, String diagnosi, int identificativoAnimale, LocalDateTime prossimaVisita, String nomeVeterinario, String cognomeVeterinario, String curaPrescritta) {
+    public VisitaVeterinaria(LocalDate data, String diagnosi, int identificativoAnimale, LocalDate prossimaVisita, String nomeVeterinario, String cognomeVeterinario, String curaPrescritta) {
         this.data = data;
         this.diagnosi = diagnosi;
         this.identificativoAnimale = identificativoAnimale;
@@ -21,11 +21,11 @@ public class VisitaVeterinaria {
         this.curaPrescritta = curaPrescritta;
     }
 
-    public LocalDateTime getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(LocalDateTime data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
@@ -45,11 +45,11 @@ public class VisitaVeterinaria {
         this.identificativoAnimale = identificativoAnimale;
     }
 
-    public LocalDateTime getProssimaVisita() {
+    public LocalDate getProssimaVisita() {
         return prossimaVisita;
     }
 
-    public void setProssimaVisita(LocalDateTime prossimaVisita) {
+    public void setProssimaVisita(LocalDate prossimaVisita) {
         this.prossimaVisita = prossimaVisita;
     }
 

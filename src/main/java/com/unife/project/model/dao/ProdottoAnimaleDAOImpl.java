@@ -1,7 +1,6 @@
 package com.unife.project.model.dao;
 
 import com.unife.project.model.mo.ProdottoAnimale;
-import com.unife.project.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

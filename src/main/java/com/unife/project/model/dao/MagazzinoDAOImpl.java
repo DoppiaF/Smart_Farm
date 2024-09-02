@@ -103,7 +103,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
     }
 
     @Override
-    public List findAll() {
+    public List<Magazzino> findAll() {
         String sql = "SELECT * FROM magazzino";
         mangimi = new ArrayList<Magazzino>();
 

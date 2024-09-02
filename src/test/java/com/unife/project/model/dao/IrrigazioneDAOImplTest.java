@@ -8,10 +8,8 @@ import org.mockito.MockitoAnnotations;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Time;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;

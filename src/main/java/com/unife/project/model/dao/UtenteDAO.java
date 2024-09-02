@@ -5,7 +5,7 @@ import com.unife.project.model.mo.Utente;
 public interface UtenteDAO extends GenericDAO<Utente> {
     //public Utente findByUsername(String username);
     //public Utente findByEmail(String email);
-    //public Utente findByUsernameAndPassword(String username, String password);
+    public Utente findByUsernameAndPassword(String username, String password);
     //public Utente findByEmailAndPassword(String email, String password);
     //public void updatePassword(Utente utente, String newPassword);
     //public void updateEmail(Utente utente, String newEmail);

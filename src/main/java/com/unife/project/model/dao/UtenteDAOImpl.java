@@ -152,4 +152,36 @@ public class UtenteDAOImpl implements UtenteDAO{
         }
         return utenti;
     }
+
+    @Override
+    public Utente findByUsernameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM utente WHERE username = ? AND password = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() == false) { System.out.println("Utente non trovato"); } 
+            else {
+                while(rs.next()){
+                    Utente utente = new Utente();
+                    utente.setId(rs.getInt("id_utente"));
+                    utente.setUserName(rs.getString("username"));
+                    utente.setPassword(rs.getString("password"));
+                    utente.setEmail(rs.getString("email"));
+                    utente.setCreateTime(rs.getTimestamp("create_time"));
+                    utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                    utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
+                    utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
+                    utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
+                    utente.setRuolo_admin(rs.getBoolean("ruolo_admin"));
+                    return utente;
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca di un utente" + username);
+        }
+
+        return null;
+    }
 }

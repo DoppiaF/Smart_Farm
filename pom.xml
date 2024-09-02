@@ -39,11 +39,39 @@
             <version>3.6.28</version>
             <scope>test</scope>
         </dependency>
+
+         <!-- Dipendenze JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Configura qui i tuoi plugin Maven -->
+            <!-- Configurazione plugin JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.unife.project.MainApp</mainClass>
+                </configuration>
+            </plugin>
+            <!-- Configurazione plugin Maven -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

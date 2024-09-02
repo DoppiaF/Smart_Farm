@@ -92,6 +92,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     Irrigazione irrigazione = new Irrigazione(
+                        rs.getInt("id_irrigazione"),
                         rs.getDate("data_inizio").toLocalDate(),
                         rs.getTime("ora_inizio").toLocalTime(),
                         rs.getInt("durata"),

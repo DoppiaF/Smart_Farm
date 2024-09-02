@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.unife.project.model.mo.IrrigazioneCisterna;
+import com.unife.project.model.mo.ProdottoAnimale;
 import com.unife.project.util.DatabaseConnection;
 
 public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
@@ -83,4 +84,53 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
         return irrigazioniCisterne;
     }
 
+    @Override
+    public List<IrrigazioneCisterna> findById_irrigazione(int id_irrigazione){
+
+        String sql = "SELECT * FROM irrigazioneCisterna WHERE id_irrigazione = ?";
+        irrigazioniCisterne = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id_irrigazione);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next() == false){ System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione); }
+                else{
+                    while(rs.next()){
+                        IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
+                        irrigazioniCisterne.add(irrigazioneCisterna);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero di cisterne per irrigaizone con id " + id_irrigazione);
+
+        }
+        return irrigazioniCisterne;
+    }
+
+    @Override
+    public List<IrrigazioneCisterna> findById_cisterna(int id_cisterna){
+
+        String sql = "SELECT * FROM irrigazioneCisterna WHERE id_cisterna = ?";
+        irrigazioniCisterne = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id_cisterna);
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next() == false){ System.out.println("Non ci sono irrigazioni connesse a cisterna con id " + id_cisterna); }
+                else{
+                    while(rs.next()){
+                        IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
+                        irrigazioniCisterne.add(irrigazioneCisterna);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero di cisterne per irrigaizone con id " + id_cisterna);
+
+        }
+        return irrigazioniCisterne;
+    }
 }

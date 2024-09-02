@@ -1,6 +1,6 @@
 package com.unife.project.model.dao;
 
-import com.mysql.cj.conf.url.FailoverDnsSrvConnectionUrl;
+//import com.mysql.cj.conf.url.FailoverDnsSrvConnectionUrl;
 import com.unife.project.model.mo.Animale;
 
 import java.util.ArrayList;
@@ -11,8 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AnimaleDAOImpl implements AnimaleDAO {
-    private List<Animale> animali = new ArrayList<>();
-    //private int idCounter = 1;  //non serve, l'id è generato dal database
+    private List<Animale> animali = null;
 
     //database connection details
     private Connection connection;
@@ -24,7 +23,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public void save(Animale animale) {
-        String sql = "INSERT INTO animale (peso, razza, tipoAlimentazione, nomeStalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO animale (peso, sesso, razza, tipoAlimentazione, nomeStalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, animale.getPeso());
@@ -123,7 +122,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
     @Override
     public List<Animale> findAll() {
         String sql = "SELECT * FROM animale";
-        ArrayList<Animale> animali = new ArrayList<Animale>();
+        animali = new ArrayList<Animale>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){

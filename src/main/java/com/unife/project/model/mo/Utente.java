@@ -1,20 +1,21 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Utente {
     private int id;
     private String userName;
     private String password;
     private String email;
-    private LocalDateTime createTime;
-    private LocalDateTime dataNascita;
+    private Timestamp createTime;
+    private LocalDate dataNascita;
     private Boolean ruolo_raccolta;
     private Boolean ruolo_irrigazione;
     private Boolean ruolo_pastore;
     private Boolean ruolo_admin;
 
-    public Utente(int id, String userName, String password, String email, LocalDateTime createTime, LocalDateTime dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
+    public Utente(int id, String userName, String password, String email, Timestamp createTime, LocalDate dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -59,19 +60,19 @@ public class Utente {
         this.email = email;
     }
     
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
     
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
     
-    public LocalDateTime getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
     
-    public void setDataNascita(LocalDateTime dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
     

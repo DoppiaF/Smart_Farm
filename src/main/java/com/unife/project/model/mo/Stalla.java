@@ -63,4 +63,9 @@ public class Stalla {
         return "Stalla{etichettaStalla='" + etichettaStalla + "', capienza=" + capienza + ", razza='" + razza + "', oraPranzo=" + oraPranzo + ", oraCena=" + oraCena + '}';
     }
 
+
+    /*
+     esempio insert per stalla
+     INSERT INTO stalla (etichetta_stalla, capienza, razza, ora_pranzo, ora_cena) VALUES ('stalla_A', 500, 'frisona', '10:00:00', '22:00:00');
+    */
 }

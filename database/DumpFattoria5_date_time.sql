@@ -27,21 +27,21 @@ DROP TABLE IF EXISTS `animale`;
 CREATE TABLE `animale` (
   `id_animale` int NOT NULL AUTO_INCREMENT,
   `peso` int DEFAULT NULL,
-  `sesso` tinyint DEFAULT NULL,
+  `sesso` char(1) DEFAULT NULL,
   `razza` varchar(12) DEFAULT NULL,
-  `data_nascita` datetime DEFAULT NULL,
+  `data_nascita` date DEFAULT NULL,
   `tipo_alimentazione` varchar(20) NOT NULL,
   `nome_stalla` varchar(20) DEFAULT NULL,
-  `data_ingresso` datetime DEFAULT NULL,
-  `data_uscita` datetime DEFAULT NULL,
-  `data_morte` datetime DEFAULT NULL,
-  `data_vaccino` datetime DEFAULT NULL,
+  `data_ingresso` date DEFAULT NULL,
+  `data_uscita` date DEFAULT NULL,
+  `data_morte` date DEFAULT NULL,
+  `data_vaccino` date DEFAULT NULL,
   PRIMARY KEY (`id_animale`),
   KEY `id_stalla_idx` (`nome_stalla`),
   KEY `id_magazzino_idx` (`tipo_alimentazione`),
   CONSTRAINT `id_magazzino` FOREIGN KEY (`tipo_alimentazione`) REFERENCES `magazzino` (`tipo_mangime`),
   CONSTRAINT `id_stalla` FOREIGN KEY (`nome_stalla`) REFERENCES `stalla` (`etichetta_stalla`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +50,7 @@ CREATE TABLE `animale` (
 
 LOCK TABLES `animale` WRITE;
 /*!40000 ALTER TABLE `animale` DISABLE KEYS */;
+INSERT INTO `animale` VALUES (4,100,'M','frisona','2020-01-01','granoturco','stalla_A','2021-01-01',NULL,NULL,'2021-01-01');
 /*!40000 ALTER TABLE `animale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +87,7 @@ DROP TABLE IF EXISTS `irrigazione`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `irrigazione` (
   `id_impostazione` int NOT NULL AUTO_INCREMENT,
-  `ora_inizio` datetime DEFAULT NULL,
+  `ora_inizio` date DEFAULT NULL,
   `durata` float DEFAULT NULL,
   `automatico` tinyint NOT NULL DEFAULT '0',
   `stato` varchar(20) DEFAULT 'da programmare',
@@ -174,6 +175,7 @@ CREATE TABLE `magazzino` (
 
 LOCK TABLES `magazzino` WRITE;
 /*!40000 ALTER TABLE `magazzino` DISABLE KEYS */;
+INSERT INTO `magazzino` VALUES ('granoturco',1000,5.8);
 /*!40000 ALTER TABLE `magazzino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,8 +221,8 @@ CREATE TABLE `prodotto` (
   `id_prodotto` int NOT NULL AUTO_INCREMENT,
   `quantità` int DEFAULT NULL,
   `tipo_prodotto` varchar(20) NOT NULL,
-  `data_produzione` datetime NOT NULL,
-  `data_scadenza` datetime DEFAULT NULL,
+  `data_produzione` date NOT NULL,
+  `data_scadenza` date DEFAULT NULL,
   PRIMARY KEY (`id_prodotto`),
   KEY `tipo_prodotto_idx` (`tipo_prodotto`),
   CONSTRAINT `tipo_prodotto` FOREIGN KEY (`tipo_prodotto`) REFERENCES `listino` (`tipo_prodotto`)
@@ -272,7 +274,7 @@ CREATE TABLE `raccolta` (
   `id_raccolta` int NOT NULL AUTO_INCREMENT,
   `tipo_pianta` varchar(20) NOT NULL,
   `quantità` int DEFAULT NULL,
-  `data_raccolta` datetime DEFAULT NULL,
+  `data_raccolta` date DEFAULT NULL,
   `stato` varchar(20) DEFAULT NULL,
   `operatore` int NOT NULL,
   `macchinario_usato` varchar(20) DEFAULT NULL,
@@ -317,6 +319,7 @@ CREATE TABLE `stalla` (
 
 LOCK TABLES `stalla` WRITE;
 /*!40000 ALTER TABLE `stalla` DISABLE KEYS */;
+INSERT INTO `stalla` VALUES ('stalla_A',500,'frisona','10:00:00','22:00:00');
 /*!40000 ALTER TABLE `stalla` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +336,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(32) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `data_nascita` timestamp NOT NULL,
+  `data_nascita` date NOT NULL,
   `ruolo_raccolta` tinyint DEFAULT '0' COMMENT 'se true, utente ha accesso alle feature di raccolta e valutazione del terreno',
   `ruolo_irrigazione` tinyint DEFAULT '0' COMMENT 'se true, utente ha accesso alle impostazioni del sistema di irrigazione',
   `ruolo_pastore` tinyint DEFAULT '0' COMMENT 'se true (1) utente ha permesso di gestione completo degli animali nelle varie stalle. mangime, visite veterinarie e gestione.',
@@ -363,7 +366,7 @@ DROP TABLE IF EXISTS `visita_veterinaria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `visita_veterinaria` (
-  `data` datetime NOT NULL,
+  `data` date NOT NULL,
   `diagnosi` varchar(45) DEFAULT NULL,
   `identificativo_animale` int NOT NULL,
   `prossima_programmata` int DEFAULT NULL,
@@ -427,4 +430,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-01 20:45:55
+-- Dump completed on 2024-09-02 11:34:18

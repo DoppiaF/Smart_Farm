@@ -39,4 +39,9 @@ public class Magazzino {
     public String toString() {
         return "Magazzino{tipoMangime='" + tipoMangime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
     }
+
+    /*
+     * esempio insert stalla
+     INSERT INTO magazzino (tipo_mangime,quantità,`prezzo/kg`) VALUES ('granoturco',1000,5.8);
+     */
 }

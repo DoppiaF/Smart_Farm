@@ -2,7 +2,6 @@ package com.unife.project.model.dao;
 
 import java.util.List;
 
-import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Stalla;
 
 import java.util.ArrayList;
@@ -117,28 +116,30 @@ public class StallaDAOImpl implements StallaDAO{
     public List<Stalla> findAll() {
         
         String sql = "SELECT * FROM stalla";
+        stalle = new ArrayList<Stalla>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             
             try (ResultSet rs = ps.executeQuery()){
-                if (rs.next()) {
-                    Stalla stalla = new Stalla(
-                        rs.getString("etichetta_stalla"),
-                        rs.getInt("capienza"),
-                        rs.getString("razza"),
-                        rs.getTime("ora_pranzo").toLocalTime(),
-                        rs.getTime("ora_cena").toLocalTime()
-                    );
-                    stalle.add(stalla);
-                } else {
-                    System.out.println("Stalla non trovata");
+                if(rs.next()==false) System.out.println("Non sono state trovate stalle");
+                else{
+                    while(rs.next()) {
+                        Stalla stalla = new Stalla(
+                            rs.getString("etichetta_stalla"),
+                            rs.getInt("capienza"),
+                            rs.getString("razza"),
+                            rs.getTime("ora_pranzo").toLocalTime(),
+                            rs.getTime("ora_cena").toLocalTime()
+                        );
+                        stalle.add(stalla);
+                    }
                 }
             } 
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nel recupero delle informazioni di tutte le stalle ");
         }
-        return null;
+        return stalle;
     }
     
 }

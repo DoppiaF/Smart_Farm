@@ -406,7 +406,7 @@ CREATE TABLE `zona` (
   `sensore_temperatura` float DEFAULT NULL,
   `sensore_PH` float DEFAULT NULL,
   `id_piantagione` int NOT NULL,
-  PRIMARY KEY (`coord_x`,`coord_y`),
+  PRIMARY KEY (`coord_x`,`coord_y`,`id_piantagione`),
   KEY `id_piant_idx` (`id_piantagione`),
   CONSTRAINT `id_piant` FOREIGN KEY (`id_piantagione`) REFERENCES `piantagione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -430,4 +430,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-02 11:34:18
+-- Dump completed on 2024-09-02 15:38:56

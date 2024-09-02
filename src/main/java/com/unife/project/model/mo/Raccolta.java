@@ -1,18 +1,20 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Raccolta {
     private int id_raccolta;
     private String tipoPianta;
     private int quantita;
-    private LocalDateTime dataRaccolta;
+    private LocalDate dataRaccolta;
     private String stato;
     private String macchinario;
     private int operatore; //FK di utente
     private int id_piantagione; //FK di piantagione
 
-    public Raccolta(int id_raccolta, String tipoPianta, int quantita, LocalDateTime dataRaccolta, String stato, int operatore, String macchinario, int id_piantagione) {
+    public Raccolta(){}
+
+    public Raccolta(int id_raccolta, String tipoPianta, int quantita, LocalDate dataRaccolta, String stato, int operatore, String macchinario, int id_piantagione) {
         this.id_raccolta = id_raccolta;
         this.tipoPianta = tipoPianta;
         this.quantita = quantita;
@@ -47,11 +49,11 @@ public class Raccolta {
         this.quantita = quantita;
     }
 
-    public LocalDateTime getDataRaccolta() {
+    public LocalDate getDataRaccolta() {
         return dataRaccolta;
     }
 
-    public void setDataRaccolta(LocalDateTime dataRaccolta) {
+    public void setDataRaccolta(LocalDate dataRaccolta) {
         this.dataRaccolta = dataRaccolta;
     }
 

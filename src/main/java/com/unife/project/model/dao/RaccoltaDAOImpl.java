@@ -25,7 +25,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, raccolta.getTipoPianta());
             ps.setInt(2, raccolta.getQuantita());
-            ps.setDate(3, raccolta.getDataRaccolta());
+            ps.setObject(3, raccolta.getDataRaccolta());
             ps.setString(4, raccolta.getStato());
             ps.setString(5, raccolta.getMacchinario());
             ps.setInt(6, raccolta.getOperatore());
@@ -54,7 +54,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, raccolta.getTipoPianta());
             ps.setInt(2, raccolta.getQuantita());
-            ps.setDate(3, raccolta.getDataRaccolta());
+            ps.setObject(3, raccolta.getDataRaccolta());
             ps.setString(4, raccolta.getStato());
             ps.setString(5, raccolta.getMacchinario());
             ps.setInt(6, raccolta.getOperatore());

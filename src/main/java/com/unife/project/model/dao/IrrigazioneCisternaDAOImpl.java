@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.unife.project.model.mo.IrrigazioneCisterna;
-import com.unife.project.model.mo.ProdottoAnimale;
-import com.unife.project.util.DatabaseConnection;
 
 public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
     

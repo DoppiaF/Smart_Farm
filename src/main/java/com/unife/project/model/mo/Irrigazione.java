@@ -20,13 +20,14 @@ public class Irrigazione {
     }
 
     public Irrigazione(
+            int id_irrigazione,
             LocalDate data_inizio,
             LocalTime ora_inizio, 
             int durata, 
             boolean auto, 
             String stato, 
             int litri_usati) {
-
+        this.id_irrigazione = id_irrigazione;
         this.data_inizio = data_inizio;
         this.ora_inizio = ora_inizio;
         this.durata = durata;

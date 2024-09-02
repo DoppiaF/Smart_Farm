@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 
 public class IrrigazioneDAOImpl implements IrrigazioneDAO {
-    private List<Irrigazione> irrigazioni = new ArrayList<>();  //lista da riempire coi dati raccolti dal database, passare poi a return
+    private List<Irrigazione> irrigazioni = null;  //lista da riempire coi dati raccolti dal database, passare poi a return
 
     //database connection
     private Connection connection;
@@ -115,7 +115,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
     @Override
     public List<Irrigazione> findAll() {
         String sql = "SELECT * FROM irrigazione";
-        ArrayList<Irrigazione> irrigazioni = new ArrayList<Irrigazione>();
+        irrigazioni = new ArrayList<Irrigazione>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){

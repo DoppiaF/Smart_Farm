@@ -12,4 +12,5 @@ public interface ZonaDAO extends GenericDAO<Zona> {
     //List<Zona> findByNomeAndTipo(String nome, String tipo);
     //List<Zona> findByNomeAndCapienzaAndTipo(String nome, int capienza, String tipo);
     
+    Zona findByCoordAndPiantagione(int coordX, int coordY, int id_piantagione);
 }

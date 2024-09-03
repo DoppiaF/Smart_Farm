@@ -16,6 +16,7 @@ com\unife\project\model\dao\IrrigazioneCisternaDAOImpl.class
 com\unife\project\model\dao\PiantagioneDAO.class
 com\unife\project\controller\LoginController.class
 com\unife\project\model\dao\GenericDAO.class
+com\unife\project\controller\HomeController.class
 com\unife\project\model\dao\IrrigazioneDAOImpl.class
 com\unife\project\model\dao\MagazzinoDAOImpl.class
 com\unife\project\model\dao\UtenteDAOImpl.class

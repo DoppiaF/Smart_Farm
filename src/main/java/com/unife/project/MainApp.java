@@ -20,15 +20,19 @@ public class MainApp extends Application {
             Connection connection = DatabaseConnection.getConnection();
             UtenteDAOImpl utenteDAO = new UtenteDAOImpl(connection);
 
-            // Carica il file FXML
+            // Carica il file FXML della schermata di home
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
+            Parent root = loader.load();
+
+            /*// Carica il file FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/login.fxml"));
             loader.setControllerFactory(c -> new LoginController(utenteDAO));
-            Parent root = loader.load();
+            Parent root = loader.load();*/
 
             // Imposta la scena
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Login");
+            primaryStage.setTitle("Home");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.unife.project.util.DatabaseConnectionTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.484 s -- in com.unife.project.util.DatabaseConnectionTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.774 s -- in com.unife.project.util.DatabaseConnectionTest

@@ -27,6 +27,7 @@ public class MainApp extends Application {
 
             // Mostra la vista
             loginView.start(primaryStage);
+            
         } catch (SQLException e){
             e.printStackTrace();
             System.out.println("Errore nella connessione al database");
@@ -34,6 +35,6 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 }

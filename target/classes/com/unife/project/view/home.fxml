@@ -46,44 +46,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="592.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="com.unife.project.controller.HomeController">
   <children>
     <MenuBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="26.0" prefWidth="574.0" VBox.vgrow="NEVER">
       <menus>
-            <Menu mnemonicParsing="false" text="Login">
+            <Menu mnemonicParsing="false" text="Impostazioni">
               <items>
-                <MenuItem id="login_button" fx:id="loginButton" mnemonicParsing="false" text="Login" />
+                <MenuItem id="login_button" fx:id="loginMenuItem" mnemonicParsing="false" onAction="#handleLoginMenuItemAction" text="Login" />
               </items>
             </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: 001;" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="598.0" prefWidth="427.0" style="-fx-background-color: 001;" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="224.0" layoutY="14.0" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+        <Label alignment="CENTER" layoutX="127.0" layoutY="8.0" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
         </Label>
-            <Button fx:id="adminButton" onAction="#handleAreaAdminButtonAction" alignment="CENTER" contentDisplay="RIGHT" layoutX="225.0" layoutY="62.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="322.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
+            <Button fx:id="adminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="128.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="322.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
                <effect>
                   <Bloom threshold="1.0" />
                </effect>
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font></Button>
-            <Button layoutX="224.0" layoutY="153.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="322.0" text="AREA PASTORE" textFill="#0dff00">
+            <Button fx:id="pastoreButton" layoutX="127.0" layoutY="147.0" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="322.0" text="AREA PASTORE" textFill="#0dff00">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button layoutX="225.0" layoutY="245.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="322.0" text="AREA PIANTAGIONE" textFill="#251ce1">
+            <Button fx:id="piantagioneButton" layoutX="128.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="322.0" text="AREA PIANTAGIONE" textFill="#251ce1">
                <font>
                   <Font name="Arial" size="12.0" />
                </font></Button>
-            <Separator layoutX="288.0" layoutY="133.0" prefHeight="26.0" prefWidth="202.0" />
-            <Separator layoutX="284.0" layoutY="225.0" prefHeight="26.0" prefWidth="202.0" />
-            <Pane layoutX="169.0" layoutY="349.0" prefHeight="247.0" prefWidth="430.0">
+            <Separator layoutX="191.0" layoutY="127.0" prefHeight="26.0" prefWidth="202.0" />
+            <Separator layoutX="187.0" layoutY="219.0" prefHeight="26.0" prefWidth="202.0" />
+            <Pane layoutX="77.0" layoutY="336.0" prefHeight="247.0" prefWidth="430.0">
                <children>
-                  <ImageView fitHeight="201.0" fitWidth="322.0" layoutX="54.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="visibility: 4;">
+                  <ImageView fitHeight="201.0" fitWidth="322.0" layoutX="51.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="visibility: 4;">
                      <image>
                         <Image url="@../../../../../../../../../../../Downloads/Designer%20(1).jpeg" />
                      </image>
@@ -92,6 +92,5 @@
             </Pane>
       </children>
     </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
   </children>
 </VBox>

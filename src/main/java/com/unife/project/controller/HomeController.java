@@ -3,6 +3,7 @@ package com.unife.project.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 
 public class HomeController {
     
@@ -11,7 +12,7 @@ public class HomeController {
      ************************************************/
 
     @FXML
-    private Button loginButton;
+    private MenuItem loginMenuItem;
 
     @FXML
     private Button areaPiantagioneButton;
@@ -27,7 +28,7 @@ public class HomeController {
      * handlers
      ************************************************/
     @FXML
-    private void handleLoginButtonAction(ActionEvent event) {
+    private void handleLoginMenuItemAction(ActionEvent event) {
         //logica per gestire il pulsante di login
         System.out.println("Login Button Pressed");
     }

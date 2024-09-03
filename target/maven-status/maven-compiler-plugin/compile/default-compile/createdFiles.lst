@@ -8,11 +8,13 @@ com\unife\project\model\dao\RaccoltaDAO.class
 com\unife\project\model\dao\ProdottoDAOImpl.class
 com\unife\project\model\dao\MagazzinoDAO.class
 com\unife\project\util\DatabaseConnection.class
+com\unife\project\view\LoginView.class
 com\unife\project\model\dao\VisitaVeterinariaDAO.class
 com\unife\project\model\dao\ProdottoDAO.class
 com\unife\project\model\mo\Stalla.class
 com\unife\project\model\dao\IrrigazioneCisternaDAOImpl.class
 com\unife\project\model\dao\PiantagioneDAO.class
+com\unife\project\controller\LoginController.class
 com\unife\project\model\dao\GenericDAO.class
 com\unife\project\model\dao\IrrigazioneDAOImpl.class
 com\unife\project\model\dao\MagazzinoDAOImpl.class
@@ -21,7 +23,6 @@ com\unife\project\model\mo\Zona.class
 com\unife\project\model\dao\CisternaDAOImpl.class
 com\unife\project\model\mo\Listino.class
 com\unife\project\model\dao\UtenteDAO.class
-com\unife\project\LoginView.class
 com\unife\project\model\mo\IrrigazioneCisterna.class
 com\unife\project\model\dao\RaccoltaDAOImpl.class
 com\unife\project\model\mo\Cisterna.class
@@ -29,7 +30,6 @@ com\unife\project\model\mo\Prodotto.class
 com\unife\project\model\dao\VisitaVeterinariaDAOImpl.class
 com\unife\project\model\mo\Animale.class
 com\unife\project\model\dao\AnimaleDAOImpl.class
-com\unife\project\LoginController.class
 com\unife\project\model\dao\AnimaleDAO.class
 com\unife\project\model\dao\StallaDAO.class
 com\unife\project\model\mo\Piantagione.class
@@ -42,7 +42,6 @@ com\unife\project\model\dao\ListinoDAO.class
 com\unife\project\model\mo\Irrigazione.class
 com\unife\project\model\dao\ZonaDAOImpl.class
 com\unife\project\model\dao\ListinoDAOImpl.class
-com\unife\project\LoginController$1.class
 com\unife\project\model\mo\Magazzino.class
 com\unife\project\model\dao\StallaDAOImpl.class
 com\unife\project\model\mo\VisitaVeterinaria.class

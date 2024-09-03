@@ -48,6 +48,6 @@ public class HomeController {
     @FXML
     private void handleAreaPastoreButtonAction(ActionEvent event) {
         //logica per gestire il pulsante di login
-        System.out.println("Admin Button Pressed");
+        System.out.println("Pastore Button Pressed");
     }
 }

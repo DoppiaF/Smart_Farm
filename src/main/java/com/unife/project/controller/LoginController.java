@@ -1,7 +1,5 @@
 package com.unife.project.controller;
 
-import javax.swing.Action;
-
 import com.unife.project.model.dao.UtenteDAOImpl;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.service.UserService;

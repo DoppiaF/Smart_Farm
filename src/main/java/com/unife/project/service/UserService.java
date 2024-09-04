@@ -10,7 +10,7 @@ public class UserService {
     public Utente authenticate(String username, String password){
         UtenteDAO utenteDAO = DAOFactory.getUtenteDAO();
         
-        Utente utente = utenteDAO.findByUsernameAndPassword(username, password)
+        Utente utente = utenteDAO.findByUsernameAndPassword(username, password);
 
         return utente;
     }

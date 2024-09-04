@@ -98,7 +98,7 @@ public class UtenteDAOImpl implements UtenteDAO{
             else {
                 while(rs.next()){
                     Utente utente = new Utente();
-                    utente.setId(rs.getInt("id_utente"));
+                    utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
                     utente.setPassword(rs.getString("password"));
                     utente.setEmail(rs.getString("email"));
@@ -131,7 +131,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                 else{
                     while(rs.next()){
                         Utente utente = new Utente();
-                        utente.setId(rs.getInt("id_utente"));
+                        utente.setId(rs.getInt("id"));
                         utente.setUserName(rs.getString("username"));
                         utente.setPassword(rs.getString("password"));
                         utente.setEmail(rs.getString("email"));
@@ -164,7 +164,7 @@ public class UtenteDAOImpl implements UtenteDAO{
             else {
                 while(rs.next()){
                     Utente utente = new Utente();
-                    utente.setId(rs.getInt("id_utente"));
+                    utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
                     utente.setPassword(rs.getString("password"));
                     utente.setEmail(rs.getString("email"));

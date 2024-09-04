@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<<<<<<< HEAD
 
 <BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
     <top>
@@ -20,6 +21,13 @@
             <fx:include source="verticalMenuBar.fxml"/>
         </left>   
     <center>
+=======
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
+   <left>
+        <fx:include source="verticalMenuBar.fxml" />
+    </left>   
+   <center>
+>>>>>>> 26c48550236deee640d65ceef375f548d664aa8c
       <AnchorPane>
           <children>
               <fx:include source="menuBar.fxml" />
@@ -37,7 +45,7 @@
                       </columns>
                   </TableView>
                   <VBox spacing="10.0">
-                      <BarChart fx:id="costiChart" title="Costi Complessivi">
+                      <BarChart fx:id="costiChart" style="-fx-background-color: #d9d9d9;" title="Costi Complessivi">
                           <xAxis>
                               <CategoryAxis label="Mese" />
                           </xAxis>
@@ -45,7 +53,7 @@
                               <NumberAxis label="Valore" />
                           </yAxis>
                       </BarChart>
-                      <BarChart fx:id="guadagniChart" title="Guadagni Totali">
+                      <BarChart fx:id="guadagniChart" style="-fx-background-color: #d9d9d9;" title="Guadagni Totali">
                           <xAxis>
                               <CategoryAxis label="Mese" />
                           </xAxis>

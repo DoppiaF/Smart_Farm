@@ -8,7 +8,6 @@ com\unife\project\model\dao\RaccoltaDAO.class
 com\unife\project\model\dao\ProdottoDAOImpl.class
 com\unife\project\model\dao\MagazzinoDAO.class
 com\unife\project\util\DatabaseConnection.class
-com\unife\project\view\LoginView.class
 com\unife\project\model\dao\VisitaVeterinariaDAO.class
 com\unife\project\model\dao\ProdottoDAO.class
 com\unife\project\model\mo\Stalla.class

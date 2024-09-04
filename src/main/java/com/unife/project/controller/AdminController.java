@@ -1,5 +1,7 @@
 package com.unife.project.controller;
 
+import com.unife.project.model.mo.Utente;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -8,13 +10,13 @@ import javafx.scene.control.TextField;
 public class AdminController {
 
     @FXML
-    private TableView<User> userTable;
+    private TableView<Utente> userTable;
 
     @FXML
-    private TableColumn<User, String> usernameColumn;
+    private TableColumn<Utente, String> usernameColumn;
 
     @FXML
-    private TableColumn<User, String> emailColumn;
+    private TableColumn<Utente, String> emailColumn;
 
     @FXML
     private TextField usernameField;

@@ -8,16 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
-<<<<<<< HEAD
-
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
+  
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
     <top>
         <fx:include source="menuBar.fxml"/>
     </top>
-=======
-<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
->>>>>>> 26c48550236deee640d65ceef375f548d664aa8c
     <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>

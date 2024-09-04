@@ -1,9 +1,11 @@
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\IrrigazioneCisterna.java
+C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\controller\AdminController.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\Prodotto.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\Animale.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\Cisterna.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\UtenteDAOImpl.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\PiantagioneDAO.java
+C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\controller\PastoreController.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\ListinoDAO.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\ZonaDAO.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\AnimaleDAOImpl.java
@@ -24,6 +26,7 @@ C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\proje
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\ProdottoAnimaleDAO.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\ProdottoAnimaleDAOImpl.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\IrrigazioneCisternaDAOImpl.java
+C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\controller\PiantagioneController.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\ZonaDAOImpl.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\Utente.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\IrrigazioneDAOImpl.java
@@ -31,6 +34,7 @@ C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\proje
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\MainApp.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\util\DatabaseConnection.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\controller\LoginController.java
+C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\controller\User.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\MagazzinoDAOImpl.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\mo\Piantagione.java
 C:\Users\furin\Desktop\progetto\pluvial\Smart_Farm\src\main\java\com\unife\project\model\dao\CisternaDAO.java

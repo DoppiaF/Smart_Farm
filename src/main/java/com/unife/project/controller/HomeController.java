@@ -44,6 +44,21 @@ public class HomeController {
     private void handleAreaPiantagioneButtonAction(ActionEvent event) {
         //logica per gestire il pulsante 
         System.out.println("Piantagione Button Pressed");
+        try {
+            // Carica il file FXML della schermata admin
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/piantagionePage.fxml"));
+            Parent adminRoot = loader.load();
+
+            // Ottieni lo stage corrente
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta la nuova scena
+            Scene scene = new Scene(adminRoot);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -71,5 +86,20 @@ public class HomeController {
     private void handleAreaPastoreButtonAction(ActionEvent event) {
         //logica per gestire il pulsante 
         System.out.println("Pastore Button Pressed");
+        try {
+            // Carica il file FXML della schermata admin
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/pastorePage.fxml"));
+            Parent adminRoot = loader.load();
+
+            // Ottieni lo stage corrente
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta la nuova scena
+            Scene scene = new Scene(adminRoot);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -11,15 +11,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<<<<<<< HEAD
-
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
-    <top>
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
+   <top>
         <fx:include source="menuBar.fxml"/>
     </top>
-=======
-<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
->>>>>>> 26c48550236deee640d65ceef375f548d664aa8c
    <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>

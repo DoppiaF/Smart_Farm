@@ -46,8 +46,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.HomeController">
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.HomeController">
    <top>
       <fx:include source="menuBar.fxml" />
    </top>
@@ -102,46 +101,6 @@
                   </ImageView>
                </children>
             </Pane>
-=======
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="598.0" prefWidth="654.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.HomeController">
-   <children>
-      <MenuBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="26.0" prefWidth="574.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <menus>
-            <Menu mnemonicParsing="false" text="Impostazioni">
-               <items>
-                  <MenuItem id="login_button" fx:id="loginMenuItem" mnemonicParsing="false" onAction="#handleLoginMenuItemAction" text="Login" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <AnchorPane layoutX="120.9000015258789" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
-         <children>
-            <Label alignment="CENTER" layoutX="4.099998474121094" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="WHITE" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="adminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="5.099998474121094" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
-               <effect>
-                  <Bloom threshold="1.0" />
-               </effect>
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="pastoreButton" layoutX="4.099998474121094" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PASTORE" textFill="#0dff00">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="piantagioneButton" layoutX="5.099998474121094" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PIANTAGIONE" textFill="#251ce1">
-               <font>
-                  <Font name="Arial" size="12.0" />
-               </font>
-            </Button>
-            <Separator layoutX="68.0999984741211" layoutY="119.0" prefHeight="26.0" prefWidth="480.0" AnchorPane.bottomAnchor="163.4" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <Separator layoutY="211.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="480.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
->>>>>>> 26c48550236deee640d65ceef375f548d664aa8c
          </children>
       </AnchorPane>
    </center>

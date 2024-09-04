@@ -11,23 +11,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<<<<<<< HEAD
-
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
-    <top>
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
+   <top>
         <fx:include source="menuBar.fxml"/>
     </top>
     <left>
-            <fx:include source="verticalMenuBar.fxml"/>
-        </left>   
-    <center>
-=======
-<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
-   <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>   
    <center>
->>>>>>> 26c48550236deee640d65ceef375f548d664aa8c
       <AnchorPane>
           <children>
               <fx:include source="menuBar.fxml" />

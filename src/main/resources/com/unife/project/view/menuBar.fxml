@@ -3,10 +3,11 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController">
     <menus>
         <Menu text="Impostazioni">
             <items>
+                <MenuItem text="Home" onAction="#handleGoHome" />
                 <MenuItem text="Login" />
                 <MenuItem text="Logout" />
             </items>

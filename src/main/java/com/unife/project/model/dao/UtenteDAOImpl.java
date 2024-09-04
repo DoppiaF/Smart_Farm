@@ -162,7 +162,7 @@ public class UtenteDAOImpl implements UtenteDAO{
             ResultSet rs = ps.executeQuery();
             if (rs.next() == false) { System.out.println("Utente non trovato"); } 
             else {
-                while(rs.next()){
+                do{
                     Utente utente = new Utente();
                     utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
@@ -175,7 +175,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                     utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
                     utente.setRuolo_admin(rs.getBoolean("ruolo_admin"));
                     return utente;
-                }
+                }while(rs.next());
             }
         }catch(SQLException e){
             e.printStackTrace();

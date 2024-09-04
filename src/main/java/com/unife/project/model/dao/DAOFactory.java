@@ -6,20 +6,24 @@ import java.sql.SQLException;
 import com.unife.project.util.DatabaseConnection;
 
 public class DAOFactory {
+
+    private static DAOFactory instance;
     private static Connection connection;
 
     static {
-        // Initialize the database connection
+        // Inizializza la connessione al database
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DatabaseConnection.getConnection();
         } catch (SQLException e) {
-            
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            
             e.printStackTrace();
         }
+    }
+
+    public static DAOFactory getInstance() {
+        if (instance == null) {
+            instance = new DAOFactory();
+        }
+        return instance;
     }
 
     public static AnimaleDAO getAnimaleDAO() {

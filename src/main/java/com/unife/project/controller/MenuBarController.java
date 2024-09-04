@@ -13,11 +13,11 @@ public class MenuBarController {
     private void handleGoHome(ActionEvent event) {
         try {
             // Carica il file FXML della schermata home
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/homePage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
             Parent homeRoot = loader.load();
 
             // Ottieni lo stage corrente
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((javafx.scene.control.MenuBar) ((javafx.scene.control.MenuItem) event.getSource()).getParentPopup().getOwnerNode()).getScene().getWindow();
 
             // Imposta la nuova scena
             Scene scene = new Scene(homeRoot);

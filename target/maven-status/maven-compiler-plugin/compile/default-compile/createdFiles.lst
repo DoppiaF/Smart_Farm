@@ -5,6 +5,7 @@ com\unife\project\model\dao\IrrigazioneCisternaDAO.class
 com\unife\project\model\mo\Raccolta.class
 com\unife\project\model\dao\PiantagioneDAOImpl.class
 com\unife\project\model\dao\RaccoltaDAO.class
+com\unife\project\controller\VerticalMenuBarController.class
 com\unife\project\model\dao\ProdottoDAOImpl.class
 com\unife\project\model\dao\MagazzinoDAO.class
 com\unife\project\util\DatabaseConnection.class

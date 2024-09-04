@@ -14,9 +14,15 @@ import com.unife.project.model.mo.Prodotto;
 
 
 public class ProdottoDAOImpl implements ProdottoDAO{
+
+    // informazioni su connessione al database
     private List<Prodotto> prodotti = null;
 
     private Connection connection;
+
+    public ProdottoDAOImpl(Connection connection){
+        this.connection = connection;
+    }
 
     @Override
     public void save(Prodotto prodotto) {

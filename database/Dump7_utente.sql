@@ -282,7 +282,7 @@ CREATE TABLE `raccolta` (
   PRIMARY KEY (`id_raccolta`),
   KEY `operatore_idx` (`operatore`),
   KEY `piantagione_idx` (`id_piantagione`),
-  CONSTRAINT `operatore` FOREIGN KEY (`operatore`) REFERENCES `user` (`id`),
+  CONSTRAINT `operatore` FOREIGN KEY (`operatore`) REFERENCES `utente` (`id`),
   CONSTRAINT `piantagione` FOREIGN KEY (`id_piantagione`) REFERENCES `piantagione` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -324,13 +324,13 @@ INSERT INTO `stalla` VALUES ('stalla_A',500,'frisona','10:00:00','22:00:00');
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `utente`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `utente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
+CREATE TABLE `utente` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -346,16 +346,17 @@ CREATE TABLE `user` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `ruolo_admin_UNIQUE` (`ruolo_admin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `utente`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `utente` WRITE;
+/*!40000 ALTER TABLE `utente` DISABLE KEYS */;
+INSERT INTO `utente` VALUES (1,'Ale','ale@gmail.com','AZ','2024-09-04 15:05:18','1997-03-13',0,0,0,1);
+/*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -430,4 +431,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-02 15:38:56
+-- Dump completed on 2024-09-04 17:33:32

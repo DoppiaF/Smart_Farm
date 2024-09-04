@@ -40,8 +40,8 @@
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="Username" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="Password" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <TextField fx:id="usernameField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="Username" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="Password" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>

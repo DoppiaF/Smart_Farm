@@ -54,7 +54,7 @@ public class LoginController {
             navigateToHome(event, user);
         } else {
             // Login fallito
-            showErrorDialog("Login Fallito", "Username o password errati.");
+            showErrorDialog("Login Fallito", "Username o password errati." +username + " "+ password);
         }
     }
 

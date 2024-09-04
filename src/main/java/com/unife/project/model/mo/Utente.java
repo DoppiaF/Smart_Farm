@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Utente {
     private int id;
-    private String userName;
+    private String username;
     private String password;
     private String email;
     private Timestamp createTime;   //data di creazione dell'utente, riempita automaticamente dal database
@@ -20,9 +20,9 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(int id, String userName, String password, String email, Timestamp createTime, LocalDate dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
+    public Utente(int id, String username, String password, String email, Timestamp createTime, LocalDate dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.createTime = createTime;
@@ -42,11 +42,11 @@ public class Utente {
     }
     
     public String getUserName() {
-        return userName;
+        return username;
     }
     
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
     
     public String getPassword() {
@@ -116,7 +116,7 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{id=" + id + 
-               ", userName='" + userName + '\'' + 
+               ", userName='" + username + '\'' + 
                ", email='" + email + '\'' + 
                ", createTime=" + createTime + 
                ", dataNascita=" + dataNascita + 

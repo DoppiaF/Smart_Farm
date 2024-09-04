@@ -5,26 +5,36 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 
 public class MenuBarController {
 
     @FXML
-    private void handleGoHome(ActionEvent event) {
+    private void handleGoLogin(ActionEvent event) {
+        navigateTo(event, "/com/unife/project/view/login.fxml");
+    }
+
+    private void navigateTo(ActionEvent event, String fxmlPath) {
         try {
-            // Carica il file FXML della schermata home
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
-            Parent homeRoot = loader.load();
-
-            // Ottieni lo stage corrente
-            Stage stage = (Stage) ((javafx.scene.control.MenuBar) ((javafx.scene.control.MenuItem) event.getSource()).getParentPopup().getOwnerNode()).getScene().getWindow();
-
-            // Imposta la nuova scena
-            Scene scene = new Scene(homeRoot);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la schermata.");
         }
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

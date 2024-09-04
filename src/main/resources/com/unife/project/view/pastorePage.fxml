@@ -13,10 +13,13 @@
 
 
 <BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
-   <left>
-        <fx:include source="verticalMenuBar.fxml"/>
-    </left>   
-   <center>
+    <top>
+        <fx:include source="menuBar.fxml"/>
+    </top>
+    <left>
+            <fx:include source="verticalMenuBar.fxml"/>
+        </left>   
+    <center>
       <AnchorPane>
           <children>
               <fx:include source="menuBar.fxml" />

@@ -34,9 +34,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -45,67 +42,66 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="598.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.HomeController">
-   <children>
-      <MenuBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="26.0" prefWidth="574.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <menus>
-            <Menu mnemonicParsing="false" text="Impostazioni">
-               <items>
-                  <MenuItem id="login_button" fx:id="loginMenuItem" mnemonicParsing="false" onAction="#handleLoginMenuItemAction" text="Login" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <AnchorPane layoutX="120.9000015258789" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.HomeController">
+   <top>
+      <fx:include source="menuBar.fxml" />
+   </top>
+   <center>
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="598.0" prefWidth="654.0">
          <children>
-            <Label alignment="CENTER" layoutX="4.099998474121094" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="adminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="5.099998474121094" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
-               <effect>
-                  <Bloom threshold="1.0" />
-               </effect>
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="pastoreButton" layoutX="4.099998474121094" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PASTORE" textFill="#0dff00">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="piantagioneButton" layoutX="5.099998474121094" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PIANTAGIONE" textFill="#251ce1">
-               <font>
-                  <Font name="Arial" size="12.0" />
-               </font>
-            </Button>
-            <Separator layoutX="68.0999984741211" layoutY="119.0" prefHeight="26.0" prefWidth="480.0" AnchorPane.bottomAnchor="163.4" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-            <Separator layoutY="211.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="480.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <AnchorPane layoutX="120.9000015258789" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="4.099998474121094" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="adminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="5.099998474121094" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
+                     <effect>
+                        <Bloom threshold="1.0" />
+                     </effect>
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="pastoreButton" layoutX="4.099998474121094" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PASTORE" textFill="#0dff00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="piantagioneButton" layoutX="5.099998474121094" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PIANTAGIONE" textFill="#251ce1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Button>
+                  <Separator layoutX="68.0999984741211" layoutY="119.0" prefHeight="26.0" prefWidth="480.0" AnchorPane.bottomAnchor="163.4" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Separator layoutY="211.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="480.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <Pane layoutX="61.0" layoutY="373.0" prefHeight="247.0" prefWidth="430.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <ImageView fitHeight="201.0" fitWidth="352.0" layoutX="163.0" layoutY="14.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="visibility: 4;" x="10.0">
+                     <image>
+                        <Image url="@/com/unife/project/images/SmartFarm.jpeg" />
+                     </image>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
-      <Pane layoutX="61.0" layoutY="373.0" prefHeight="247.0" prefWidth="430.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <ImageView fitHeight="201.0" fitWidth="352.0" layoutX="163.0" layoutY="14.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="visibility: 4;" x="10.0">
-               <image>
-                  <Image url="@/com/unife/project/images/SmartFarm.jpeg" />
-               </image>
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect>
-            </ImageView>
-         </children>
-      </Pane>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

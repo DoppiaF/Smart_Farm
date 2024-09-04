@@ -13,6 +13,9 @@
 
 
 <BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
+    <top>
+        <fx:include source="menuBar.fxml"/>
+    </top>
    <left>
         <fx:include source="verticalMenuBar.fxml"/>
     </left>

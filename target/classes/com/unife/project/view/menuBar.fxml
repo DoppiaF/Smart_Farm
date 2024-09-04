@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController">
-    <menus>
-        <Menu text="Impostazioni">
-            <items>
-                <MenuItem text="Home" onAction="#handleGoHome" />
-                <MenuItem text="Login" />
-                <MenuItem text="Logout" />
-            </items>
-        </Menu>
-    </menus>
-</MenuBar>
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController" alignment="TOP_RIGHT" spacing="10">
+    <children>
+        <Button text="Log In" onAction="#handleGoLogin">
+            <graphic>
+                <ImageView fx:id="loginIcon" fitHeight="16" fitWidth="16" />
+            </graphic>
+        </Button>
+    </children>
+</HBox>

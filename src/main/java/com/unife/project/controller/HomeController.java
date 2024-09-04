@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -41,13 +42,13 @@ public class HomeController {
         try {
             // Carica il file FXML della schermata admin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/login.fxml"));
-            Parent adminRoot = loader.load();
+            Parent loginRoot = loader.load();
 
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             // Imposta la nuova scena
-            Scene scene = new Scene(adminRoot);
+            Scene scene = new Scene(loginRoot);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -116,5 +117,13 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

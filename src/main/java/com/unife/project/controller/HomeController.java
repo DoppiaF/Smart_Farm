@@ -2,6 +2,8 @@ package com.unife.project.controller;
 
 import java.io.IOException;
 
+import com.unife.project.model.mo.Utente;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 public class HomeController {
@@ -40,6 +41,8 @@ public class HomeController {
     private boolean isPiantagione = false;
     private boolean isPastore = false;
 
+    private Utente utente = null;
+
     @FXML
     public void initialize() {
         // Imposta la visibilità e l'abilitazione dei bottoni in base allo stato di login e ruolo
@@ -47,14 +50,17 @@ public class HomeController {
     }
 
     private void updateButtonVisibility() {
-        //areaAdminButton.setVisible(isLoggedIn && isAdmin);
-        areaAdminButton.setDisable(!(isLoggedIn && isAdmin));
 
-        //areaPiantagioneButton.setVisible(isLoggedIn && isPiantagione);
-        areaPiantagioneButton.setDisable(!(isLoggedIn && isPiantagione));
+        if (areaAdminButton != null && areaPiantagioneButton != null && areaPastoreButton != null) {
+            //areaAdminButton.setVisible(isLoggedIn && isAdmin);
+            areaAdminButton.setDisable(!(isLoggedIn && isAdmin));
 
-        //areaPastoreButton.setVisible(isLoggedIn && isPastore);
-        areaPastoreButton.setDisable(!(isLoggedIn && isPastore));
+            //areaPiantagioneButton.setVisible(isLoggedIn && isPiantagione);
+            areaPiantagioneButton.setDisable(!(isLoggedIn && isPiantagione));
+
+            //areaPastoreButton.setVisible(isLoggedIn && isPastore);
+            areaPastoreButton.setDisable(!(isLoggedIn && isPastore));
+        }
     }
 
     /************************************************

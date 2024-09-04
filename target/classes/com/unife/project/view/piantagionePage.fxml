@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
    <left>
-        <fx:include source="verticalMenuBar.fxml"/>
+        <fx:include source="verticalMenuBar.fxml" />
     </left>
    <center>
       <AnchorPane>
@@ -34,7 +33,7 @@
                       </columns>
                   </TableView>
                   <VBox spacing="10.0">
-                      <BarChart fx:id="costiGuadagniChart" title="Costi e Guadagni">
+                      <BarChart fx:id="costiGuadagniChart" style="-fx-background-color: #d9d9d9;" title="Costi e Guadagni">
                           <xAxis>
                               <CategoryAxis label="Mese" />
                           </xAxis>
@@ -42,7 +41,7 @@
                               <NumberAxis label="Valore" />
                           </yAxis>
                       </BarChart>
-                      <BarChart fx:id="produzioneChart" title="Produzione Totale">
+                      <BarChart fx:id="produzioneChart" style="-fx-background-color: #d9d9d9;" title="Produzione Totale">
                           <xAxis>
                               <CategoryAxis label="Mese" />
                           </xAxis>

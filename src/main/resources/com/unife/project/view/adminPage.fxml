@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
+<BorderPane stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
     <left>
-        <fx:include source="verticalMenuBar.fxml"/>
+        <fx:include source="verticalMenuBar.fxml" />
     </left>
     <center>
         <AnchorPane>

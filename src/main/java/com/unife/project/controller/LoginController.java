@@ -1,6 +1,10 @@
 package com.unife.project.controller;
 
+import javax.swing.Action;
+
 import com.unife.project.model.dao.UtenteDAOImpl;
+import com.unife.project.model.mo.Utente;
+import com.unife.project.service.UserService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,23 +31,23 @@ public class LoginController {
         this.utenteDAO = utenteDAO;
     }
 
-    //private UserService userService = new UserService(); // Supponiamo che questa classe gestisca l'autenticazione
+    private UserService userService = new UserService(); // Supponiamo che questa classe gestisca l'autenticazione
 
     @FXML
-    private void handleLoginButtonAction() {
+    private void handleLoginButtonAction(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
         // Aggiungi la logica di autenticazione qui
 
         // Aggiungi la logica di autenticazione qui
-   /*     User user = userService.authenticate(username, password);
+        Utente user = userService.authenticate(username, password);
         if (user != null) {
             // Login ha avuto successo
             navigateToHome(event, user);
         } else {
             // Login fallito
             showErrorDialog("Login Fallito", "Username o password errati.");
-        } */
+        }
     }
 
     /*
@@ -70,6 +74,10 @@ public class LoginController {
     }
         */
 
+    private void navigateToHome(ActionEvent event, Utente user) {
+        navigateTo(event, "/com/unife/project/view/home.fxml");
+    }
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
@@ -78,4 +86,17 @@ public class LoginController {
         alert.showAndWait();
     }
 
+
+    private void navigateTo(ActionEvent event, String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

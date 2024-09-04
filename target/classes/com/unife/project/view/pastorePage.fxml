@@ -15,7 +15,7 @@
    <top>
         <fx:include source="menuBar.fxml"/>
     </top>
-   <left>
+    <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>   
    <center>

@@ -25,7 +25,17 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
+
+    // Costruttore pubblico senza argomenti
+    public LoginController() {
+    }
+
     public LoginController(UtenteDAOImpl utenteDAO) {
+        this.utenteDAO = utenteDAO;
+    }
+
+    // Metodo setter per l'iniezione manuale
+    public void setUtenteDAO(UtenteDAOImpl utenteDAO) {
         this.utenteDAO = utenteDAO;
     }
 

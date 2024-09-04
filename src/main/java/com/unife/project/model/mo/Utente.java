@@ -126,4 +126,8 @@ public class Utente {
                ", ruolo_admin=" + ruolo_admin + 
                '}';
     }
+
+    /*
+     INSERT INTO user (username, email, password, data_nascita, ruolo_raccolta, ruolo_irrigazione, ruolo_pastore, ruolo_admin) VALUES ('Ale', 'ale@gmail.com', 'AZ', '1997-03-13',0,0,0,1);
+     */
 }

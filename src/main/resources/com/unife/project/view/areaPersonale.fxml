@@ -48,7 +48,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="personaleRoot" fx:controller="com.unife.project.controller.AreaPersonaleController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
   <left>
     <fx:include source="verticalMenuBar.fxml" />
   </left>
@@ -195,9 +195,9 @@
                </children>
             </GridPane>
          </center></BorderPane>
-      <top>
+      <!--<top>
         <fx:include source="menuBar.fxml" />
-    </top>
+    </top> -->
    </center>
   
 </BorderPane>

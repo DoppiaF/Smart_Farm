@@ -68,16 +68,16 @@ public class AreaPersonaleController {
 
     @FXML
     private void initialize() {
-        myUsernameField.setText(utente.getUserName());
-        myPasswordField.setText(utente.getPassword());
-        emailField.setText(utente.getEmail());
-        adminCheckBox.setSelected(utente.getRuolo_admin());
-        agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
-        allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
-        irrigatoreCheckBox.setSelected(utente.getRuolo_irrigazione());
-
-
-        
+        if(utente != null){
+             myUsernameField.setText(utente.getUserName());
+            myPasswordField.setText(utente.getPassword());
+            emailField.setText(utente.getEmail());
+            adminCheckBox.setSelected(utente.getRuolo_admin());
+            agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
+            allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
+            irrigatoreCheckBox.setSelected(utente.getRuolo_irrigazione());
+        }
+       
         // Inizializza i componenti se necessario
         // Ad esempio, carica i dati nei grafici
         loadChartData();
@@ -112,6 +112,7 @@ public class AreaPersonaleController {
     public void setUser(Utente utente){
         this.utente = utente;
         updateMenuBar();
+        initialize();
     }
 
     

@@ -17,8 +17,6 @@ import javafx.scene.Node;
 
 public class MenuBarController {
 
-    Utente utente = null;
-
     /************************************************
      * buttons and items fxml
      ************************************************/
@@ -103,8 +101,12 @@ public class MenuBarController {
             // Ottieni il controller della schermata home
             AreaPersonaleController areaPersonaleController = loader.getController();
 
-            //passa l'oggetto utente al controller della schermata home
-            areaPersonaleController.setUser(utente);
+            // Passa l'oggetto Utente al controller della schermata area personale
+            if (utente != null) {
+                areaPersonaleController.setUser(utente);
+            } else {
+                System.err.println("utente è null");
+            }
 
             //imposta la nuova scena
             Scene areaPersonaleScene = new Scene(personalRoot);
@@ -136,6 +138,7 @@ public class MenuBarController {
         else{
             this.isLoggedIn = false;
             username = "";
+            this.utente = null;
         }
         //updateButtonsVisibility();
         initialize();

@@ -76,7 +76,7 @@ public class ListinoDAOImpl implements ListinoDAO{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try(ResultSet rs = ps.executeQuery()) {
-                if (rs.next() == false) {
+                if (!rs.isBeforeFirst()) {
                     System.out.println("Non ci sono prodotti nel listino");
                 } else {
                     while (rs.next()) {
@@ -107,7 +107,7 @@ public class ListinoDAOImpl implements ListinoDAO{
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, tipo_prodotto);
             try(ResultSet rs = ps.executeQuery()) {
-                if (rs.next() == false) {
+                if (!rs.isBeforeFirst()) {
                     System.out.println("Prodotto non trovato");
                 } else {
                     while (rs.next()) {

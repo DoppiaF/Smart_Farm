@@ -105,7 +105,7 @@ public class CisternaDAOImpl implements CisternaDAO{
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono state trovate cisterne");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate cisterne");
                 else{
                     while (rs.next()){
                         Cisterna cisterna = new Cisterna(rs.getInt("capacita"),

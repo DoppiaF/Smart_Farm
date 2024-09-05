@@ -129,7 +129,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono stati trovati animali");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati animali");
                 else{
                     while (rs.next()){
                         Animale animale = new Animale(rs.getInt("peso"),

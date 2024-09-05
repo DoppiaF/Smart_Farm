@@ -68,7 +68,7 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             try( ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali"); }
+                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono prodotti animali"); }
                 else{
                     while(rs.next()){
                         ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));
@@ -92,7 +92,7 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_animale);
             try(ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali per l'animale con id " + id_animale); }
+                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono prodotti animali per l'animale con id " + id_animale); }
                 else{
                     while(rs.next()){
                         ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));
@@ -116,7 +116,7 @@ public class ProdottoAnimaleDAOImpl implements ProdottoAnimaleDAO {
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_prodotto);
             try(ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false){ System.out.println("Non ci sono prodotti animali per il prodotto con id " + id_prodotto); }
+                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono prodotti animali per il prodotto con id " + id_prodotto); }
                 else{
                     while(rs.next()){
                         ProdottoAnimale prodottoAnimale = new ProdottoAnimale(rs.getInt("id_prodotto"), rs.getInt("id_animale"));

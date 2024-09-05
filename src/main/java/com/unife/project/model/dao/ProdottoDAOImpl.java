@@ -113,7 +113,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono stati trovati prodotti");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati prodotti");
                 else{
                     while (rs.next()){
                         Prodotto prodotto = new Prodotto(

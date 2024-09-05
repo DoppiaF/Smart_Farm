@@ -120,7 +120,7 @@ public class StallaDAOImpl implements StallaDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono state trovate stalle");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate stalle");
                 else{
                     while(rs.next()) {
                         Stalla stalla = new Stalla(

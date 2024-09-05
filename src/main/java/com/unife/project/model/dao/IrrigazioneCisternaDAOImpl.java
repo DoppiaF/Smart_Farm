@@ -69,7 +69,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try(ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false) {System.out.println("IrrigazioneCisterna non presenti in database");}
+                if(!rs.isBeforeFirst()) {System.out.println("IrrigazioneCisterna non presenti in database");}
                 else while(rs.next()){
                     IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
                     irrigazioniCisterne.add(irrigazioneCisterna);
@@ -91,7 +91,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_irrigazione);
             try(ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false){ System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione); }
+                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione); }
                 else{
                     while(rs.next()){
                         IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
@@ -116,7 +116,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_cisterna);
             try(ResultSet rs = ps.executeQuery()){
-                if(rs.next() == false){ System.out.println("Non ci sono irrigazioni connesse a cisterna con id " + id_cisterna); }
+                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono irrigazioni connesse a cisterna con id " + id_cisterna); }
                 else{
                     while(rs.next()){
                         IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));

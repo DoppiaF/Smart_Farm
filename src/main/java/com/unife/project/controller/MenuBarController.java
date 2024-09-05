@@ -49,6 +49,8 @@ public class MenuBarController {
     private boolean isLoggedIn = false;
     private String username = "";
 
+    private Utente utente;
+
 
     @FXML
     public void initialize(){
@@ -125,6 +127,7 @@ public class MenuBarController {
     //metodo per impostare lo stato dell'utente, richiamato dal controller della schermata di login
     public void setUserStatus(Utente utente){
         if (utente != null) {
+            this.utente = utente;
             this.isLoggedIn = true;
             username = utente.getUserName();
 

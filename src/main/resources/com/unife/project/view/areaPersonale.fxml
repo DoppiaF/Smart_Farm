@@ -53,7 +53,7 @@
     <fx:include source="verticalMenuBar.fxml" />
   </left>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="personaleNested" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>

@@ -24,6 +24,8 @@ public class AdminController {
     private BorderPane adminRoot;
     
     @FXML
+    private BorderPane adminNested;
+    @FXML
     private Label usernameLabel;
 
     @FXML
@@ -86,8 +88,9 @@ public class AdminController {
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             menuBarController.setUserStatus(utente);
 
+            
             // Aggiungi la barra di menu alla root
-            adminRoot.setTop(menuBarRoot);
+            adminNested.setTop(menuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

@@ -25,6 +25,9 @@ public class AreaPersonaleController {
     private BorderPane personaleRoot;
 
     @FXML
+    private BorderPane personaleNested;
+
+    @FXML
     private GridPane gridPane;
 
     @FXML
@@ -132,7 +135,7 @@ public class AreaPersonaleController {
             menuBarController.setUserStatus(utente);
 
             // Aggiungi la barra di menu alla root
-            personaleRoot.setTop(menuBarRoot);
+            personaleNested.setTop(menuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

@@ -5,7 +5,7 @@
 
 <HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController" alignment="TOP_RIGHT" spacing="10">
     <children>
-        <Button text="Log In" onAction="#handleGoLogin">
+        <Button fx:id="loginButton" text="Log In" onAction="#handleGoLogin">
             <graphic>
                 <ImageView fx:id="loginIcon" fitHeight="16" fitWidth="16" />
             </graphic>
@@ -17,7 +17,7 @@
             </graphic>
         </Button>
         <!-- Bottone di Area Personale -->
-        <Button fx:id="personalAreaButton" text="Area Personale" onAction="#handlePersonalArea" visible="false">
+        <Button fx:id="areaPersonaleButton" text="Area Personale" onAction="#handleAreaPersonaleButton" visible="false">
             <graphic>
                 <ImageView fx:id="personalAreaIcon" fitHeight="16" fitWidth="16" />
             </graphic>

@@ -49,14 +49,14 @@ public class MenuBarController {
     }
 
     @FXML
-    private void handleGoLogout(ActionEvent event) {
+    private void handleLogout(ActionEvent event) {
         setUserStatus(null);
         updateButtonsVisibility();
         //gestire anche la visibilità bottoni della home
     }
 
     @FXML
-    private void handleGoAreaPersonale(ActionEvent event) {
+    private void handleAreaPersonaleButton(ActionEvent event) {
         navigateTo(event, "/com/unife/project/view/areaPersonale.fxml");
     }
 
@@ -79,6 +79,7 @@ public class MenuBarController {
     /************************************************
      * metodi per la gestione della barra di menu
      ************************************************/
+    //metodo per impostare lo stato dell'utente, richiamato dal controller della schermata di login
     public void setUserStatus(Utente utente){
         if (utente != null) 
             this.isLoggedIn = true;
@@ -93,6 +94,7 @@ public class MenuBarController {
         areaPersonaleButton.setVisible(isLoggedIn);
         if (isLoggedIn){
             areaPersonaleButton.setText(username);
+            loginButton.setVisible(false);
         }
     }
 

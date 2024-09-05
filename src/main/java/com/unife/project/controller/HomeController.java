@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 
 public class HomeController {
     
@@ -26,6 +27,9 @@ public class HomeController {
 
     @FXML
     private Label welcomeLabel;
+
+    @FXML
+    private BorderPane rootPane;
 
     @FXML
     private Button areaPiantagioneButton;
@@ -60,14 +64,14 @@ public class HomeController {
 
     private void updateButtonVisibility() {
 
-        if (areaAdminButton != null && areaPiantagioneButton != null && areaPastoreButton != null) {
-            //areaAdminButton.setVisible(isLoggedIn && isAdmin);
+        if (areaAdminButton != null 
+            && areaPiantagioneButton != null 
+            && areaPastoreButton != null) {
+
             areaAdminButton.setDisable(!(isLoggedIn && isAdmin));
 
-            //areaPiantagioneButton.setVisible(isLoggedIn && isPiantagione);
             areaPiantagioneButton.setDisable(!(isLoggedIn && isPiantagione));
 
-            //areaPastoreButton.setVisible(isLoggedIn && isPastore);
             areaPastoreButton.setDisable(!(isLoggedIn && isPastore));
         }
     }
@@ -177,11 +181,20 @@ public class HomeController {
      * public methods
      ************************************************/
     // Metodo per aggiornare lo stato di login e ruolo
-    public void setUserStatus(boolean loggedIn, boolean admin, boolean piantagione, boolean pastore) {
-        this.isLoggedIn = loggedIn;
-        this.isAdmin = admin;
-        this.isPiantagione = piantagione;
-        this.isPastore = pastore;
+    public void setUserStatus() {
+        
+        if(utente != null){
+            isLoggedIn = true;
+            isAdmin = utente.getRuolo_admin();
+            isPiantagione = (utente.getRuolo_raccolta() || utente.getRuolo_irrigazione());
+            isPastore = utente.getRuolo_pastore();
+        }
+        else{
+            isLoggedIn = false;
+            isAdmin = false;
+            isPiantagione = false;
+            isPastore = false;
+        }
         updateButtonVisibility();
     }
 
@@ -189,6 +202,7 @@ public class HomeController {
     public void setUser(Utente utente){
         this.utente = utente;
         updateWelcomeLabel();
+        //updateMenuBar();
     }
 
 
@@ -208,6 +222,24 @@ public class HomeController {
     private void updateWelcomeLabel(){
         if (utente != null){
             welcomeLabel.setText("Benvenuto "+ utente.getUserName());
+        }
+    }
+
+    private void updateMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/menuBar.fxml"));
+            Parent menuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            MenuBarController menuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            menuBarController.setUserStatus(utente);
+
+            // Aggiungi la barra di menu alla root
+            rootPane.setTop(menuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
         }
     }
 

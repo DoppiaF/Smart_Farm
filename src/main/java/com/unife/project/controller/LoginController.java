@@ -96,6 +96,7 @@ public class LoginController {
 
             //passa l'oggetto utente al controller della schermata home
             homeController.setUser(user);
+            homeController.setUserStatus();
 
             //imposta la nuova scena
             Scene homeScene = new Scene(homeRoot);

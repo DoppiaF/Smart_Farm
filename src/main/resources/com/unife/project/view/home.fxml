@@ -66,7 +66,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="adminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="5.099998474121094" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
+                  <Button fx:id="areaAdminButton" alignment="CENTER" contentDisplay="RIGHT" layoutX="5.099998474121094" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaAdminButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA AMMINISTRATORE" textAlignment="CENTER" textFill="#e70202">
                      <effect>
                         <Bloom threshold="1.0" />
                      </effect>
@@ -74,12 +74,12 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="pastoreButton" layoutX="4.099998474121094" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PASTORE" textFill="#0dff00">
+                  <Button fx:id="areaPastoreButton" layoutX="4.099998474121094" layoutY="139.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPastoreButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PASTORE" textFill="#0dff00">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="piantagioneButton" layoutX="5.099998474121094" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PIANTAGIONE" textFill="#251ce1">
+                  <Button fx:id="areaPiantagioneButton" layoutX="5.099998474121094" layoutY="231.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleAreaPiantagioneButtonAction" prefHeight="77.0" prefWidth="500.0" text="AREA PIANTAGIONE" textFill="#251ce1">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>

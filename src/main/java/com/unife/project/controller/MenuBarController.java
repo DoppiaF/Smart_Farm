@@ -1,4 +1,5 @@
 package com.unife.project.controller;
+import java.io.IOException;
 
 import com.unife.project.model.mo.Utente;
 
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 public class MenuBarController {
+
+    Utente utente = null;
 
     /************************************************
      * buttons and items fxml
@@ -72,7 +75,7 @@ public class MenuBarController {
 
     @FXML
     private void handleAreaPersonaleButton(ActionEvent event) {
-        navigateTo(event, "/com/unife/project/view/areaPersonale.fxml");
+        navigateToAreaPersonale(event, utente);
     }
 
     private void navigateTo(ActionEvent event, String fxmlPath) {
@@ -89,6 +92,31 @@ public class MenuBarController {
         }
     }
 
+    private void navigateToAreaPersonale(ActionEvent event, Utente utente) {
+        try{
+            //carica la nuova Root per i nodi fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/areaPersonale.fxml"));
+            Parent personalRoot = loader.load();
+
+            // Ottieni il controller della schermata home
+            AreaPersonaleController areaPersonaleController = loader.getController();
+
+            //passa l'oggetto utente al controller della schermata home
+            areaPersonaleController.setUser(utente);
+
+            //imposta la nuova scena
+            Scene areaPersonaleScene = new Scene(personalRoot);
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            appStage.setScene(areaPersonaleScene);
+            appStage.show();
+
+        }catch(IOException e){
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la schermata di area personale.");
+        }
+    }
+
 
 
     /************************************************
@@ -99,6 +127,8 @@ public class MenuBarController {
         if (utente != null) {
             this.isLoggedIn = true;
             username = utente.getUserName();
+
+            this.utente = utente;
         }
         else{
             this.isLoggedIn = false;

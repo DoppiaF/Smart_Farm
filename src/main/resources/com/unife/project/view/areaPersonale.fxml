@@ -105,10 +105,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <CheckBox mnemonicParsing="false" text="Amministratore" GridPane.halignment="CENTER" />
-                        <CheckBox mnemonicParsing="false" text="Agricoltore" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <CheckBox mnemonicParsing="false" text="Irrigatore" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                        <CheckBox mnemonicParsing="false" text="Allevatore" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <CheckBox fx:id="adminCheckBox" mnemonicParsing="false" text="Amministratore" GridPane.halignment="CENTER" />
+                        <CheckBox fx:id="agricoltoreCheckBox" mnemonicParsing="false" text="Agricoltore" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <CheckBox fx:id="irrigatoreCheckBox" mnemonicParsing="false" text="Irrigatore" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <CheckBox fx:id="allevatoreCheckBox" mnemonicParsing="false" text="Allevatore" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                   <GridPane>
@@ -140,7 +140,7 @@
                                 </rowConstraints>
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" GridPane.halignment="CENTER" />
-                                    <TextField text="Ale" GridPane.columnIndex="1" />
+                                    <TextField fx:id="usernameField" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="1">
@@ -153,7 +153,7 @@
                                  </rowConstraints>
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" GridPane.halignment="CENTER" />
-                                    <TextField text="ale@gmail.com" GridPane.columnIndex="1" />
+                                    <TextField fx:id="emailField" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="2">
@@ -167,7 +167,7 @@
                                  </rowConstraints>
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" GridPane.halignment="CENTER" />
-                                    <PasswordField text="pw" GridPane.columnIndex="1" />
+                                    <PasswordField fx:id="passwordField" text="pw" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>

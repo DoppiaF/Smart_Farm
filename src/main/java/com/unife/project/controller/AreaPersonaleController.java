@@ -1,9 +1,15 @@
 package com.unife.project.controller;
+import java.io.IOException;
+
+import com.unife.project.model.mo.Utente;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -13,11 +19,16 @@ import javafx.scene.layout.GridPane;
 
 public class AreaPersonaleController {
 
+    private Utente utente = null;
+
     @FXML
     private BorderPane rootPane;
 
     @FXML
     private GridPane gridPane;
+
+    @FXML
+    private CheckBox rememberMeCheckBox;
 
     @FXML
     private TextField usernameField;
@@ -26,7 +37,22 @@ public class AreaPersonaleController {
     private PasswordField passwordField;
 
     @FXML
-    private CheckBox rememberMeCheckBox;
+    private TextField myUsernameField;
+
+    @FXML
+    private PasswordField myPasswordField;
+    
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private CheckBox adminCheckBox;
+    @FXML
+    private CheckBox agricoltoreCheckBox;
+    @FXML
+    private CheckBox irrigatoreCheckBox;
+    @FXML
+    private CheckBox allevatoreCheckBox;
 
     @FXML
     private Button loginButton;
@@ -42,6 +68,16 @@ public class AreaPersonaleController {
 
     @FXML
     private void initialize() {
+        myUsernameField.setText(utente.getUserName());
+        myPasswordField.setText(utente.getPassword());
+        emailField.setText(utente.getEmail());
+        adminCheckBox.setSelected(utente.getRuolo_admin());
+        agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
+        allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
+        irrigatoreCheckBox.setSelected(utente.getRuolo_irrigazione());
+
+
+        
         // Inizializza i componenti se necessario
         // Ad esempio, carica i dati nei grafici
         loadChartData();
@@ -70,5 +106,39 @@ public class AreaPersonaleController {
         } else {
             System.out.println("Login failed");
         }
+    }
+
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setUser(Utente utente){
+        this.utente = utente;
+        updateMenuBar();
+    }
+
+    
+    private void updateMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/menuBar.fxml"));
+            Parent menuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            MenuBarController menuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            menuBarController.setUserStatus(utente);
+
+            // Aggiungi la barra di menu alla root
+            rootPane.setTop(menuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
+    
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

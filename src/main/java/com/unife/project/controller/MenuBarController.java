@@ -17,8 +17,6 @@ import javafx.scene.Node;
 
 public class MenuBarController {
 
-    Utente utente = null;
-
     /************************************************
      * buttons and items fxml
      ************************************************/
@@ -100,7 +98,7 @@ public class MenuBarController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/areaPersonale.fxml"));
             Parent personalRoot = loader.load();
 
-            // Ottieni il controller della schermata home
+            // Ottieni il controller della schermata area personale
             AreaPersonaleController areaPersonaleController = loader.getController();
 
             //passa l'oggetto utente al controller della schermata home
@@ -130,8 +128,6 @@ public class MenuBarController {
             this.utente = utente;
             this.isLoggedIn = true;
             username = utente.getUserName();
-
-            this.utente = utente;
         }
         else{
             this.isLoggedIn = false;

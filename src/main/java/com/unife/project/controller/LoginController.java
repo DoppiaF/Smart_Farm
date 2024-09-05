@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.unife.project.model.dao.UtenteDAOImpl;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.service.UserService;
+import com.unife.project.util.WindowUtil;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -101,6 +102,9 @@ public class LoginController {
             //imposta la nuova scena
             Scene homeScene = new Scene(homeRoot);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(appStage);
 
             appStage.setScene(homeScene);
             appStage.show();

@@ -2,6 +2,7 @@ package com.unife.project.controller;
 import java.io.IOException;
 
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,6 +85,10 @@ public class MenuBarController {
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
@@ -111,6 +116,10 @@ public class MenuBarController {
             //imposta la nuova scena
             Scene areaPersonaleScene = new Scene(personalRoot);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(appStage);
 
             appStage.setScene(areaPersonaleScene);
             appStage.show();
@@ -176,6 +185,10 @@ public class MenuBarController {
                 stage = (Stage) root.getScene().getWindow();
             }
             Scene scene = new Scene(root);
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

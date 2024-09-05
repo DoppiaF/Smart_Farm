@@ -141,6 +141,12 @@ public class HomeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/adminPage.fxml"));
             Parent adminRoot = loader.load();
 
+            // Ottieni il controller della schermata admin
+            AdminController adminController = loader.getController();
+
+            // Passa l'oggetto Utente al controller della schermata admin
+            adminController.setUser(utente);
+
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -233,6 +239,12 @@ public class HomeController {
         if (utente != null){
             welcomeLabel.setText("Benvenuto "+ utente.getUserName());
         }
+    }
+
+    public void updateContent() {
+        // Logica per aggiornare il contenuto della home
+        rootPane.getChildren().clear();
+        initialize();
     }
 
     private void updateMenuBar(){

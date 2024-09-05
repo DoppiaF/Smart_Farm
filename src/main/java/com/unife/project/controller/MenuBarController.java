@@ -49,13 +49,14 @@ public class MenuBarController {
 
     @FXML
     public void initialize(){
-        if(!isLoggedIn){
+        /*if(!isLoggedIn){
             root.getChildren().remove(logoutButton);
             root.getChildren().remove(areaPersonaleButton);
         }
         else{
             root.getChildren().remove(loginButton);
-        }
+        }*/
+        updateButtons();
     }
 
     @FXML
@@ -65,10 +66,9 @@ public class MenuBarController {
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        setUserStatus(null);
-        //updateButtonsVisibility();
-        //gestire anche la visibilità bottoni della home
+        goHome(event);
     }
+
 
     @FXML
     private void handleAreaPersonaleButton(ActionEvent event) {
@@ -105,9 +105,11 @@ public class MenuBarController {
             username = "";
         }
         //updateButtonsVisibility();
+        initialize();
     }
 
 
+    /*
     private void updateButtonsVisibility(){
         logoutButton.setVisible(isLoggedIn);
         areaPersonaleButton.setVisible(isLoggedIn);
@@ -115,9 +117,37 @@ public class MenuBarController {
             areaPersonaleButton.setText(username);
             loginButton.setVisible(false);
         }
+    }*/
+
+    private void updateButtons(){
+        root.getChildren().removeAll(loginButton, logoutButton, areaPersonaleButton);
+        if(isLoggedIn){
+            root.getChildren().addAll(logoutButton, areaPersonaleButton);
+            areaPersonaleButton.setText(username);
+        }
+        else{
+            root.getChildren().add(loginButton);
+        }
     }
 
-
+    private void goHome(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
+            Parent root = loader.load();
+            Stage stage;
+            if (event != null && event.getSource() != null) {
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            } else {
+                // Se l'evento è null, prendi lo stage corrente
+                stage = (Stage) root.getScene().getWindow();
+            }
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

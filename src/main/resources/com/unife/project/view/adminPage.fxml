@@ -20,7 +20,6 @@
     <center>
         <AnchorPane>
             <children>
-                <fx:include source="menuBar.fxml" />
                 <VBox layoutY="30.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                     <TableView fx:id="userTable">
                         <columns>

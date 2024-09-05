@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -19,6 +20,9 @@ public class MenuBarController {
      * buttons and items fxml
      ************************************************/
 
+    @FXML
+    private HBox root;
+    
     @FXML
     private Button logoutButton;
 
@@ -44,6 +48,17 @@ public class MenuBarController {
 
 
     @FXML
+    public void initialize(){
+        if(!isLoggedIn){
+            root.getChildren().remove(logoutButton);
+            root.getChildren().remove(areaPersonaleButton);
+        }
+        else{
+            root.getChildren().remove(loginButton);
+        }
+    }
+
+    @FXML
     private void handleGoLogin(ActionEvent event) {
         navigateTo(event, "/com/unife/project/view/login.fxml");
     }
@@ -51,7 +66,7 @@ public class MenuBarController {
     @FXML
     private void handleLogout(ActionEvent event) {
         setUserStatus(null);
-        updateButtonsVisibility();
+        //updateButtonsVisibility();
         //gestire anche la visibilità bottoni della home
     }
 
@@ -81,13 +96,17 @@ public class MenuBarController {
      ************************************************/
     //metodo per impostare lo stato dell'utente, richiamato dal controller della schermata di login
     public void setUserStatus(Utente utente){
-        if (utente != null) 
+        if (utente != null) {
             this.isLoggedIn = true;
-        else 
+            username = utente.getUserName();
+        }
+        else{
             this.isLoggedIn = false;
-        username = utente.getUserName();
-        updateButtonsVisibility();
+            username = "";
+        }
+        //updateButtonsVisibility();
     }
+
 
     private void updateButtonsVisibility(){
         logoutButton.setVisible(isLoggedIn);

@@ -10,5 +10,17 @@
                 <ImageView fx:id="loginIcon" fitHeight="16" fitWidth="16" />
             </graphic>
         </Button>
+         <!-- Bottone di Logout -->
+        <Button fx:id="logoutButton" text="Log Out" onAction="#handleLogout" visible="false">
+            <graphic>
+                <ImageView fx:id="logoutIcon" fitHeight="16" fitWidth="16" />
+            </graphic>
+        </Button>
+        <!-- Bottone di Area Personale -->
+        <Button fx:id="personalAreaButton" text="Area Personale" onAction="#handlePersonalArea" visible="false">
+            <graphic>
+                <ImageView fx:id="personalAreaIcon" fitHeight="16" fitWidth="16" />
+            </graphic>
+        </Button>
     </children>
 </HBox>

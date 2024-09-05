@@ -189,9 +189,11 @@ public class VerticalMenuBarController {
     }
 
     private void updateButtonsVisibility(){
-        homeButtonV.setDisable(false);
-        piantagioneButtonV.setDisable(!(utente.getRuolo_irrigazione() || utente.getRuolo_raccolta()));
-        pastoreButtonV.setDisable(!utente.getRuolo_pastore());
-        adminButtonV.setDisable(!utente.getRuolo_admin());
+        if(utente != null){
+            homeButtonV.setDisable(false);
+            piantagioneButtonV.setDisable(!(utente.getRuolo_irrigazione() || utente.getRuolo_raccolta()));
+            pastoreButtonV.setDisable(!utente.getRuolo_pastore());
+            adminButtonV.setDisable(!utente.getRuolo_admin());
+        }
     }
 }

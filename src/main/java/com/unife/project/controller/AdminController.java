@@ -76,6 +76,7 @@ public class AdminController {
         this.utente = utente;
         //updateWelcomeLabel();
         updateMenuBar();
+        updateVerticalMenuBar();
     }
 
     private void updateMenuBar(){
@@ -91,6 +92,25 @@ public class AdminController {
             
             // Aggiungi la barra di menu alla root
             adminNested.setTop(menuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
+    private void updateVerticalMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/verticalMenuBar.fxml"));
+            Parent verticalMenuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            VerticalMenuBarController verticalMenuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            verticalMenuBarController.setUserStatus(utente);
+
+            
+            // Aggiungi la barra di menu alla root
+            adminRoot.setLeft(verticalMenuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

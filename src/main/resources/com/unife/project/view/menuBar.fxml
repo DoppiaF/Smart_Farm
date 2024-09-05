@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController" alignment="TOP_RIGHT" spacing="10">
+<HBox alignment="TOP_RIGHT" minHeight="-Infinity" prefHeight="28.0" spacing="10" style="-fx-background-color: none;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController">
     <children>
-        <Button fx:id="loginButton" text="Log In" onAction="#handleGoLogin">
+        <Button fx:id="loginButton" blendMode="MULTIPLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleGoLogin" prefHeight="26.0" prefWidth="80.0" text="Log In">
             <graphic>
                 <ImageView fx:id="loginIcon" fitHeight="16" fitWidth="16" />
             </graphic>
         </Button>
          <!-- Bottone di Logout -->
-        <Button fx:id="logoutButton" text="Log Out" onAction="#handleLogout" visible="false">
+        <Button fx:id="logoutButton" blendMode="MULTIPLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleLogout" prefHeight="26.0" prefWidth="80.0" text="Log Out">
             <graphic>
                 <ImageView fx:id="logoutIcon" fitHeight="16" fitWidth="16" />
             </graphic>
         </Button>
         <!-- Bottone di Area Personale -->
-        <Button fx:id="areaPersonaleButton" text="Area Personale" onAction="#handleAreaPersonaleButton" visible="false">
+        <Button fx:id="areaPersonaleButton" blendMode="MULTIPLY" minWidth="-Infinity" onAction="#handleAreaPersonaleButton" prefHeight="26.0" text="Area Personale">
             <graphic>
                 <ImageView fx:id="personalAreaIcon" fitHeight="16" fitWidth="16" />
             </graphic>

@@ -265,6 +265,24 @@ public class HomeController {
         }
     }
 
+    private void updateVerticalMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/verticalMenuBar.fxml"));
+            Parent vMenuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            VerticalMenuBarController verticalMenuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            verticalMenuBarController.setUserStatus(utente);
+
+            // Aggiungi la barra di menu alla root
+            rootPane.setLeft(vMenuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

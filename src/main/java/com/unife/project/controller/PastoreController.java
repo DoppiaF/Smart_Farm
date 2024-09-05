@@ -1,6 +1,7 @@
 package com.unife.project.controller;
 
 import com.unife.project.model.mo.Stalla;
+import com.unife.project.model.mo.Utente;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -8,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class PastoreController {
+
+    private Utente utente;
 
     @FXML
     private TableView<Stalla> stalleTable;
@@ -56,5 +59,11 @@ public class PastoreController {
     private void loadStalleData() {
         // Carica i dati delle stalle dal database e impostali nella tabella
         // stalleTable.setItems(...);
+    }
+
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setUser(Utente utente){
+        this.utente = utente;
+        //updateMenuBar();
     }
 }

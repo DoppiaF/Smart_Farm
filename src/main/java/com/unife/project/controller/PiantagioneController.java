@@ -1,6 +1,7 @@
 package com.unife.project.controller;
 
 import com.unife.project.model.mo.Piantagione;
+import com.unife.project.model.mo.Utente;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -8,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class PiantagioneController {
+
+    private Utente utente;
 
     @FXML
     private TableView<Piantagione> piantagioneTable;
@@ -56,5 +59,11 @@ public class PiantagioneController {
     private void loadPiantagioneData() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella
         // piantagioneTable.setItems(...);
+    }
+
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setUser(Utente utente){
+        this.utente = utente;
+        //updateMenuBar();
     }
 }

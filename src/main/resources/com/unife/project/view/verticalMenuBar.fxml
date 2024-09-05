@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.VerticalMenuBarController" spacing="10" alignment="TOP_LEFT">
+<VBox alignment="TOP_LEFT" spacing="10" style="-fx-background-color: #ff6600;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.VerticalMenuBarController">
     <children>
-        <Button text="Home" onAction="#handleGoHome"/>
-        <Button text="Admin" onAction="#handleGoAdmin"/>
-        <Button text="Piantagione" onAction="#handleGoPiantagione"/>
-        <Button text="Pastore" onAction="#handleGoPastore"/>
+        <Button blendMode="MULTIPLY" maxHeight="1.7976931348623157E308" onAction="#handleGoHome" prefWidth="85.0" style="-fx-border-color: white;" text="Home">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button blendMode="MULTIPLY" onAction="#handleGoAdmin" prefWidth="85.0" style="-fx-border-color: white;" text="Admin" />
+        <Button blendMode="MULTIPLY" onAction="#handleGoPiantagione" prefWidth="85.0" style="-fx-border-color: white;" text="Piantagione" />
+        <Button blendMode="MULTIPLY" onAction="#handleGoPastore" prefWidth="85.0" style="-fx-border-color: white;" text="Pastore" />
         <!-- Aggiungi altri bottoni qui -->
     </children>
 </VBox>

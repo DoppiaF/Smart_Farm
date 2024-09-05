@@ -55,13 +55,7 @@
          <children>
             <AnchorPane layoutX="120.9000015258789" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
                <children>
-                  <!-- Aggiunta della welcomeLabel -->
-                  <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="4.099998474121094" layoutY="10.0" prefHeight="27.0" prefWidth="322.0" text="Benvenuto!" textAlignment="CENTER" textFill="#000000" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" layoutX="4.099998474121094" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Label alignment="CENTER" layoutX="2.0" prefHeight="27.0" prefWidth="322.0" style="&#10;" text="Seleziona la tua area di competenza" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -107,6 +101,12 @@
                   </ImageView>
                </children>
             </Pane>
+            <!-- Aggiunta della welcomeLabel -->
+            <Label fx:id="welcomeLabel" alignment="CENTER" layoutY="14.0" prefHeight="27.0" prefWidth="322.0" text="Benvenuto!" textAlignment="CENTER" textFill="#000000" wrapText="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.7999999999999545">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>

@@ -3,6 +3,7 @@ package com.unife.project.controller;
 import java.io.IOException;
 
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -119,6 +120,9 @@ public class HomeController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
             // Imposta la nuova scena
             Scene scene = new Scene(adminRoot);
             stage.setScene(scene);
@@ -139,6 +143,9 @@ public class HomeController {
 
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
 
             // Imposta la nuova scena
             Scene scene = new Scene(adminRoot);
@@ -161,6 +168,9 @@ public class HomeController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+            
             // Imposta la nuova scena
             Scene scene = new Scene(adminRoot);
             stage.setScene(scene);

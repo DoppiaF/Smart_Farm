@@ -22,7 +22,7 @@ public class AreaPersonaleController {
     private Utente utente = null;
 
     @FXML
-    private BorderPane rootPane;
+    private BorderPane personaleRoot;
 
     @FXML
     private GridPane gridPane;
@@ -68,16 +68,7 @@ public class AreaPersonaleController {
 
     @FXML
     private void initialize() {
-        if(utente != null){
-             myUsernameField.setText(utente.getUserName());
-            myPasswordField.setText(utente.getPassword());
-            emailField.setText(utente.getEmail());
-            adminCheckBox.setSelected(utente.getRuolo_admin());
-            agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
-            allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
-            irrigatoreCheckBox.setSelected(utente.getRuolo_irrigazione());
-        }
-       
+        
         // Inizializza i componenti se necessario
         // Ad esempio, carica i dati nei grafici
         loadChartData();
@@ -112,7 +103,21 @@ public class AreaPersonaleController {
     public void setUser(Utente utente){
         this.utente = utente;
         updateMenuBar();
-        initialize();
+        setPersonalFields();
+    }
+
+    private void setPersonalFields(){
+        if (utente != null){
+            
+            myUsernameField.setText(utente.getUserName());
+            myPasswordField.setText(utente.getPassword());
+            emailField.setText(utente.getEmail());
+            adminCheckBox.setSelected(utente.getRuolo_admin());
+            agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
+            allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
+            irrigatoreCheckBox.setSelected(utente.getRuolo_irrigazione());
+
+        }
     }
 
     
@@ -127,7 +132,7 @@ public class AreaPersonaleController {
             menuBarController.setUserStatus(utente);
 
             // Aggiungi la barra di menu alla root
-            rootPane.setTop(menuBarRoot);
+            personaleRoot.setTop(menuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

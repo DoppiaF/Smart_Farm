@@ -110,7 +110,7 @@ public class ZonaDAOImpl implements ZonaDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
-                if(rs.next() == false){
+                if(!rs.isBeforeFirst()){
                     System.out.println("Non ci sono zone nel database");
                 } else {
                     while (rs.next()) {

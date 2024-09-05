@@ -101,7 +101,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
-                if(rs.next() == false) {
+                if(!rs.isBeforeFirst()) {
                     System.out.println("Non ci sono visite veterinarie nel database");
                 } else {
                     while(rs.next()){
@@ -137,7 +137,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
             ps.setInt(2, identificativoAnimale);
 
             try (ResultSet rs = ps.executeQuery()) {
-                if(rs.next() == false) {
+                if(!rs.isBeforeFirst()) {
                     System.out.println("Non ci sono visite veterinarie nel database");
                 } else {
                     while(rs.next()){

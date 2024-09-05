@@ -123,7 +123,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono state trovate raccolte");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate raccolte");
                 else{
                     while (rs.next()) {
                         Raccolta raccolta = new Raccolta(

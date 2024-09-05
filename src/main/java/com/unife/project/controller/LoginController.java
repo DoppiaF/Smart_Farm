@@ -49,6 +49,7 @@ public class LoginController {
 
         // Aggiungi la logica di autenticazione qui
         Utente user = userService.authenticate(username, password);
+        //System.out.println("info: " + user.toString());
         if (user != null) {
             // Login ha avuto successo
             navigateToHome(event, user);

@@ -123,7 +123,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono state trovate piantagioni");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate piantagioni");
                 else{
                     while (rs.next()) {
                         Piantagione piantagione = new Piantagione(

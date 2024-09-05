@@ -94,7 +94,7 @@ public class UtenteDAOImpl implements UtenteDAO{
         try ( PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next() == false) { System.out.println("Utente non trovato"); } 
+            if (!rs.isBeforeFirst()) { System.out.println("Utente non trovato"); } 
             else {
                 while(rs.next()){
                     Utente utente = new Utente();
@@ -126,7 +126,7 @@ public class UtenteDAOImpl implements UtenteDAO{
         String sql = "SELECT * FROM utente";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {                
-                if (rs.next() == false) { 
+                if (!rs.isBeforeFirst()) { 
                     System.out.println("Nessun utente trovato"); }
                 else{
                     while(rs.next()){
@@ -160,9 +160,9 @@ public class UtenteDAOImpl implements UtenteDAO{
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            if (rs.next() == false) { System.out.println("Utente non trovato"); } 
+            if (!rs.isBeforeFirst()) { System.out.println("Utente non trovato"); } 
             else {
-                do{
+                while(rs.next()){
                     Utente utente = new Utente();
                     utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
@@ -175,7 +175,7 @@ public class UtenteDAOImpl implements UtenteDAO{
                     utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
                     utente.setRuolo_admin(rs.getBoolean("ruolo_admin"));
                     return utente;
-                }while(rs.next());
+                }
             }
         }catch(SQLException e){
             e.printStackTrace();

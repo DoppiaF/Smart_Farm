@@ -109,7 +109,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono stati trovati mangimi");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati mangimi");
                 else{
                     while (rs.next()){
                         Magazzino mangime = new Magazzino(

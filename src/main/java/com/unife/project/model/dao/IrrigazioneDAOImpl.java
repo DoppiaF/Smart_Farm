@@ -120,7 +120,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()){
-                if(rs.next()==false) System.out.println("Non sono state trovate irrigazioni");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate irrigazioni");
                 else{
                     while (rs.next()){
                         Irrigazione irrigazione = new Irrigazione(

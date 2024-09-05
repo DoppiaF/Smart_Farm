@@ -202,7 +202,7 @@ public class HomeController {
     public void setUser(Utente utente){
         this.utente = utente;
         updateWelcomeLabel();
-        //updateMenuBar();
+        updateMenuBar();
     }
 
 

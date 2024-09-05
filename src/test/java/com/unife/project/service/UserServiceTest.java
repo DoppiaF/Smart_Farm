@@ -1,11 +1,14 @@
-package com.unife.project;
+package com.unife.project.service;
 
-
+import org.junit.jupiter.api.Test;
 import com.unife.project.model.mo.Utente;
-import com.unife.project.service.UserService;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Main {
-    public static void main(String[] args) {
+
+public class UserServiceTest {
+
+    @Test
+    public void testAuthenticate() {
         // Inizializza il servizio utente
         UserService userService = new UserService();
 
@@ -24,5 +27,11 @@ public class Main {
         } else {
             System.out.println("Autenticazione fallita!");
         }
+
+        // Asserzioni per verificare il risultato
+        assertNotNull(utente, "L'utente non dovrebbe essere null");
+        assertEquals(testUsername, utente.getUserName(), "Lo username dovrebbe corrispondere");
+        assertEquals(testPassword, utente.getPassword(), "La password dovrebbe corrispondere");
+    
     }
 }

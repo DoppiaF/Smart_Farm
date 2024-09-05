@@ -1,5 +1,7 @@
 package com.unife.project.controller;
 
+import java.io.IOException;
+
 import com.unife.project.model.dao.UtenteDAOImpl;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.service.UserService;
@@ -84,7 +86,28 @@ public class LoginController {
         */
 
     private void navigateToHome(ActionEvent event, Utente user) {
-        navigateTo(event, "/com/unife/project/view/home.fxml");
+        try{
+            //carica la nuova Root per i nodi fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
+            Parent homeRoot = loader.load();
+
+            // Ottieni il controller della schermata home
+            HomeController homeController = loader.getController();
+
+            //passa l'oggetto utente al controller della schermata home
+            homeController.setUser(user);
+
+            //imposta la nuova scena
+            Scene homeScene = new Scene(homeRoot);
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            appStage.setScene(homeScene);
+            appStage.show();
+
+        }catch(IOException e){
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la schermata home.");
+        }
     }
 
     private void showErrorDialog(String title, String message) {

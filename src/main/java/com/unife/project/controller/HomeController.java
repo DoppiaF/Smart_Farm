@@ -13,15 +13,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class HomeController {
     
     /************************************************
-     * buttons
+     * buttons and items fxml
      ************************************************/
 
     /*@FXML
     private MenuItem loginMenuItem;*/
+
+    @FXML
+    private Label welcomeLabel;
 
     @FXML
     private Button areaPiantagioneButton;
@@ -32,6 +36,11 @@ public class HomeController {
     @FXML
     private Button areaPastoreButton;
 
+
+
+
+
+
     /************************************************
      * initialize
      ************************************************/
@@ -41,7 +50,7 @@ public class HomeController {
     private boolean isPiantagione = false;
     private boolean isPastore = false;
 
-    private Utente utente = null;
+    private Utente utente;
 
     @FXML
     public void initialize() {
@@ -63,9 +72,16 @@ public class HomeController {
         }
     }
 
+
+
+
+
+
     /************************************************
      * handlers
      ************************************************/
+
+
     /*@FXML
     private void handleLoginMenuItemAction(ActionEvent event) {
         //logica per gestire il pulsante 
@@ -151,6 +167,12 @@ public class HomeController {
     }
 
 
+
+
+
+
+
+
     /************************************************
      * public methods
      ************************************************/
@@ -163,6 +185,31 @@ public class HomeController {
         updateButtonVisibility();
     }
 
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setUser(Utente utente){
+        this.utente = utente;
+        updateWelcomeLabel();
+    }
+
+
+
+
+
+
+
+
+
+
+    /************************************************
+     * private methods
+     ************************************************/
+
+    //metodo per aggiornare la label di benvenuto
+    private void updateWelcomeLabel(){
+        if (utente != null){
+            welcomeLabel.setText("Benvenuto "+ utente.getUserName());
+        }
+    }
 
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

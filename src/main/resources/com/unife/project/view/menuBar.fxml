@@ -6,19 +6,19 @@
 
 <HBox fx:id="root" alignment="TOP_RIGHT" minHeight="-Infinity" prefHeight="28.0" spacing="10" style="-fx-background-color: none;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.MenuBarController">
     <children>
-        <Button fx:id="loginButton" blendMode="MULTIPLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleGoLogin" prefHeight="26.0" prefWidth="80.0" text="Log In">
+        <Button fx:id="loginButton" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleGoLogin" prefHeight="26.0" prefWidth="80.0" text="Log In">
             <graphic>
                 <ImageView fx:id="loginIcon" fitHeight="16" fitWidth="16" />
             </graphic>
         </Button>
          <!-- Bottone di Logout -->
-        <Button fx:id="logoutButton" blendMode="MULTIPLY" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleLogout" prefHeight="26.0" prefWidth="80.0" text="Log Out">
+        <Button fx:id="logoutButton" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleLogout" prefHeight="26.0" prefWidth="80.0" text="Log Out">
             <graphic>
                 <ImageView fx:id="logoutIcon" fitHeight="16" fitWidth="16" />
             </graphic>
         </Button>
         <!-- Bottone di Area Personale -->
-        <Button fx:id="areaPersonaleButton" blendMode="MULTIPLY" minWidth="-Infinity" onAction="#handleAreaPersonaleButton" prefHeight="26.0" text="Area Personale">
+        <Button fx:id="areaPersonaleButton" minWidth="-Infinity" onAction="#handleAreaPersonaleButton" prefHeight="26.0" text="Area Personale">
             <graphic>
                 <ImageView fx:id="personalAreaIcon" fitHeight="16" fitWidth="16" />
             </graphic>

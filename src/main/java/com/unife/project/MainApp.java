@@ -1,14 +1,14 @@
 package com.unife.project;
 
-import com.unife.project.model.dao.UtenteDAOImpl;
-import com.unife.project.util.DatabaseConnection;
+//import com.unife.project.model.dao.UtenteDAOImpl;
+//import com.unife.project.util.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
+//import java.sql.Connection;
 
 public class MainApp extends Application {
 
@@ -16,8 +16,8 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
             // Configura la connessione al database
-            Connection connection = DatabaseConnection.getConnection();
-            UtenteDAOImpl utenteDAO = new UtenteDAOImpl(connection);
+            //Connection connection = DatabaseConnection.getConnection();
+            //UtenteDAOImpl utenteDAO = new UtenteDAOImpl(connection);
 
             // Carica il file FXML della schermata di home
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));

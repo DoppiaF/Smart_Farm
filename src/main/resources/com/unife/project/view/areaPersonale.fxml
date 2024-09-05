@@ -140,7 +140,7 @@
                                 </rowConstraints>
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" GridPane.halignment="CENTER" />
-                                    <TextField fx:id="usernameField" GridPane.columnIndex="1" />
+                                    <TextField fx:id="myUsernameField" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="1">
@@ -167,7 +167,7 @@
                                  </rowConstraints>
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" GridPane.halignment="CENTER" />
-                                    <PasswordField fx:id="passwordField" text="pw" GridPane.columnIndex="1" />
+                                    <PasswordField fx:id="myPasswordField" text="pw" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>

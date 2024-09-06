@@ -1,5 +1,7 @@
 package com.unife.project.controller;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.dao.UtenteDAO;
@@ -14,6 +16,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -56,6 +59,9 @@ public class AreaPersonaleController {
     private TextField emailField;
 
     @FXML
+    private DatePicker birthDateField;
+
+    @FXML
     private CheckBox adminCheckBox;
     @FXML
     private CheckBox agricoltoreCheckBox;
@@ -88,6 +94,8 @@ public class AreaPersonaleController {
     private Pane unmodifiablePainForIrrigatoreCk;
     @FXML
     private Pane unmodifiablePainForAllevatoreCk;
+    @FXML
+    private Pane unmodifiablePainForBirthDate;
 
     @FXML
     private BarChart<String, Number> barChart;
@@ -147,6 +155,7 @@ public class AreaPersonaleController {
             myUsernameField.setText(utente.getUserName());
             myPasswordField.setText(utente.getPassword());
             emailField.setText(utente.getEmail());
+            birthDateField.setValue(utente.getDataNascita());
             adminCheckBox.setSelected(utente.getRuolo_admin());
             agricoltoreCheckBox.setSelected(utente.getRuolo_raccolta());        
             allevatoreCheckBox.setSelected(utente.getRuolo_pastore());
@@ -206,9 +215,7 @@ public class AreaPersonaleController {
         unmodifiablePainForUsername.setDisable(true);
         unmodifiablePainForEmail.setDisable(true);
         unmodifiablePainForPassword.setDisable(true);
-        unmodifiablePainForAgricoltoreCk.setDisable(true);
-        unmodifiablePainForIrrigatoreCk.setDisable(true);
-        unmodifiablePainForAllevatoreCk.setDisable(true);
+        unmodifiablePainForBirthDate.setDisable(true);
         modifyButton.setDisable(true);
         
         modifyRoot.getChildren().remove(modifyButton);
@@ -220,29 +227,25 @@ public class AreaPersonaleController {
     private void handleConfirmButtonAction() {
         unmodifiablePainForUsername.setDisable(false);
         unmodifiablePainForEmail.setDisable(false);
-        unmodifiablePainForPassword.setDisable(false);
-        unmodifiablePainForAgricoltoreCk.setDisable(false);
-        unmodifiablePainForIrrigatoreCk.setDisable(false);
-        unmodifiablePainForAllevatoreCk.setDisable(false);
+        unmodifiablePainForPassword.setDisable(false);        
+        unmodifiablePainForBirthDate.setDisable(false);
         modifyButton.setDisable(false);
 
         
         String username = myUsernameField.getText();
         String email = emailField.getText();
         String password = myPasswordField.getText();
-        boolean irrigazione = irrigatoreCheckBox.isSelected();
-        boolean raccolta = agricoltoreCheckBox.isSelected();
-        boolean pastore = allevatoreCheckBox.isSelected();
+        LocalDate dataNascita = birthDateField.getValue();
 
         Utente nuovoUtente = new Utente();
         nuovoUtente.setUserName(username);
         nuovoUtente.setEmail(email);
         nuovoUtente.setPassword(password);
-        nuovoUtente.setRuolo_irrigazione(irrigazione);
-        nuovoUtente.setRuolo_raccolta(raccolta);
-        nuovoUtente.setRuolo_pastore(pastore);
+        nuovoUtente.setRuolo_irrigazione(this.utente.getRuolo_irrigazione());
+        nuovoUtente.setRuolo_raccolta(this.utente.getRuolo_raccolta());
+        nuovoUtente.setRuolo_pastore(this.utente.getRuolo_pastore());
         nuovoUtente.setRuolo_admin(this.utente.getRuolo_admin());
-        nuovoUtente.setDataNascita(this.utente.getDataNascita());
+        nuovoUtente.setDataNascita(dataNascita);
         nuovoUtente.setId(this.utente.getId());
 
         System.out.println(nuovoUtente.toString());
@@ -272,6 +275,8 @@ public class AreaPersonaleController {
         
         modifyRoot.getChildren().removeAll(confirmButton, goBackButton);
         modifyRoot.getChildren().add(modifyButton);
+
+        setPersonalFields();
 
 
         initialize();

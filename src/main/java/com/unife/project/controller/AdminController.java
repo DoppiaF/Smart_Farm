@@ -16,14 +16,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 public class AdminController {
@@ -146,40 +144,49 @@ public class AdminController {
 
     @FXML
     private void handleSubmitButtonAction() {
+        if(usernameFieldAdd.getText().isEmpty() || 
+        emailFieldAdd.getText().isEmpty() || 
+        passwordFieldAdd.getText().isEmpty() ||
+        (!irrigazioneCheckBox.isSelected() && !raccoltaCheckBox.isSelected() && !pastoreCheckBox.isSelected()))
+        {
+            showErrorDialog("Errore", "Compilare tutti i campi.");
+        }else{
         //ottiene valori dai campi del form
-        String username = usernameFieldAdd.getText();
-        String email = emailFieldAdd.getText();
-        String password = passwordFieldAdd.getText();
-        boolean irrigazione = irrigazioneCheckBox.isSelected();
-        boolean raccolta = raccoltaCheckBox.isSelected();
-        boolean pastore = pastoreCheckBox.isSelected();
+            System.out.println("submit button pressed, esempio testo" + usernameFieldAdd.getText());
+            String username = usernameFieldAdd.getText();
+            String email = emailFieldAdd.getText();
+            String password = passwordFieldAdd.getText();
+            boolean irrigazione = irrigazioneCheckBox.isSelected();
+            boolean raccolta = raccoltaCheckBox.isSelected();
+            boolean pastore = pastoreCheckBox.isSelected();
 
-        Utente utente = new Utente();
-        utente.setUserName(username);
-        utente.setEmail(email);
-        utente.setPassword(password);
-        utente.setRuolo_irrigazione(irrigazione);
-        utente.setRuolo_raccolta(raccolta);
-        utente.setRuolo_pastore(pastore);
-        utente.setRuolo_admin(false);
-        utente.setDataNascita(null);
-        
+            Utente utente = new Utente();
+            utente.setUserName(username);
+            utente.setEmail(email);
+            utente.setPassword(password);
+            utente.setRuolo_irrigazione(irrigazione);
+            utente.setRuolo_raccolta(raccolta);
+            utente.setRuolo_pastore(pastore);
+            utente.setRuolo_admin(false);
+            utente.setDataNascita(null);
+            
+            // Salva l'utente nel database
+            DAOFactory.getUtenteDAO().save(utente); 
+            
+            
+            // Ricarica i dati degli utenti
+            initialize();
+            }
+        }
 
-        // Aggiungi l'utente al database
-        DAOFactory.getUtenteDAO().save(utente);
+        private void loadUserData() {
+            // Svuota la lista userData per evitare duplicati
+            if(userData != null) userData.clear();
 
-        // Ricarica i dati degli utenti
-        initialize();
-    }
+            // Carica i dati degli utenti dal database e impostali nella tabella
+            List<Utente> utenti = DAOFactory.getUtenteDAO().findAll();
 
-    private void loadUserData() {
-        // Svuota la lista userData per evitare duplicati
-        if(userData != null) userData.clear();
-
-        // Carica i dati degli utenti dal database e impostali nella tabella
-        List<Utente> utenti = DAOFactory.getUtenteDAO().findAll();
-
-        userData.addAll(utenti);
+            userData.addAll(utenti);
     }
 
 

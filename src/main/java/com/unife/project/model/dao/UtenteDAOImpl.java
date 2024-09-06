@@ -162,9 +162,9 @@ public class UtenteDAOImpl implements UtenteDAO{
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            if (!rs.isBeforeFirst()) { System.out.println("Utente non trovato"); } 
+            if (!rs.isBeforeFirst()) { System.out.println("Utente non trovato"); return null;} 
             else {
-                while(rs.next()){
+                if(rs.next()){
                     Utente utente = new Utente();
                     utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
@@ -182,8 +182,41 @@ public class UtenteDAOImpl implements UtenteDAO{
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("Errore nella ricerca di un utente" + username);
+            java.util.logging.Logger.getLogger(UtenteDAOImpl.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
         }
 
         return null;
     }
+
+    @Override
+    public Utente findByEmail(String email) {
+        String sql = "SELECT * FROM utente WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Utente utente = new Utente();
+                utente.setId(rs.getInt("id"));
+                utente.setUserName(rs.getString("username"));
+                utente.setPassword(rs.getString("password"));
+                utente.setEmail(rs.getString("email"));
+                utente.setCreateTime(rs.getTimestamp("create_time"));
+                utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
+                utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
+                utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
+                utente.setRuolo_admin(rs.getBoolean("ruolo_admin"));
+                return utente;
+            } else {
+                System.out.println("Utente non trovato");
+            }
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca di un utente" + email);
+            java.util.logging.Logger.getLogger(UtenteDAOImpl.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+        }
+    return null;
+    }
+
 }

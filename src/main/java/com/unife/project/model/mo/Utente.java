@@ -124,6 +124,7 @@ public class Utente {
                ", ruolo_irrigazione=" + ruolo_irrigazione + 
                ", ruolo_pastore=" + ruolo_pastore + 
                ", ruolo_admin=" + ruolo_admin + 
+               ", password='" + password + '\'' +
                '}';
     }
 

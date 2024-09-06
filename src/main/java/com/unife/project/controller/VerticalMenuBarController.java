@@ -54,6 +54,7 @@ public class VerticalMenuBarController {
             
             // Passa l'oggetto Utente al controller della schermata admin
             homeController.setUser(utente);
+            //homeController.setUserStatus();
 
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -72,7 +73,7 @@ public class VerticalMenuBarController {
 
     @FXML
     private void handleGoAdmin(ActionEvent event) {
-        System.out.println("home Button Pressed");
+        System.out.println("admin Button Pressed");
         try {
             // Carica il file FXML della schermata admin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/adminPage.fxml"));
@@ -102,7 +103,7 @@ public class VerticalMenuBarController {
 
     @FXML
     private void handleGoPiantagione(ActionEvent event) {
-        System.out.println("home Button Pressed");
+        System.out.println("piantagione Button Pressed");
         try {
             // Carica il file FXML della schermata admin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/piantagionePage.fxml"));
@@ -132,7 +133,7 @@ public class VerticalMenuBarController {
 
     @FXML
     private void handleGoPastore(ActionEvent event) {
-        System.out.println("home Button Pressed");
+        System.out.println("pastore Button Pressed");
         try {
             // Carica il file FXML della schermata admin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/pastorePage.fxml"));

@@ -217,8 +217,10 @@ public class HomeController {
     //metodo da chiamare da altri controller per passare l'utente alla home
     public void setUser(Utente utente){
         this.utente = utente;
+        setUserStatus();
         updateWelcomeLabel();
         updateMenuBar();
+        
     }
 
 

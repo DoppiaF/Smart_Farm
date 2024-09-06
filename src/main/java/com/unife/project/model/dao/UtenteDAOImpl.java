@@ -48,9 +48,8 @@ public class UtenteDAOImpl implements UtenteDAO{
 
     @Override
     public void update(Utente utente) {
-        String sql = "UPDATE utente" +
-                     "SET username = ?, password = ?, email = ?, data_nascita = ?, ruolo_raccolta = ?, ruolo_irrigazione = ?, ruolo_pastore = ?, ruolo_admin = ?" + 
-                     "WHERE id_utente = ?";
+        String sql = "UPDATE utente SET username = ?, password = ?, email = ?, data_nascita = ?, ruolo_raccolta = ?, ruolo_irrigazione = ?, ruolo_pastore = ?, ruolo_admin = ? " + 
+                     "WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, utente.getUserName());
@@ -61,6 +60,7 @@ public class UtenteDAOImpl implements UtenteDAO{
             ps.setBoolean(6, utente.getRuolo_irrigazione());
             ps.setBoolean(7, utente.getRuolo_pastore());
             ps.setBoolean(8, utente.getRuolo_admin());
+            ps.setInt(9, utente.getId());
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Un utente esistente è stato aggiornato correttamente!");

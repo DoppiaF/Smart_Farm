@@ -1,6 +1,8 @@
 package com.unife.project.controller;
 import java.io.IOException;
 
+import com.unife.project.model.dao.DAOFactory;
+import com.unife.project.model.dao.UtenteDAO;
 import com.unife.project.model.mo.Utente;
 
 import javafx.fxml.FXML;
@@ -223,6 +225,30 @@ public class AreaPersonaleController {
         unmodifiablePainForIrrigatoreCk.setDisable(false);
         unmodifiablePainForAllevatoreCk.setDisable(false);
         modifyButton.setDisable(false);
+
+        
+        String username = myUsernameField.getText();
+        String email = emailField.getText();
+        String password = myPasswordField.getText();
+        boolean irrigazione = irrigatoreCheckBox.isSelected();
+        boolean raccolta = agricoltoreCheckBox.isSelected();
+        boolean pastore = allevatoreCheckBox.isSelected();
+
+        Utente nuovoUtente = new Utente();
+        nuovoUtente.setUserName(username);
+        nuovoUtente.setEmail(email);
+        nuovoUtente.setPassword(password);
+        nuovoUtente.setRuolo_irrigazione(irrigazione);
+        nuovoUtente.setRuolo_raccolta(raccolta);
+        nuovoUtente.setRuolo_pastore(pastore);
+        nuovoUtente.setRuolo_admin(this.utente.getRuolo_admin());
+        nuovoUtente.setDataNascita(this.utente.getDataNascita());
+        nuovoUtente.setId(this.utente.getId());
+
+        System.out.println(nuovoUtente.toString());
+
+        updateUserData(nuovoUtente);
+        setUser(nuovoUtente);
         
         modifyRoot.getChildren().removeAll(confirmButton, goBackButton);
         modifyRoot.getChildren().add(modifyButton);
@@ -230,6 +256,32 @@ public class AreaPersonaleController {
         
         initialize();
 
+    }
+
+    @FXML
+    private void handleGoBackButtonAction() {
+        
+        unmodifiablePainForUsername.setDisable(false);
+        unmodifiablePainForEmail.setDisable(false);
+        unmodifiablePainForPassword.setDisable(false);
+        unmodifiablePainForAgricoltoreCk.setDisable(false);
+        unmodifiablePainForIrrigatoreCk.setDisable(false);
+        unmodifiablePainForAllevatoreCk.setDisable(false);
+        modifyButton.setDisable(false);
+
+        
+        modifyRoot.getChildren().removeAll(confirmButton, goBackButton);
+        modifyRoot.getChildren().add(modifyButton);
+
+
+        initialize();
+
+    }
+
+    private void updateUserData(Utente nuovoUtente){
+        UtenteDAO utenteDAO = DAOFactory.getUtenteDAO();
+        
+        utenteDAO.update(nuovoUtente);
     }
 
 }

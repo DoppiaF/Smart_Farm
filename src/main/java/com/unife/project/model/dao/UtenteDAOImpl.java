@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +105,10 @@ public class UtenteDAOImpl implements UtenteDAO{
                     utente.setPassword(rs.getString("password"));
                     utente.setEmail(rs.getString("email"));
                     utente.setCreateTime(rs.getTimestamp("create_time"));
-                    utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                    //per settare i campi nullable nelle find
+                    if(rs.getDate("data_nascita") != null) 
+                        utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                        
                     utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
                     utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
                     utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
@@ -171,7 +176,10 @@ public class UtenteDAOImpl implements UtenteDAO{
                     utente.setPassword(rs.getString("password"));
                     utente.setEmail(rs.getString("email"));
                     utente.setCreateTime(rs.getTimestamp("create_time"));
-                    utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                    //per settare i campi nullable nelle find
+                    if(rs.getDate("data_nascita") != null) 
+                        utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+
                     utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
                     utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
                     utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
@@ -201,7 +209,10 @@ public class UtenteDAOImpl implements UtenteDAO{
                 utente.setPassword(rs.getString("password"));
                 utente.setEmail(rs.getString("email"));
                 utente.setCreateTime(rs.getTimestamp("create_time"));
-                utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                //per settare i campi nullable nelle find
+                if(rs.getDate("data_nascita") != null) 
+                    utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+
                 utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
                 utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
                 utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));

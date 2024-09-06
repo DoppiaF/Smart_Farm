@@ -7,8 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="adminRoot" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
+<BorderPane fx:id="adminRoot" prefHeight="598.0" prefWidth="698.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AdminController">
     <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>
@@ -25,7 +26,10 @@
                             <TableColumn fx:id="emailColumn" text="Email" />
                         </columns>
                     </TableView>
-                    <Label text="Aggiungi Nuovo Utente" />
+                    <Label prefHeight="18.0" prefWidth="168.0" text="Aggiungi Nuovo Utente" textAlignment="JUSTIFY" textFill="#d0e700">
+                  <font>
+                     <Font size="14.0" />
+                  </font></Label>
                     <TextField fx:id="usernameField" promptText="Username" />
                     <TextField fx:id="emailField" promptText="Email" />
                     <Button onAction="#handleAddUser" text="Aggiungi Utente" />

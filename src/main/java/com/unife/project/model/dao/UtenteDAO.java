@@ -1,6 +1,5 @@
 package com.unife.project.model.dao;
 
-import java.util.List;
 
 import com.unife.project.model.mo.Utente;
 

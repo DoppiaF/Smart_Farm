@@ -3,21 +3,21 @@ package com.unife.project.model.mo;
 
 public class Piantagione {
     private int id;
-    private String tipoPianta;
+    private String tipo_pianta;
     private int area;
-    private String Stato;
-    private int numZone;
+    private String stato;
+    private int num_zone;
     private boolean concimazione;
     private boolean raccolta;
     private int id_irrigazione; //FK di irrigazione
     
 
-    public Piantagione(int id, String tipoPianta, int area, String stato, int numZone, boolean concimazione, int id_irrigazione, boolean raccolta) {
+    public Piantagione(int id, String tipo_pianta, int area, String stato, int num_zone, boolean concimazione, int id_irrigazione, boolean raccolta) {
         this.id = id;
-        this.tipoPianta = tipoPianta;
+        this.tipo_pianta = tipo_pianta;
         this.area = area;
-        Stato = stato;
-        this.numZone = numZone;
+        this.stato = stato;
+        this.num_zone = num_zone;
         this.concimazione = concimazione;
         this.id_irrigazione = id_irrigazione;
         this.raccolta = raccolta;
@@ -32,11 +32,11 @@ public class Piantagione {
     }
     
     public String getTipoPianta() {
-        return tipoPianta;
+        return tipo_pianta;
     }
 
-    public void setTipoPianta(String tipoPianta) {
-        this.tipoPianta = tipoPianta;
+    public void setTipoPianta(String tipo_pianta) {
+        this.tipo_pianta = tipo_pianta;
     }
 
     public int getArea() {
@@ -48,19 +48,19 @@ public class Piantagione {
     }
 
     public String getStato() {
-        return Stato;
+        return stato;
     }
 
     public void setStato(String stato) {
-        Stato = stato;
+        this.stato = stato;
     }
 
     public int getNumZone() {
-        return numZone;
+        return num_zone;
     }
 
-    public void setNumZone(int numZone) {
-        this.numZone = numZone;
+    public void setNumZone(int num_zone) {
+        this.num_zone = num_zone;
     }
 
     public boolean isConcimazione() {
@@ -91,10 +91,10 @@ public class Piantagione {
     @Override
     public String toString() {
         return "Piantagione{id=" + id + 
-            ", tipoPianta='" + tipoPianta + 
+            ", tipoPianta='" + tipo_pianta + 
             "', area=" + area + 
-            ", Stato='" + Stato + 
-            "', numZone=" + numZone + 
+            ", Stato='" + stato + 
+            "', numZone=" + num_zone + 
             ", concimazione=" + concimazione +
             ", raccolta=" + raccolta 
             + '}';

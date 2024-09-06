@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="piantagioneRoot" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
+<BorderPane fx:id="piantagioneRoot" prefHeight="671.0" prefWidth="775.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
    <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>
@@ -25,29 +26,41 @@
                   </HBox>
                   <TableView fx:id="piantagioneTable">
                       <columns>
-                          <TableColumn fx:id="nomeColumn" text="Nome" />
-                          <TableColumn fx:id="tipoColumn" text="Tipo" />
-                          <TableColumn fx:id="dataColumn" text="Data" />
+                          <TableColumn fx:id="idColumn" text="ID" />
+                          <TableColumn fx:id="tipoColumn" text="Tipo Pianta" />
+                          <TableColumn fx:id="areaColumn" text="Area" />                          
+                          <TableColumn fx:id="zoneColumn" text="Numero Zone" />
+                          <TableColumn fx:id="statoColumn" text="Stato" />
+                          <TableColumn fx:id="concimazioneColumn" text="Concimazione" />
+                          <TableColumn fx:id="raccoltaColumn" text="Raccolta" />
                       </columns>
                   </TableView>
-                  <VBox spacing="10.0">
-                      <BarChart fx:id="costiGuadagniChart" style="-fx-background-color: #d9d9d9;" title="Costi e Guadagni">
-                          <xAxis>
-                              <CategoryAxis label="Mese" />
-                          </xAxis>
-                          <yAxis>
-                              <NumberAxis label="Valore" />
-                          </yAxis>
-                      </BarChart>
-                      <BarChart fx:id="produzioneChart" style="-fx-background-color: #d9d9d9;" title="Produzione Totale">
-                          <xAxis>
-                              <CategoryAxis label="Mese" />
-                          </xAxis>
-                          <yAxis>
-                              <NumberAxis label="Quantità" />
-                          </yAxis>
-                      </BarChart>
-                  </VBox>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                         <BarChart fx:id="costiGuadagniChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #d9d9d9;" title="Costi e Guadagni">
+                             <xAxis>
+                                 <CategoryAxis label="Mese" />
+                             </xAxis>
+                             <yAxis>
+                                 <NumberAxis label="Valore" />
+                             </yAxis>
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                        </HBox.margin>
+                         </BarChart>
+                         <BarChart fx:id="produzioneChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #d9d9d9;" title="Produzione Totale">
+                             <xAxis>
+                                 <CategoryAxis label="Mese" />
+                             </xAxis>
+                             <yAxis>
+                                 <NumberAxis label="Quantità" />
+                             </yAxis>
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                        </HBox.margin>
+                         </BarChart>
+                  </children>
+               </HBox>
               </VBox>
          </center>
          <top>

@@ -13,7 +13,7 @@ public class UserServiceTest {
         UserService userService = new UserService();
 
         // Dati di test
-        String testUsername = "Fra";
+        String testUsername = "Ale";
         String testPassword = "AZ";
 
         // Autentica l'utente

@@ -175,7 +175,13 @@ public class HomeController {
         try {
             // Carica il file FXML della schermata admin
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/pastorePage.fxml"));
-            Parent adminRoot = loader.load();
+            Parent pastoreRoot = loader.load();
+            
+            // Ottieni il controller della schermata pastore
+            PastoreController pastoreController = loader.getController();
+            
+            // Passa l'oggetto Utente al controller della schermata pastore
+            pastoreController.setUser(utente);
 
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -184,7 +190,7 @@ public class HomeController {
             WindowUtil.setWindowSize(stage);
             
             // Imposta la nuova scena
-            Scene scene = new Scene(adminRoot);
+            Scene scene = new Scene(pastoreRoot);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -87,7 +87,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
-                    Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantita"),
+                    Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantità"),
                         rs.getFloat("`prezzo/kg`"));
                     return magazzino;
                 } else {
@@ -114,7 +114,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
                     while (rs.next()){
                         Magazzino mangime = new Magazzino(
                             rs.getString("tipo_mangime"),
-                            rs.getInt("quantita"),
+                            rs.getInt("quantità"),
                             rs.getFloat("`prezzo/kg`"));
 
                         mangimi.add(mangime);

@@ -72,7 +72,7 @@ public class Prodotto {
     @Override
     public String toString() {
         return "Prodotto{id_prodotto=" + id_prodotto + 
-        ", quantita=" + quantita + 
+        ", quantità=" + quantita + 
         ", dataProduzione=" + dataProduzione + 
         ", dataScadenza=" + dataScadenza +
         '}';

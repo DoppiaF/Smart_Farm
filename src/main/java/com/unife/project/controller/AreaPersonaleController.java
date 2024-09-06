@@ -16,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class AreaPersonaleController {
 
@@ -29,6 +30,10 @@ public class AreaPersonaleController {
 
     @FXML
     private GridPane gridPane;
+
+    
+    @FXML
+    private GridPane modifyRoot;
 
     @FXML
     private CheckBox rememberMeCheckBox;
@@ -59,6 +64,28 @@ public class AreaPersonaleController {
 
     @FXML
     private Button loginButton;
+    
+    @FXML
+    private Button modifyButton;
+    
+    @FXML
+    private Button confirmButton;
+    
+    @FXML
+    private Button goBackButton;
+
+    @FXML
+    private Pane unmodifiablePainForUsername;
+    @FXML
+    private Pane unmodifiablePainForEmail;
+    @FXML
+    private Pane unmodifiablePainForPassword;
+    @FXML
+    private Pane unmodifiablePainForAgricoltoreCk;
+    @FXML
+    private Pane unmodifiablePainForIrrigatoreCk;
+    @FXML
+    private Pane unmodifiablePainForAllevatoreCk;
 
     @FXML
     private BarChart<String, Number> barChart;
@@ -71,6 +98,8 @@ public class AreaPersonaleController {
 
     @FXML
     private void initialize() {
+        
+        modifyRoot.getChildren().removeAll(confirmButton, goBackButton);
         
         // Inizializza i componenti se necessario
         // Ad esempio, carica i dati nei grafici
@@ -168,4 +197,39 @@ public class AreaPersonaleController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    
+    @FXML
+    private void handleModifyButtonAction() {
+        unmodifiablePainForUsername.setDisable(true);
+        unmodifiablePainForEmail.setDisable(true);
+        unmodifiablePainForPassword.setDisable(true);
+        unmodifiablePainForAgricoltoreCk.setDisable(true);
+        unmodifiablePainForIrrigatoreCk.setDisable(true);
+        unmodifiablePainForAllevatoreCk.setDisable(true);
+        modifyButton.setDisable(true);
+        
+        modifyRoot.getChildren().remove(modifyButton);
+        modifyRoot.getChildren().addAll(confirmButton, goBackButton);
+
+    }
+
+    @FXML
+    private void handleConfirmButtonAction() {
+        unmodifiablePainForUsername.setDisable(false);
+        unmodifiablePainForEmail.setDisable(false);
+        unmodifiablePainForPassword.setDisable(false);
+        unmodifiablePainForAgricoltoreCk.setDisable(false);
+        unmodifiablePainForIrrigatoreCk.setDisable(false);
+        unmodifiablePainForAllevatoreCk.setDisable(false);
+        modifyButton.setDisable(false);
+        
+        modifyRoot.getChildren().removeAll(confirmButton, goBackButton);
+        modifyRoot.getChildren().add(modifyButton);
+
+        
+        initialize();
+
+    }
+
 }

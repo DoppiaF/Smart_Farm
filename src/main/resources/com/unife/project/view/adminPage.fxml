@@ -24,6 +24,12 @@
                         <columns>
                             <TableColumn fx:id="usernameColumn" text="Username" />
                             <TableColumn fx:id="emailColumn" text="Email" />
+                            <TableColumn fx:id="dataNascitaColumn" text="Data Nascita" />
+                            <TableColumn fx:id="ruoloIrrigazioneColumn" text="Irrigazione" />
+                            <TableColumn fx:id="ruoloRaccoltaColumn" text="Raccolta" />
+                            <TableColumn fx:id="ruoloPastoreColumn" text="Pastore" />
+                            <TableColumn fx:id="ruoloAdminColumn" text="Amministratore" />
+                            <TableColumn fx:id="creationColumn" text="Data Creazione" />
                         </columns>
                     </TableView>
                     <Label prefHeight="18.0" prefWidth="168.0" text="Aggiungi Nuovo Utente" textAlignment="JUSTIFY" textFill="#d0e700">
@@ -32,7 +38,13 @@
                   </font></Label>
                     <TextField fx:id="usernameField" promptText="Username" />
                     <TextField fx:id="emailField" promptText="Email" />
-                    <Button onAction="#handleAddUser" text="Aggiungi Utente" />
+                    <!-- <TextField fx:id="dataNascitaField" promptText="Data Nascita" />
+                    <TextField fx:id="ruoloIrrigazioneField" promptText="Irrigazione" />
+                    <TextField fx:id="ruoloRaccoltaField" promptText="Raccolta" />
+                    <TextField fx:id="ruoloPastoreField" promptText="Pastore" />
+                    <TextField fx:id="ruoloAdminField" promptText="Amministratore" />
+                    <TextField fx:id="dataCreazioneField" promptText="Data Creazione" />
+                    <Button onAction="#handleAddUser" text="Aggiungi Utente" /> -->
                 </VBox>
          </center>
       </BorderPane>

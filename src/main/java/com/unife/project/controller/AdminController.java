@@ -1,6 +1,7 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
@@ -47,16 +48,60 @@ public class AdminController {
     private TableColumn<Utente, String> emailColumn;
 
     @FXML
+    private TableColumn<Utente, Timestamp> creationColumn;
+
+    @FXML
+    private TableColumn<Utente, String> dataNascitaColumn;
+
+    @FXML
+    private TableColumn<Utente, String> ruoloIrrigazioneColumn;
+
+    @FXML
+    private TableColumn<Utente, String> ruoloRaccoltaColumn;
+
+    @FXML
+    private TableColumn<Utente, String> ruoloPastoreColumn;
+
+    @FXML
+    private TableColumn<Utente, String> ruoloAdminColumn;
+
+    
+
+    @FXML
     private TextField usernameField;
 
     @FXML
     private TextField emailField;
 
     @FXML
+    private TextField dataNascitaField;
+
+    @FXML
+    private TextField ruoloIrrigazioneField;
+
+    @FXML
+    private TextField ruoloRaccoltaField;
+
+    @FXML
+    private TextField ruoloPastoreField;
+
+    @FXML
+    private TextField ruoloAdminField;
+
+    @FXML
+    private TextField dataCreazioneField;
+
+    @FXML
     private void initialize() {
         // Inizializza le colonne della tabella
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        dataNascitaColumn.setCellValueFactory(new PropertyValueFactory<>("dataNascita"));
+        ruoloIrrigazioneColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_irrigazione"));
+        ruoloRaccoltaColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_raccolta"));
+        ruoloPastoreColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_pastore"));
+        ruoloAdminColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_admin"));
+        creationColumn.setCellValueFactory(new PropertyValueFactory<>("createTime"));
 
         // Carica i dati degli utenti dal database
         loadUserData();

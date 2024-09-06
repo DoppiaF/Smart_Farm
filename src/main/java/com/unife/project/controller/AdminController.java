@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
@@ -91,6 +93,29 @@ public class AdminController {
     @FXML
     private TextField dataCreazioneField;
 
+    //form aggiunta utenti
+
+    @FXML
+    private TextField usernameFieldAdd;
+
+    @FXML
+    private TextField emailFieldAdd;
+
+    @FXML
+    private TextField passwordFieldAdd;
+
+    @FXML
+    private CheckBox irrigazioneCheckBox;
+
+    @FXML
+    private CheckBox raccoltaCheckBox;
+
+    @FXML
+    private CheckBox pastoreCheckBox;
+
+    @FXML
+    private Button submitButton;
+
     @FXML
     private void initialize() {
         // Inizializza le colonne della tabella
@@ -110,21 +135,36 @@ public class AdminController {
     }
 
     @FXML
-    private void handleAddUser() {
-        String username = usernameField.getText();
-        String email = emailField.getText();
+    private void handleSubmitButtonAction() {
+        //ottiene valori dai campi del form
+        String username = usernameFieldAdd.getText();
+        String email = emailFieldAdd.getText();
+        String password = passwordFieldAdd.getText();
+        boolean irrigazione = irrigazioneCheckBox.isSelected();
+        boolean raccolta = raccoltaCheckBox.isSelected();
+        boolean pastore = pastoreCheckBox.isSelected();
+
+        Utente utente = new Utente();
+        utente.setUserName(username);
+        utente.setEmail(email);
+        utente.setPassword(password);
+        utente.setRuolo_irrigazione(irrigazione);
+        utente.setRuolo_raccolta(raccolta);
+        utente.setRuolo_pastore(pastore);
+        utente.setRuolo_admin(false);
+        utente.setDataNascita(null);
+        
 
         // Aggiungi l'utente al database
-        addUserToDatabase(username, email);
+        DAOFactory.getUtenteDAO().save(utente);
 
         // Ricarica i dati degli utenti
-        loadUserData();
+        initialize();
     }
 
     private void loadUserData() {
         // Carica i dati degli utenti dal database e impostali nella tabella
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        List<Utente> utenti = daoFactory.getUtenteDAO().findAll();
+        List<Utente> utenti = DAOFactory.getUtenteDAO().findAll();
 
         userData.addAll(utenti);
     }

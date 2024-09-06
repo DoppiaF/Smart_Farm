@@ -136,7 +136,9 @@ public class UtenteDAOImpl implements UtenteDAO{
                         utente.setPassword(rs.getString("password"));
                         utente.setEmail(rs.getString("email"));
                         utente.setCreateTime(rs.getTimestamp("create_time"));
-                        utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                        if(rs.getDate("data_nascita") != null){
+                            utente.setDataNascita(rs.getDate("data_nascita").toLocalDate());
+                        }
                         utente.setRuolo_raccolta(rs.getBoolean("ruolo_raccolta"));
                         utente.setRuolo_irrigazione(rs.getBoolean("ruolo_irrigazione"));
                         utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));

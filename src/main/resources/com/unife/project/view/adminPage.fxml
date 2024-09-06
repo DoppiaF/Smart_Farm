@@ -13,7 +13,7 @@
         <fx:include source="verticalMenuBar.fxml" />
     </left>
    <center>
-      <BorderPane fx:id="adminNested" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="adminNested" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <!--<top>
             <fx:include source="menuBar.fxml" />
         </top> -->

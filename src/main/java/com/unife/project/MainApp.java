@@ -1,5 +1,7 @@
 package com.unife.project;
 
+import com.unife.project.util.WindowUtil;
+
 //import com.unife.project.model.dao.UtenteDAOImpl;
 //import com.unife.project.util.DatabaseConnection;
 import javafx.application.Application;
@@ -31,8 +33,9 @@ public class MainApp extends Application {
             // Imposta la scena
             primaryStage.setScene(new Scene(root, 800, 600)); // Imposta la dimensione iniziale della finestra
             primaryStage.setTitle("Home");
-            primaryStage.setMinWidth(800); // Imposta la larghezza minima
-            primaryStage.setMinHeight(600); // Imposta l'altezza minima    
+            //primaryStage.setMinWidth(800); // Imposta la larghezza minima
+            //primaryStage.setMinHeight(600); // Imposta l'altezza minima    
+            WindowUtil.setWindowSize(primaryStage);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

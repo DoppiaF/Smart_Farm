@@ -26,7 +26,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 
     @Override
     public void save(Prodotto prodotto) {
-        String sql = "INSERT INTO prodotto (quantita, dataProduzione, dataScadenza, tipoProdotto)";
+        String sql = "INSERT INTO prodotto (quantità, dataProduzione, dataScadenza, tipoProdotto)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1,prodotto.getQuantita());
@@ -46,7 +46,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
     @Override
     public void update(Prodotto prodotto) {
         String sql = "UPDATE prodotto" +
-                    "SET quantita = ?, dataProduzione = ?, dataScadenza = ?, tipoProdotto = ?" +
+                    "SET quantità = ?, dataProduzione = ?, dataScadenza = ?, tipoProdotto = ?" +
                     "WHERE id_prodotto = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)){
@@ -88,7 +88,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     Prodotto prodotto = new Prodotto(
-                        rs.getInt("quantita"),
+                        rs.getInt("quantità"),
                         rs.getString("tipoProdotto"),
                         rs.getTimestamp("dataProduzione").toLocalDateTime(),
                         rs.getTimestamp("dataScadenza").toLocalDateTime()
@@ -117,7 +117,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
                 else{
                     while (rs.next()){
                         Prodotto prodotto = new Prodotto(
-                            rs.getInt("quantita"),
+                            rs.getInt("quantità"),
                             rs.getString("tipoProdotto"),
                             rs.getTimestamp("dataProduzione").toLocalDateTime(),
                             rs.getTimestamp("dataScadenza").toLocalDateTime()

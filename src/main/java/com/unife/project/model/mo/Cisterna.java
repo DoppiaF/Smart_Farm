@@ -50,8 +50,8 @@ public class Cisterna {
     public String toString() {
         return "Cisterna{" +
                 "id=" + id +
-                ", capacita=" + capacita +
-                ", quantita=" + quantita +
+                ", capacità=" + capacita +
+                ", quantità=" + quantita +
                 '}';
     }
 

@@ -37,7 +37,7 @@ public class Magazzino {
 
     @Override
     public String toString() {
-        return "Magazzino{tipoMangime='" + tipoMangime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
+        return "Magazzino{tipoMangime='" + tipoMangime + "', quantità=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
     }
 
     /*

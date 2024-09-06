@@ -37,6 +37,7 @@
                             <TableColumn fx:id="ruoloPastoreColumn" text="Pastore" />
                             <TableColumn fx:id="ruoloAdminColumn" text="Amministratore" />
                             <TableColumn fx:id="creationColumn" text="Data Creazione" />
+                            <TableColumn fx:id="deleteColumn" text="Delete" />
                         </columns>
                   <VBox.margin>
                      <Insets top="30.0" />

@@ -42,7 +42,7 @@ public class IrrigazioneDAOImplTest {
         LocalDate dataInizio = LocalDate.parse("2022-01-01");
         LocalTime oraInizio = LocalTime.parse("12:00:00");
 
-        irrigazione.setData_inizio(dataInizio);
+        //irrigazione.setData_inizio(dataInizio);
         irrigazione.setOra_inizio(oraInizio);
         irrigazione.setDurata(60);
         irrigazione.setAuto(true);

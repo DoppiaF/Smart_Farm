@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Irrigazione {
     private int id_irrigazione;
-    private LocalDate data_inizio;
     private LocalTime ora_inizio;
     private int durata;
     private boolean auto;
@@ -21,14 +20,12 @@ public class Irrigazione {
 
     public Irrigazione(
             int id_irrigazione,
-            LocalDate data_inizio,
             LocalTime ora_inizio, 
             int durata, 
             boolean auto, 
             String stato, 
             int litri_usati) {
         this.id_irrigazione = id_irrigazione;
-        this.data_inizio = data_inizio;
         this.ora_inizio = ora_inizio;
         this.durata = durata;
         this.auto = auto;
@@ -42,14 +39,6 @@ public class Irrigazione {
 
     public void setId_irrigazione(int id_irrigazione) {
         this.id_irrigazione = id_irrigazione;
-    }
-
-    public LocalDate getData_inizio() {
-        return data_inizio;
-    }
-
-    public void setData_inizio(LocalDate data_inizio) {
-        this.data_inizio = data_inizio;
     }
 
     public LocalTime getOra_inizio() {
@@ -104,7 +93,6 @@ public class Irrigazione {
     public String toString() {
         return "Irrigazione{" +
                 "id_irrigazione=" + id_irrigazione +
-                ", data_inizio=" + data_inizio +
                 ", ora_inizio=" + ora_inizio +
                 ", durata=" + durata +
                 ", auto=" + auto +

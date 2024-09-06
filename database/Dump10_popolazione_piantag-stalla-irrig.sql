@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `fattoria` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `fattoria`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fattoria
+-- Host: localhost    Database: fattoria
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -87,13 +85,13 @@ DROP TABLE IF EXISTS `irrigazione`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `irrigazione` (
   `id_impostazione` int NOT NULL AUTO_INCREMENT,
-  `ora_inizio` date DEFAULT NULL,
+  `ora_inizio` time DEFAULT NULL,
   `durata` float DEFAULT NULL,
   `automatico` tinyint NOT NULL DEFAULT '0',
   `stato` varchar(20) DEFAULT 'da programmare',
   `litri_usati` int DEFAULT NULL,
   PRIMARY KEY (`id_impostazione`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +100,7 @@ CREATE TABLE `irrigazione` (
 
 LOCK TABLES `irrigazione` WRITE;
 /*!40000 ALTER TABLE `irrigazione` DISABLE KEYS */;
+INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10);
 /*!40000 ALTER TABLE `irrigazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +197,7 @@ CREATE TABLE `piantagione` (
   PRIMARY KEY (`id`),
   KEY `irrigazione_idx` (`id_irrigazione`),
   CONSTRAINT `irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_impostazione`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,6 +206,7 @@ CREATE TABLE `piantagione` (
 
 LOCK TABLES `piantagione` WRITE;
 /*!40000 ALTER TABLE `piantagione` DISABLE KEYS */;
+INSERT INTO `piantagione` VALUES (2,'grano',1,'ottimale',9,0,1,1);
 /*!40000 ALTER TABLE `piantagione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +319,7 @@ CREATE TABLE `stalla` (
 
 LOCK TABLES `stalla` WRITE;
 /*!40000 ALTER TABLE `stalla` DISABLE KEYS */;
-INSERT INTO `stalla` VALUES ('stalla_A',500,'frisona','10:00:00','22:00:00');
+INSERT INTO `stalla` VALUES ('stalla_A',500,'frisona','10:00:00','22:00:00'),('stalla_B',400,'muccona','10:30:00','21:00:00'),('stalla_C',400,'bufalo','11:00:00','21:45:00');
 /*!40000 ALTER TABLE `stalla` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +336,7 @@ CREATE TABLE `utente` (
   `email` varchar(255) NOT NULL,
   `password` varchar(32) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `data_nascita` date DEFAULT NULL,
+  `data_nascita` date NOT NULL,
   `ruolo_raccolta` tinyint DEFAULT '0' COMMENT 'se true, utente ha accesso alle feature di raccolta e valutazione del terreno',
   `ruolo_irrigazione` tinyint DEFAULT '0' COMMENT 'se true, utente ha accesso alle impostazioni del sistema di irrigazione',
   `ruolo_pastore` tinyint DEFAULT '0' COMMENT 'se true (1) utente ha permesso di gestione completo degli animali nelle varie stalle. mangime, visite veterinarie e gestione.',
@@ -345,7 +345,7 @@ CREATE TABLE `utente` (
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,7 +354,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES (1,'Fra','ale@gmail.com','AZ','2024-09-04 15:05:18','1997-03-13',0,0,0,1),(2,'Racc','racc@email.com','ra','2024-09-06 08:00:13','2001-07-13',1,0,0,0),(5,'Irr','irr@email.com','ir','2024-09-06 08:06:09','1997-04-18',0,1,0,0),(6,'Pas','pas@email.com','pa','2024-09-06 08:06:09','1999-01-30',0,0,1,0);
+INSERT INTO `utente` VALUES (1,'Ale','ale@email.com','az','2024-09-04 15:05:18','1997-03-13',0,0,0,1),(2,'Racc','racc@email.com','ra','2024-09-06 08:00:13','2001-07-13',1,0,0,0),(5,'Irr','irr@email.com','ir','2024-09-06 08:06:09','1997-04-18',0,1,0,0),(6,'Pas','pas@email.com','pa','2024-09-06 08:06:09','1999-01-30',0,0,1,0);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,4 +430,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-06 15:34:31
+-- Dump completed on 2024-09-06 18:20:08

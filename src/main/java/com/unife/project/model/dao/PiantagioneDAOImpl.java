@@ -26,7 +26,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
 
     @Override
     public void save(Piantagione piantagione) {
-        String sql = "INSERT INTO piantagione (tipoPianta, area, Stato, numZone, concimazione, id_irrigazione, raccolta) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO piantagione (tipo_pianta, area, stato, num_zone, concimazione, id_irrigazione, raccolta) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, piantagione.getTipoPianta());
@@ -50,7 +50,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
     @Override
     public void update(Piantagione piantagione) {
         String sql ="UPDATE piantagione" +
-                    "SET tipoPianta = ?, area = ?, Stato = ?, numZone = ?, concimazione = ?, id_irrigazione = ?, raccolta = ?" + 
+                    "SET tipo_pianta = ?, area = ?, stato = ?, num_zone = ?, concimazione = ?, id_irrigazione = ?, raccolta = ?" + 
                     "WHERE piantagione = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

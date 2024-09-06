@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `fattoria` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `fattoria` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `fattoria`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fattoria
+-- Host: localhost    Database: fattoria
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -347,11 +347,7 @@ CREATE TABLE `utente` (
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-<<<<<<<< HEAD:database/Dump11_ripristino_data_nascita_utente_nullable.sql
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
-========
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
->>>>>>>> d524b18f6c558c53c687e7c073f20af2425e315c:database/Dump11_fixDataNascitaNullable.sql
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,11 +356,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-<<<<<<<< HEAD:database/Dump11_ripristino_data_nascita_utente_nullable.sql
 INSERT INTO `utente` VALUES (1,'Ale','ale@email.com','az','2024-09-04 15:05:18','1997-03-13',0,0,0,1),(2,'Racc','racc@email.com','ra','2024-09-06 08:00:13','2001-07-13',1,0,0,0),(5,'Irr','irr@email.com','ir','2024-09-06 08:06:09','1997-04-18',0,1,0,0),(6,'Pas','pas@email.com','pa','2024-09-06 08:06:09','1999-01-30',0,0,1,0),(7,'Gio','gio@email.com','gc','2024-09-06 17:33:08','1997-10-24',0,1,0,0);
-========
-INSERT INTO `utente` VALUES (1,'Ale','ale@email.com','az','2024-09-04 15:05:18','1997-03-13',0,0,0,1),(2,'Racc','racc@email.com','ra','2024-09-06 08:00:13','2001-07-13',1,0,0,0),(5,'Irr','irr@email.com','ir','2024-09-06 08:06:09','1997-04-18',0,1,0,0),(6,'Pas','pas@email.com','pa','2024-09-06 08:06:09','1999-01-30',0,0,1,0),(7,'Pianta','pianta@email.com','pianta','2024-09-06 17:01:14','1998-10-02',1,1,0,0),(8,'prova','prova@email.com','prova','2024-09-06 17:28:28',NULL,0,0,1,0);
->>>>>>>> d524b18f6c558c53c687e7c073f20af2425e315c:database/Dump11_fixDataNascitaNullable.sql
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,8 +432,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<<< HEAD:database/Dump11_ripristino_data_nascita_utente_nullable.sql
 -- Dump completed on 2024-09-06 19:54:10
-========
--- Dump completed on 2024-09-06 19:40:51
->>>>>>>> d524b18f6c558c53c687e7c073f20af2425e315c:database/Dump11_fixDataNascitaNullable.sql

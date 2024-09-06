@@ -44,11 +44,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="personaleRoot" fx:controller="com.unife.project.controller.AreaPersonaleController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="personaleRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AreaPersonaleController">
   <left>
     <fx:include source="verticalMenuBar.fxml" />
   </left>
@@ -109,6 +110,11 @@
                         <CheckBox fx:id="agricoltoreCheckBox" mnemonicParsing="false" text="Agricoltore" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                         <CheckBox fx:id="irrigatoreCheckBox" mnemonicParsing="false" text="Irrigatore" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                         <CheckBox fx:id="allevatoreCheckBox" mnemonicParsing="false" text="Allevatore" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <Pane fx:id="unmodifiablePainForAgricoltoreCk" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="1" />
+                        <Pane fx:id="unmodifiablePainForIrrigatoreCk" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="2" />
+                        <Pane fx:id="unmodifiablePainForAllevatoreCk" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="3" />
+                        <!--pannello che copre il checkbox di Admin, che non deve essere modificabile-->
+                        <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" />
                      </children>
                   </GridPane>
                   <GridPane>
@@ -141,6 +147,7 @@
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" GridPane.halignment="CENTER" />
                                     <TextField fx:id="myUsernameField" GridPane.columnIndex="1" />
+                                    <Pane fx:id="unmodifiablePainForUsername" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="1">
@@ -154,6 +161,7 @@
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" GridPane.halignment="CENTER" />
                                     <TextField fx:id="emailField" GridPane.columnIndex="1" />
+                                    <Pane fx:id="unmodifiablePainForEmail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                               <GridPane GridPane.columnIndex="2">
@@ -168,6 +176,7 @@
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" GridPane.halignment="CENTER" />
                                     <PasswordField fx:id="myPasswordField" text="pw" GridPane.columnIndex="1" />
+                                    <Pane fx:id="unmodifiablePainForPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" prefHeight="40.0" prefWidth="514.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -177,17 +186,19 @@
                               <Font size="36.0" />
                            </font>
                         </Text>
-                        <GridPane>
+                        <GridPane fx:id="modifyRoot">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" text="Modifica" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#handleModifyButtonAction" text="Modifica" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                              <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#handleConfirmButtonAction" text="Conferma" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#handleGoBackButtonAction" text="Annulla" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>

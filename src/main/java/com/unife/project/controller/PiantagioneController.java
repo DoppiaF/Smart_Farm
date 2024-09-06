@@ -66,7 +66,6 @@ public class PiantagioneController {
     @FXML
     private void initialize() {
         // Inizializza le colonne della tabella
-        /*
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tipColumn.setCellValueFactory(new PropertyValueFactory<>("tipo_pianta"));
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("area"));
@@ -74,7 +73,7 @@ public class PiantagioneController {
         statoColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
         concimazioneColumn.setCellValueFactory(new PropertyValueFactory<>("concimazione"));
         raccoltaColumn.setCellValueFactory(new PropertyValueFactory<>("raccolta"));
-*/
+
         
         // Carica i dati delle piantagioni dal database
         //loadPiantagioneData();

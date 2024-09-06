@@ -250,11 +250,16 @@ public class AdminController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(btn);
-                            btn.setVisible(getTableRow().isSelected());
-                            getTableRow().selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                                btn.setVisible(isNowSelected);
-                            });
+                            Utente utenteSelezionato = getTableView().getItems().get(getIndex());
+                            if (utenteSelezionato.getRuolo_admin()) {
+                                setGraphic(null);
+                            } else {
+                                setGraphic(btn);
+                                btn.setVisible(getTableRow().isSelected());
+                                getTableRow().selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                                    btn.setVisible(isNowSelected);
+                                });
+                            }
                         }
                     }
                 };

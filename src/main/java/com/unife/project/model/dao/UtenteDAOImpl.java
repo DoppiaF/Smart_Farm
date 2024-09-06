@@ -50,7 +50,7 @@ public class UtenteDAOImpl implements UtenteDAO{
     public void update(Utente utente) {
         String sql = "UPDATE utente" +
                      "SET username = ?, password = ?, email = ?, data_nascita = ?, ruolo_raccolta = ?, ruolo_irrigazione = ?, ruolo_pastore = ?, ruolo_admin = ?" + 
-                     "WHERE id_utente = ?";
+                     "WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, utente.getUserName());
@@ -74,7 +74,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 
     @Override
     public void delete(Utente utente) {
-        String sql = "DELETE FROM utente WHERE id_utente = ?";
+        String sql = "DELETE FROM utente WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, utente.getId());
             int rowsDeleted = ps.executeUpdate();
@@ -90,7 +90,7 @@ public class UtenteDAOImpl implements UtenteDAO{
 
     @Override
     public Utente findById(int id) {
-        String sql = "SELECT * FROM utente WHERE id_utente = ?";
+        String sql = "SELECT * FROM utente WHERE id = ?";
         try ( PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();

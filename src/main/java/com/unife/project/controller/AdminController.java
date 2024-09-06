@@ -17,12 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 public class AdminController {
 
@@ -66,6 +68,9 @@ public class AdminController {
 
     @FXML
     private TableColumn<Utente, String> ruoloAdminColumn;
+
+    @FXML
+    private TableColumn<Utente, Void> deleteColumn;
 
     
 
@@ -118,6 +123,8 @@ public class AdminController {
 
     @FXML
     private void initialize() {
+
+
         // Inizializza le colonne della tabella
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -127,6 +134,9 @@ public class AdminController {
         ruoloPastoreColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_pastore"));
         ruoloAdminColumn.setCellValueFactory(new PropertyValueFactory<>("ruolo_admin"));
         creationColumn.setCellValueFactory(new PropertyValueFactory<>("createTime"));
+
+        // Configura la colonna deleteColumn
+        addDeleteButtonToTable();
 
         // Carica i dati degli utenti dal database
         loadUserData();
@@ -163,6 +173,9 @@ public class AdminController {
     }
 
     private void loadUserData() {
+        // Svuota la lista userData per evitare duplicati
+        if(userData != null) userData.clear();
+
         // Carica i dati degli utenti dal database e impostali nella tabella
         List<Utente> utenti = DAOFactory.getUtenteDAO().findAll();
 
@@ -216,8 +229,51 @@ public class AdminController {
         }
     }
 
-    private void addUserToDatabase(String username, String email) {
-        // Aggiungi l'utente al database
+    private void addDeleteButtonToTable() {
+        Callback<TableColumn<Utente, Void>, TableCell<Utente, Void>> cellFactory = new Callback<TableColumn<Utente, Void>, TableCell<Utente, Void>>() {
+            @Override
+            public TableCell<Utente, Void> call(final TableColumn<Utente, Void> param) {
+                final TableCell<Utente, Void> cell = new TableCell<Utente, Void>() {
+
+                    private final Button btn = new Button("Elimina");
+
+                    {
+                        btn.setOnAction((event) -> {
+                            Utente utente = getTableView().getItems().get(getIndex());
+                            deleteUtente(utente);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                            btn.setVisible(getTableRow().isSelected());
+                            getTableRow().selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                                btn.setVisible(isNowSelected);
+                            });
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        deleteColumn.setCellFactory(cellFactory);
+    }
+
+    private void deleteUtente(Utente utente) {
+        // Rimuovi l'utente dal database
+        if (utente != null) {
+            DAOFactory.getUtenteDAO().delete(utente);
+            System.out.println(utente.toString());
+        }
+
+        // Rimuovi l'utente dalla lista userData
+        userData.remove(utente);
     }
 
     private void showErrorDialog(String title, String message) {

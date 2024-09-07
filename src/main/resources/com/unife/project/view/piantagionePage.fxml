@@ -26,13 +26,13 @@
                   </HBox>
                   <TableView fx:id="piantagioneTable">
                       <columns>
-                          <TableColumn fx:id="idColumn" text="ID" />
-                          <TableColumn fx:id="tipoColumn" text="Tipo Pianta" />
-                          <TableColumn fx:id="areaColumn" text="Area" />                          
-                          <TableColumn fx:id="zoneColumn" text="Numero Zone" />
-                          <TableColumn fx:id="statoColumn" text="Stato" />
-                          <TableColumn fx:id="concimazioneColumn" text="Concimazione" />
-                          <TableColumn fx:id="raccoltaColumn" text="Raccolta" />
+                            <TableColumn fx:id="idColumn" text="ID" />
+                            <TableColumn fx:id="tipoColumn" text="Tipo Pianta" />
+                            <TableColumn fx:id="areaColumn" text="Area" />                          
+                            <TableColumn fx:id="zoneColumn" text="Numero Zone" />
+                            <TableColumn fx:id="statoColumn" text="Stato" />
+                            <TableColumn fx:id="concimazioneColumn" text="Concimazione" />
+                            <TableColumn fx:id="raccoltaColumn" text="Raccolta" />
                       </columns>
                   </TableView>
                <HBox prefHeight="100.0" prefWidth="200.0">

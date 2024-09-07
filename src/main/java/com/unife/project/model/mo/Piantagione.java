@@ -12,6 +12,9 @@ public class Piantagione {
     private int id_irrigazione; //FK di irrigazione
     
 
+    public Piantagione() {
+    }
+
     public Piantagione(int id, String tipo_pianta, int area, String stato, int num_zone, boolean concimazione, int id_irrigazione, boolean raccolta) {
         this.id = id;
         this.tipo_pianta = tipo_pianta;

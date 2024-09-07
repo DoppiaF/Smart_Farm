@@ -181,11 +181,9 @@ public class AdminController {
 
         private void loadUserData() {
             // Svuota la lista userData per evitare duplicati
-            if(userData != null) userData.clear();
-
             // Carica i dati degli utenti dal database e impostali nella tabella
             List<Utente> utenti = DAOFactory.getUtenteDAO().findAll();
-
+            userData.clear();
             userData.addAll(utenti);
     }
 
@@ -282,10 +280,11 @@ public class AdminController {
         if (utente != null) {
             DAOFactory.getUtenteDAO().delete(utente);
             System.out.println(utente.toString());
+            // Rimuovi l'utente dalla lista userData
+            userData.remove(utente);
         }
 
-        // Rimuovi l'utente dalla lista userData
-        userData.remove(utente);
+        
     }
 
     private void showErrorDialog(String title, String message) {

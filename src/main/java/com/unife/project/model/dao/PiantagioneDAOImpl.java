@@ -26,7 +26,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
 
     @Override
     public void save(Piantagione piantagione) {
-        String sql = "INSERT INTO piantagione (tipo_pianta, area, stato, num_zone, concimazione, id_irrigazione, raccolta) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO piantagione (tipo_pianta, area, stato, num_zone, concimazione, raccolta) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, piantagione.getTipoPianta());
@@ -34,8 +34,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
             ps.setString(3, piantagione.getStato());
             ps.setInt(4, piantagione.getNumZone());
             ps.setBoolean(5, piantagione.isConcimazione());
-            ps.setInt(6, piantagione.getId_irrigazione());
-            ps.setBoolean(7, piantagione.isRaccolta());
+            ps.setBoolean(6, piantagione.isRaccolta());
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Una nuova piantagione è stata registrata correttamente!");

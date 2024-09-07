@@ -9,15 +9,22 @@ import com.unife.project.model.mo.Utente;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
+import javafx.util.converter.BooleanStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class PiantagioneController {
 
@@ -36,13 +43,13 @@ public class PiantagioneController {
     private TableView<Piantagione> piantagioneTable;
 
     @FXML
-    private TableColumn<Piantagione, String> idColumn;
+    private TableColumn<Piantagione, Integer> idColumn;
 
     @FXML
     private TableColumn<Piantagione, String> tipoColumn;
 
     @FXML
-    private TableColumn<Piantagione, String> areaColumn;
+    private TableColumn<Piantagione, Integer> areaColumn;
 
     @FXML
     private TableColumn<Piantagione, Integer> zoneColumn;
@@ -51,10 +58,13 @@ public class PiantagioneController {
     private TableColumn<Piantagione, String> statoColumn;
 
     @FXML
-    private TableColumn<Piantagione, String> concimazioneColumn;
+    private TableColumn<Piantagione, Boolean> concimazioneColumn;
 
     @FXML
-    private TableColumn<Piantagione, String> raccoltaColumn;
+    private TableColumn<Piantagione, Boolean> raccoltaColumn;
+
+    @FXML
+    private TableColumn<Piantagione, Void> actionColumn;
 
     //grafici
     @FXML
@@ -66,6 +76,7 @@ public class PiantagioneController {
     @FXML
     private void initialize() {
         // Inizializza le colonne della tabella
+        //nelle property serve usare i nomi dei metodi getter del MO. es tipoPianta diventa getTipoPianta qui dentro.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipoPianta"));
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("area"));
@@ -74,7 +85,28 @@ public class PiantagioneController {
         concimazioneColumn.setCellValueFactory(new PropertyValueFactory<>("concimazione"));
         raccoltaColumn.setCellValueFactory(new PropertyValueFactory<>("raccolta"));
 
+        // Rendi le colonne editabili
         
+        piantagioneTable.setEditable(true);
+        tipoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        areaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        zoneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        statoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        concimazioneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+        raccoltaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+
+         // Gestisci le modifiche delle celle
+         tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));
+         areaColumn.setOnEditCommit(event -> event.getRowValue().setArea(event.getNewValue()));
+         zoneColumn.setOnEditCommit(event -> event.getRowValue().setNumZone(event.getNewValue()));
+         statoColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
+         concimazioneColumn.setOnEditCommit(event -> event.getRowValue().setConcimazione(event.getNewValue()));
+         raccoltaColumn.setOnEditCommit(event -> event.getRowValue().setRaccolta(event.getNewValue()));
+
+         
+        // Aggiungi il pulsante di conferma alla tabella
+        addConfirmButtonToTable();
+
         // Carica i dati delle piantagioni dal database
         loadPiantagioneData();
         piantagioneTable.setItems(piantagioneData);
@@ -83,6 +115,10 @@ public class PiantagioneController {
     @FXML
     private void handleAddPiantagione() {
         // Logica per aggiungere una nuova piantagione
+        Piantagione nuovaPiantagione = new Piantagione(0, "", 0, "", 0, true, 1, false);
+        piantagioneData.add(nuovaPiantagione);
+        piantagioneTable.getSelectionModel().select(nuovaPiantagione);
+    
     }
 
     @FXML
@@ -97,7 +133,7 @@ public class PiantagioneController {
 
     private void loadPiantagioneData() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella
-        if(piantagioneData != null ) piantagioneData.clear();
+        piantagioneData.clear();
         List<Piantagione> piantagioni = DAOFactory.getPiantagioneDAO().findAll();
 
         piantagioneData.addAll(piantagioni);
@@ -148,7 +184,99 @@ public class PiantagioneController {
         }
     }
 
-    
+    //gestione dinamica dell'inserimento di una nuova piantagione dentro la tabella
+    private void addConfirmButtonToTable() {
+        //Viene creata una nuova colonna di tipo Void chiamata "Action".
+        TableColumn<Piantagione, Void> colBtn = new TableColumn<>("Conferma aggiunta");
+
+        //Viene definita una fabbrica di celle (cellFactory) che crea celle per la colonna "Action".
+        Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>> cellFactory = new Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>>() {
+            @Override
+            public TableCell<Piantagione, Void> call(final TableColumn<Piantagione, Void> param) {
+                final TableCell<Piantagione, Void> cell = new TableCell<Piantagione, Void>() {
+
+                    private final Button btn = new Button("Modifica");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            //controllo l'indice corrente per evitare eccezioni su riga non selezionat
+                            int index = getIndex();
+                            if(index >= 0 && index < getTableView().getItems().size()){
+                                //All'interno della cella, viene creato un pulsante "Conferma". 
+                                //Quando il pulsante viene cliccato, viene chiamato il metodo confermaPiantagione 
+                                //con la piantagione corrispondente alla riga.
+                                Piantagione piantagione = getTableView().getItems().get(index);
+                                confermaPiantagione(piantagione);
+                            } else {
+                                System.out.println("Errore: indice fuori dai limiti di tabella");
+                            }
+                            
+                            
+                        });
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        /*Il metodo updateItem viene sovrascritto per aggiornare il contenuto della cella. 
+                        Se la cella è vuota (empty), 
+                        il contenuto grafico viene impostato a null. Altrimenti, viene impostato il pulsante "Conferma". */
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            if (getTableView().getSelectionModel().isSelected(getIndex())) {
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+
+                            // Aggiunge un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                            getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                int index = getIndex();
+                                if (index >= 0 && index <=getTableView().getItems().size() && newSelection == getTableView().getItems().get(index)) {
+                                    setGraphic(btn);
+                                } else {
+                                    setGraphic(null);
+                                }
+                            });
+                        
+                        }
+                    }
+                };
+                return cell;
+            }    
+        };
+
+        /*La fabbrica di celle viene impostata sulla colonna "Action" e la colonna viene aggiunta alla TableView. */
+        colBtn.setCellFactory(cellFactory);
+        piantagioneTable.getColumns().add(colBtn);
+    }
+
+    //metodo per confermare l'inserimento di una nuova piantagione dentro la tabella.
+    private void confermaPiantagione(Piantagione piantagione) {
+        // Verifica che tutti i campi della riga siano validi
+        if (piantagione.getTipoPianta().isEmpty() 
+                || (piantagione.getArea() == 0) 
+                || (piantagione.getNumZone() == 0)
+                || piantagione.getStato().isEmpty()) {
+            // Mostra un messaggio di errore
+            showErrorDialog("Errore", "Tutti i campi devono essere compilati.");
+            return;
+        }
+
+        
+        // log per il debug
+        System.out.println("Conferma piantagione. cosa sta inserendo nel db: " + piantagione.toString());
+        
+        // Aggiungi la piantagione al database
+        DAOFactory.getPiantagioneDAO().save(piantagione);
+
+        // Aggiorna la lista delle piantagioni
+        loadPiantagioneData();
+
+        // Rimuovi il pulsante "Conferma" dalla cella
+        piantagioneTable.refresh();
+    }
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

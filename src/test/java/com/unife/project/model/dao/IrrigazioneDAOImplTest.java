@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class IrrigazioneDAOImplTest {
@@ -39,7 +39,7 @@ public class IrrigazioneDAOImplTest {
     public void testSave() throws SQLException {
         Irrigazione irrigazione = new Irrigazione();
         
-        LocalDate dataInizio = LocalDate.parse("2022-01-01");
+        //LocalDate dataInizio = LocalDate.parse("2022-01-01");
         LocalTime oraInizio = LocalTime.parse("12:00:00");
 
         //irrigazione.setData_inizio(dataInizio);
@@ -54,12 +54,12 @@ public class IrrigazioneDAOImplTest {
         irrigazioneDAO.save(irrigazione);
 
         verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).setDate(eq(1), any());
-        verify(preparedStatement, times(1)).setTime(eq(2), any());
-        verify(preparedStatement, times(1)).setInt(eq(3), eq(60));
-        verify(preparedStatement, times(1)).setBoolean(eq(4), eq(true));
-        verify(preparedStatement, times(1)).setString(eq(5), eq("In corso"));
-        verify(preparedStatement, times(1)).setInt(eq(6), eq(100));
+        //verify(preparedStatement, times(1)).setDate(eq(1), any()); //commentato perché in irrigazione abbiamo rimosso il campo data_inizio
+        verify(preparedStatement, times(1)).setTime(eq(1), any());
+        verify(preparedStatement, times(1)).setInt(eq(2), eq(60));
+        verify(preparedStatement, times(1)).setBoolean(eq(3), eq(true));
+        verify(preparedStatement, times(1)).setString(eq(4), eq("In corso"));
+        verify(preparedStatement, times(1)).setInt(eq(5), eq(100));
         verify(preparedStatement, times(1)).executeUpdate();
     }
 

@@ -18,9 +18,10 @@
             "name": "Debug (Launch) MainAPP",
             "request": "launch",
             "mainClass": "com.unife.project.MainApp", // Sostituisci con il nome della tua classe principale
-            "projectName": "smart-farm-management", // Sostituisci con il nome del tuo progetto
-            "preLaunchTask": "mvn clean compile",
-            "args": ""
+            //"projectName": "smart-farm-management", // Sostituisci con il nome del tuo progetto
+            //"preLaunchTask": "mvn clean compile",
+            
+            "vmArgs": "--module-path \"${workspaceFolder}\"/target/dependency --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",

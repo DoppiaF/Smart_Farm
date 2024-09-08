@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pastoreRoot" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
+<BorderPane fx:id="pastoreRoot" prefHeight="600.0" prefWidth="817.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
     <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>
@@ -19,35 +20,45 @@
          <center>
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
-                      <Button onAction="#handleAddAnimale" text="Aggiungi" />
+                      <Button onAction="#handleAddStalla" text="Aggiungi" />
                       <Button onAction="#handleEditAnimale" text="Modifica" />
                       <Button onAction="#handleRemoveAnimale" text="Rimuovi" />
                   </HBox>
                   <TableView fx:id="stalleTable">
                       <columns>
-                          <TableColumn fx:id="nomeColumn" text="Nome" />
-                          <TableColumn fx:id="tipoColumn" text="Tipo" />
-                          <TableColumn fx:id="dataColumn" text="Data" />
+                          <TableColumn fx:id="nomeColumn" text="Nome Stalla" />
+                          <TableColumn fx:id="capienzaColumn" text="Capienza" />
+                          <TableColumn fx:id="razzaColumn" text="Razza" />
+                          <TableColumn fx:id="pranzoColumn" text="Orario Primo Pasto" />
+                          <TableColumn fx:id="cenaColumn" text="Orario Secondo Pasto" />
                       </columns>
                   </TableView>
-                  <VBox spacing="10.0">
-                      <BarChart fx:id="costiChart" style="-fx-background-color: #d9d9d9;" title="Costi Complessivi">
-                          <xAxis>
-                              <CategoryAxis label="Mese" />
-                          </xAxis>
-                          <yAxis>
-                              <NumberAxis label="Valore" />
-                          </yAxis>
-                      </BarChart>
-                      <BarChart fx:id="guadagniChart" style="-fx-background-color: #d9d9d9;" title="Guadagni Totali">
-                          <xAxis>
-                              <CategoryAxis label="Mese" />
-                          </xAxis>
-                          <yAxis>
-                              <NumberAxis label="Valore" />
-                          </yAxis>
-                      </BarChart>
-                  </VBox>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                         <BarChart fx:id="costiChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0" style="-fx-background-color: #d9d9d9;" title="Costi Complessivi">
+                             <xAxis>
+                                 <CategoryAxis label="Mese" prefHeight="0.0" prefWidth="455.0" />
+                             </xAxis>
+                             <yAxis>
+                                 <NumberAxis label="Valore" />
+                             </yAxis>
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </HBox.margin>
+                         </BarChart>
+                         <BarChart fx:id="guadagniChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0" style="-fx-background-color: #d9d9d9;" title="Guadagni Totali">
+                             <xAxis>
+                                 <CategoryAxis label="Mese" />
+                             </xAxis>
+                             <yAxis>
+                                 <NumberAxis label="Valore" />
+                             </yAxis>
+                        <HBox.margin>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </HBox.margin>
+                         </BarChart>
+                  </children>
+               </HBox>
               </VBox>
          </center>
          <top>

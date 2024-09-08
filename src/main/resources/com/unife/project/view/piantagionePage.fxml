@@ -21,7 +21,6 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddPiantagione" text="Aggiungi" />
-                      <Button onAction="#handleEditPiantagione" text="Modifica" />
                       <Button onAction="#handleRemovePiantagione" text="Rimuovi" />
                   </HBox>
                   <TableView fx:id="piantagioneTable">

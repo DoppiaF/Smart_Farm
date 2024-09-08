@@ -118,6 +118,12 @@ public class PiantagioneController {
         Piantagione nuovaPiantagione = new Piantagione(0, "", 0, "", 0, true, 1, false);
         piantagioneData.add(nuovaPiantagione);
         piantagioneTable.getSelectionModel().select(nuovaPiantagione);
+        // Mostra un popup con un messaggio per l'utente
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Nuova Piantagione Aggiunta");
+        alert.setHeaderText(null);
+        alert.setContentText("Una nuova piantagione è stata aggiunta. Si prega di compilare i dettagli e confermare per aggiungere effettivamente il record.");
+        alert.showAndWait();
     
     }
 
@@ -249,6 +255,64 @@ public class PiantagioneController {
         /*La fabbrica di celle viene impostata sulla colonna "Action" e la colonna viene aggiunta alla TableView. */
         colBtn.setCellFactory(cellFactory);
         piantagioneTable.getColumns().add(colBtn);
+
+        // Aggiungi una nuova colonna per il pulsante "Elimina"
+    TableColumn<Piantagione, Void> colDeleteBtn = new TableColumn<>("Elimina");
+
+    Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>> deleteCellFactory = new Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>>() {
+        @Override
+        public TableCell<Piantagione, Void> call(final TableColumn<Piantagione, Void> param) {
+            final TableCell<Piantagione, Void> cell = new TableCell<Piantagione, Void>() {
+
+                private final Button btn = new Button("Elimina");
+
+                {
+                    btn.setOnAction((ActionEvent event) -> {
+                        // Controllo l'indice corrente per evitare eccezioni su riga non selezionata
+                        int index = getIndex();
+                        if (index >= 0 && index < getTableView().getItems().size()) {
+                            // Rimuovi la piantagione corrispondente alla riga
+                            Piantagione piantagione = getTableView().getItems().get(index);
+                            piantagioneData.remove(piantagione);
+                            // Puoi anche aggiungere la logica per rimuovere la piantagione dal database qui
+                            DAOFactory.getPiantagioneDAO().delete(piantagione);
+                        } else {
+                            System.out.println("Indice fuori dai limiti: " + index);
+                        }
+                    });
+                }
+
+                @Override
+                public void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        // Controlla se la riga è selezionata
+                        if (getTableView().getSelectionModel().isSelected(getIndex())) {
+                            setGraphic(btn);
+                        } else {
+                            setGraphic(null);
+                        }
+
+                        // Aggiungi un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                        getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                            int index = getIndex();
+                            if (index >= 0 && index < getTableView().getItems().size() && newSelection == getTableView().getItems().get(index)) {
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+                        });
+                    }
+                }
+            };
+            return cell;
+        }
+    };
+
+    colDeleteBtn.setCellFactory(deleteCellFactory);
+    piantagioneTable.getColumns().add(colDeleteBtn);
     }
 
     //metodo per confermare l'inserimento di una nuova piantagione dentro la tabella.

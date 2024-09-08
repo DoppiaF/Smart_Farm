@@ -12,15 +12,20 @@ import com.unife.project.model.mo.Utente;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 
 public class PastoreController {
 
@@ -71,6 +76,9 @@ public class PastoreController {
         // Carica i dati delle stalle dal database
         loadStalleData();
         stalleTable.setItems(stalleData);
+
+        // Aggiungi la colonna del pulsante di conferma
+        addConfirmButtonToTable();
     }
 
     @FXML
@@ -80,12 +88,8 @@ public class PastoreController {
         nuovaStalla.setEtichettaStalla("Nuova Stalla");
         nuovaStalla.setCapienza(0);
         nuovaStalla.setRazza("Razza");
-        LocalTime oraPranzo = LocalTime.of(12, 0);
-        LocalTime oraCena = LocalTime.of(18, 0);
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        nuovaStalla.setOraPranzo(oraPranzo.format(timeFormatter));
-        nuovaStalla.setOraCena(oraCena.format(timeFormatter));
+        nuovaStalla.setOraPranzo(LocalTime.of(12, 0));
+        nuovaStalla.setOraCena(LocalTime.of(18, 0));
 
         // Aggiungi la nuova stalla alla lista
         stalleData.add(nuovaStalla);
@@ -164,6 +168,55 @@ public class PastoreController {
         }
     }
     
+
+    private void addConfirmButtonToTable() {
+        TableColumn<Stalla, Void> colBtn = new TableColumn<>("Conferma Modifica");
+
+        Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>> cellFactory = new Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>>() {
+            @Override
+            public TableCell<Stalla, Void> call(final TableColumn<Stalla, Void> param) {
+                final TableCell<Stalla, Void> cell = new TableCell<Stalla, Void>() {
+
+                    private final Button btn = new Button("Conferma");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Stalla stalla = getTableView().getItems().get(getIndex());
+                            confermaStalla(stalla);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+          colBtn.setCellFactory(cellFactory);
+        stalleTable.getColumns().add(colBtn);
+    }
+
+    private void confermaStalla(Stalla stalla) {
+        // Logica per aggiungere la stalla al database  
+        DAOFactory.getStallaDAO().save(stalla);
+
+
+        // Mostra un popup di conferma
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Stalla Confermata");
+        alert.setHeaderText(null);
+        alert.setContentText("La stalla è stata confermata e aggiunta al database.");
+        alert.showAndWait();
+    }
+
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

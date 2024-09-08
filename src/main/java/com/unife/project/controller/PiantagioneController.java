@@ -201,7 +201,7 @@ public class PiantagioneController {
             public TableCell<Piantagione, Void> call(final TableColumn<Piantagione, Void> param) {
                 final TableCell<Piantagione, Void> cell = new TableCell<Piantagione, Void>() {
 
-                    private final Button btn = new Button("Modifica");
+                    private final Button btn = new Button("Conferma");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {

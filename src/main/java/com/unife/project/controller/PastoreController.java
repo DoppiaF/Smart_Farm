@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,6 +29,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -103,6 +105,9 @@ public class PastoreController {
 
         // Aggiungi la colonna del pulsante di conferma
         addConfirmButtonToTable();
+
+        // Aggiungi la colonna del pulsante "goTo"
+        addGoToButtonToTable();
     }
 
     @FXML
@@ -353,6 +358,75 @@ public class PastoreController {
         colDeleteBtn.setCellFactory(deleteCellFactory);
         stalleTable.getColumns().add(colDeleteBtn);
 
+    }
+
+
+    private void addGoToButtonToTable() {
+        TableColumn<Stalla, Void> colBtn = new TableColumn<>("Vai a Animali");
+
+        Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>> cellFactory = new Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>>() {
+            @Override
+            public TableCell<Stalla, Void> call(final TableColumn<Stalla, Void> param) {
+                final TableCell<Stalla, Void> cell = new TableCell<Stalla, Void>() {
+
+                    private final Button btn = new Button("goTo");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Stalla stalla = getTableView().getItems().get(getIndex());
+                            goToAnimaleView(stalla);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            if (getTableView().getSelectionModel().isSelected(getIndex())) {
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+
+                            // Aggiungi un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                            getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                if (newSelection == getTableView().getItems().get(getIndex())) {
+                                    setGraphic(btn);
+                                } else {
+                                    setGraphic(null);
+                                }
+                            });
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+        stalleTable.getColumns().add(colBtn);
+    }
+
+
+    private void goToAnimaleView(Stalla stalla) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/animaleView.fxml"));
+            Parent root = loader.load();
+
+            // Ottieni il controller e passa i dati
+            AnimaliController controller = loader.getController();
+            controller.setStalla(stalla);
+            controller.setUtente(utente);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Animali nella Stalla" + stalla.getEtichettaStalla());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void confermaStalla(Stalla stalla) {

@@ -155,4 +155,39 @@ public class AnimaleDAOImpl implements AnimaleDAO {
         }
         return animali;
     }
+
+    @Override
+    public List<Animale> findByStalla(String etichettaStalla){
+        String sql = "SELECT * FROM animale WHERE nomeStalla = ?";
+        animali = new ArrayList<Animale>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1, etichettaStalla);
+            try (ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati animali nella stalla " + etichettaStalla);
+                else{
+                    while (rs.next()){
+                        Animale animale = new Animale(rs.getInt("peso"),
+                            rs.getString("sesso").charAt(0),
+                            rs.getString("razza"),
+                            rs.getString("tipoAlimentazione"),
+                            rs.getString("nomeStalla"),
+                            rs.getDate("data_nascita").toLocalDate(),
+                            rs.getDate("data_ingresso").toLocalDate(),
+                            rs.getDate("data_uscita").toLocalDate(),
+                            rs.getDate("data_morte").toLocalDate(),
+                            rs.getDate("data_vaccino").toLocalDate());
+
+                        animali.add(animale);
+                        
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero delle informazioni degli animali della stalla " + etichettaStalla);
+        }
+        return animali;
+    }
 }

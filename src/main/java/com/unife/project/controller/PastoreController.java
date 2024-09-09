@@ -418,8 +418,8 @@ public class PastoreController {
         try {
             String etichetta = stalla.getEtichettaStalla();
             System.out.println("Stalla passata ad animali: " + etichetta );
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/animaleView.fxml"));
-            Parent animaleRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/animalePage.fxml"));
+            Parent animaleRoot = loader.load(); 
 
             // Ottieni il controller e passa i dati
             AnimaliController controller = loader.getController();

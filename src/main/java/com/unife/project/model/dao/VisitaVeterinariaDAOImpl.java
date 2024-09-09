@@ -180,11 +180,11 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
                         VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
                             rs.getDate("data").toLocalDate(),
                             rs.getString("diagnosi"), 
-                            rs.getInt("identificativoAnimale"),
-                            rs.getDate("prossimaVisita").toLocalDate(),
-                            rs.getString("nomeVeterinario"),
-                            rs.getString("cognomeVeterinario"),
-                            rs.getString("curaPrescritta"));
+                            rs.getInt("identificativo_animale"),
+                            rs.getDate("prossima_programmata").toLocalDate(),
+                            rs.getString("nome_veterinario"),
+                            rs.getString("cognome_veterinario"),
+                            rs.getString("cura_prescritta"));
 
                         visiteVeterinarie.add(visitaVeterinaria);
                     }

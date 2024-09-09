@@ -239,13 +239,40 @@ public class AnimaliController {
             MagazzinoController magazzinoController = loader.getController();
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             magazzinoController.setUser(utente);
-            magazzinoController.loadMagazzinoData();
+            //magazzinoController.loadMagazzinoData();
 
             // Aggiungi la barra di menu alla root
             rootPane.setCenter(magazzinoRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la schermata del magazzino.");
+        }
+    }
+
+    @FXML
+    public void handleGoToVeterinario(){
+        Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
+        System.out.println("Animale selezionato: " + animaleSelezionato.toString());
+        if(animaleSelezionato != null){
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/veterinarioPage.fxml"));
+                Parent veterinarioRoot = loader.load();
+
+                // Ottieni il controller della barra di menu
+                VeterinarioController veterinarioController = loader.getController();
+                //passa utente al controller menu bar e aggiorna visibilità bottoni
+                veterinarioController.setUser(utente);
+                veterinarioController.setAnimale(animaleSelezionato);
+                veterinarioController.loadVeterinarioData();
+
+                
+
+                // Aggiungi la barra di menu alla root
+                rootPane.setCenter(veterinarioRoot);
+            } catch (IOException e) {
+                e.printStackTrace();
+                showErrorDialog("Errore", "Impossibile caricare la schermata del veterinario. ");
+            }
         }
     }
 

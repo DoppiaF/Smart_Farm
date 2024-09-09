@@ -64,7 +64,7 @@
                       <Button onAction="#handleGoToMagazzino" mnemonicParsing="false" prefHeight="72.0" prefWidth="209.0" text="MAGAZZINO" textFill="#b14d0e" />
                     </buttons>
                   </ButtonBar>
-                  <Button mnemonicParsing="false" text="aggiorna stato salute" />
+                  <Button onAction="#handleGoToVeterinario" mnemonicParsing="false" text="aggiorna stato salute" />
                </children>
             </VBox>
          </center>

@@ -37,7 +37,7 @@ import javafx.scene.layout.StackPane;
         
 
         public void initialize() {
-            //loadMagazzinoData();
+            loadMagazzinoData();
         }
 
 

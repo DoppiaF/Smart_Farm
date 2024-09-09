@@ -25,7 +25,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void save(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "INSERT INTO visitaVeterinaria (data, diagnosi, identificativoAnimale, prossimaVisita, nomeVeterinario, cognomeVeterinario, curaPrescritta) VALUES (?, ?, ?, ?, ?, ? , ?)";
+        String sql = "INSERT INTO visita_veterinaria (data, diagnosi, identificativo_animale, prossima_visita, nome_veterinario, cognome_veterinario, cura_prescritta) VALUES (?, ?, ?, ?, ?, ? , ?)";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setObject(1, visitaVeterinaria.getData());
@@ -49,7 +49,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void update(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "UPDATE visitaVeterinaria SET diagnosi = ?, prossimaVisita = ?, nomeVeteriario = ?, cognomeVeterinario = ?, curaPrescritta = ? WHERE data = ? and identificativoAnimale = ?";
+        String sql = "UPDATE visita_veterinaria SET diagnosi = ?, prossima_programmata = ?, nome_veterinario = ?, cognome_veterinario = ?, cura_prescritta = ? WHERE data = ? and identificativo_animale = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, visitaVeterinaria.getDiagnosi());
@@ -73,7 +73,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void delete(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "DELETE FROM visitaVeterinaria WHERE data = ? and identificativoAnimale = ?";
+        String sql = "DELETE FROM visita_veterinaria WHERE data = ? and identificativo_animale = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setObject(1, visitaVeterinaria.getData());
             ps.setInt(2, visitaVeterinaria.getIdentificativoAnimale());
@@ -97,7 +97,7 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
     public List<VisitaVeterinaria> findAll() {
         visiteVeterinarie = new ArrayList<VisitaVeterinaria>();
 
-        String sql = "SELECT * FROM visitaVeterinaria";
+        String sql = "SELECT * FROM visita_veterinaria";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -130,11 +130,47 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
     public List<VisitaVeterinaria> findByDataAndIdentificativoAnimale(LocalDate data, int identificativoAnimale) {
         visiteVeterinarie = new ArrayList<VisitaVeterinaria>();
 
-        String sql = "SELECT * FROM visitaVeterinaria WHERE data = ? and identificativoAnimale = ?";
+        String sql = "SELECT * FROM visita_veterinaria WHERE data = ? and identificativo_animale = ?";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setObject(1, data);
             ps.setInt(2, identificativoAnimale);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if(!rs.isBeforeFirst()) {
+                    System.out.println("Non ci sono visite veterinarie nel database");
+                } else {
+                    while(rs.next()){
+                        VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
+                            rs.getDate("data").toLocalDate(),
+                            rs.getString("diagnosi"), 
+                            rs.getInt("identificativoAnimale"),
+                            rs.getDate("prossimaVisita").toLocalDate(),
+                            rs.getString("nomeVeterinario"),
+                            rs.getString("cognomeVeterinario"),
+                            rs.getString("curaPrescritta"));
+
+                        visiteVeterinarie.add(visitaVeterinaria);
+                    }
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle visite veterinarie");
+        }
+
+        return visiteVeterinarie;
+    }
+
+
+    @Override
+    public List<VisitaVeterinaria> findByIdAnimale(int idAnimale) {
+        visiteVeterinarie = new ArrayList<VisitaVeterinaria>();
+
+        String sql = "SELECT * FROM visita_veterinaria WHERE identificativo_animale = ?";
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idAnimale);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if(!rs.isBeforeFirst()) {

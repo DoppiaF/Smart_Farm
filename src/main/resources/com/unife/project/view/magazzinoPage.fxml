@@ -15,7 +15,7 @@
                 <CategoryAxis fx:id="xAxis" label="Alimenti" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis fx:id="yAxis" label="Quantità [Kg]" side="LEFT" />
+                <NumberAxis fx:id="yAxis" label="quantita [Kg]" side="LEFT" />
               </yAxis>
             </BarChart>
          </center>

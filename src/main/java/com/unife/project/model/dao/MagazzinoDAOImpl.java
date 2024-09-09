@@ -22,7 +22,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
 
     @Override
     public void save(Magazzino magazzino) {
-        String sql = "INSERT INTO magazzino (tipo_mangime, quantità, `prezzo/kg`) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO magazzino (tipo_mangime, quantita, `prezzo/kg`) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, magazzino.getTipoMangime());
@@ -43,7 +43,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
     @Override
     public void update(Magazzino magazzino) {
         String sql ="UPDATE magazzino" +
-                    "SET quantità = ?, `prezzo/kg` = ?" + 
+                    "SET quantita = ?, `prezzo/kg` = ?" + 
                     "WHERE tipo_mangime = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -87,7 +87,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
-                    Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantità"),
+                    Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantita"),
                         rs.getFloat("`prezzo/kg`"));
                     return magazzino;
                 } else {
@@ -114,7 +114,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
                     while (rs.next()){
                         Magazzino mangime = new Magazzino(
                             rs.getString("tipo_mangime"),
-                            rs.getInt("quantità"),
+                            rs.getInt("quantita"),
                             rs.getFloat("prezzo_kg"));
 
                         mangimi.add(mangime);

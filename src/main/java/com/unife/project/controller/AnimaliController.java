@@ -252,9 +252,11 @@ public class AnimaliController {
     @FXML
     public void handleGoToVeterinario(){
         Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
-        System.out.println("Animale selezionato: " + animaleSelezionato.toString());
-        if(animaleSelezionato != null){
+        if(animaleSelezionato == null){
+            showErrorDialog("Errore", "Seleziona dalla lista un animale per visualizzare le visite veterinarie.");
+        }else {
             try{
+                System.out.println("Animale selezionato: " + animaleSelezionato.toString());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/veterinarioPage.fxml"));
                 Parent veterinarioRoot = loader.load();
 
@@ -263,9 +265,7 @@ public class AnimaliController {
                 //passa utente al controller menu bar e aggiorna visibilità bottoni
                 veterinarioController.setUser(utente);
                 veterinarioController.setAnimale(animaleSelezionato);
-                veterinarioController.loadVeterinarioData();
-
-                
+                //veterinarioController.loadVeterinarioData();
 
                 // Aggiungi la barra di menu alla root
                 rootPane.setCenter(veterinarioRoot);

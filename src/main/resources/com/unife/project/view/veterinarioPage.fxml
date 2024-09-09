@@ -14,7 +14,7 @@
          <center>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="visitaTable" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="visiteTable" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="nomeColumn" prefWidth="75.0" text="Veterinario: Nome" />
                       <TableColumn fx:id="cognomeColumn" prefWidth="75.0" text="Cognome" />

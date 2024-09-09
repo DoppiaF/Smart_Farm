@@ -51,7 +51,7 @@ public class Cisterna {
         return "Cisterna{" +
                 "id=" + id +
                 ", capacità=" + capacita +
-                ", quantità=" + quantita +
+                ", quantita=" + quantita +
                 '}';
     }
 

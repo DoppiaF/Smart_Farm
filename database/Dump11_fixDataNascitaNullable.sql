@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `cisterna`;
 CREATE TABLE `cisterna` (
   `id` int NOT NULL AUTO_INCREMENT,
   `capacità` int DEFAULT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -164,7 +164,7 @@ DROP TABLE IF EXISTS `magazzino`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `magazzino` (
   `tipo_mangime` varchar(20) NOT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `prezzo/kg` float DEFAULT NULL,
   PRIMARY KEY (`tipo_mangime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -221,7 +221,7 @@ DROP TABLE IF EXISTS `prodotto`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prodotto` (
   `id_prodotto` int NOT NULL AUTO_INCREMENT,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `tipo_prodotto` varchar(20) NOT NULL,
   `data_produzione` date NOT NULL,
   `data_scadenza` date DEFAULT NULL,
@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `raccolta`;
 CREATE TABLE `raccolta` (
   `id_raccolta` int NOT NULL AUTO_INCREMENT,
   `tipo_pianta` varchar(20) NOT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `data_raccolta` date DEFAULT NULL,
   `stato` varchar(20) DEFAULT NULL,
   `operatore` int NOT NULL,

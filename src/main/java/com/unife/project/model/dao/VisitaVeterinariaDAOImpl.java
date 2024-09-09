@@ -165,6 +165,9 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public List<VisitaVeterinaria> findByIdAnimale(int idAnimale) {
+        if(idAnimale <= 0) {
+            throw new IllegalArgumentException("L'id dell'animale non è valido: "+ idAnimale);
+        }
         visiteVeterinarie = new ArrayList<VisitaVeterinaria>();
 
         String sql = "SELECT * FROM visita_veterinaria WHERE identificativo_animale = ?";
@@ -175,13 +178,18 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if(!rs.isBeforeFirst()) {
                     System.out.println("Non ci sono visite veterinarie nel database");
+                    return null;
                 } else {
                     while(rs.next()){
+                        LocalDate prossimaProgrammata = null;
+                        if (rs.getDate("prossima_programmata") != null) {
+                            prossimaProgrammata = rs.getDate("prossima_programmata").toLocalDate();
+                        }
                         VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
                             rs.getDate("data").toLocalDate(),
                             rs.getString("diagnosi"), 
                             rs.getInt("identificativo_animale"),
-                            rs.getDate("prossima_programmata").toLocalDate(),
+                            prossimaProgrammata,
                             rs.getString("nome_veterinario"),
                             rs.getString("cognome_veterinario"),
                             rs.getString("cura_prescritta"));
@@ -194,7 +202,15 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
             e.printStackTrace();
             System.out.println("Errore nel recupero delle visite veterinarie");
         }
-
+        if (visiteVeterinarie.isEmpty()) {
+            System.out.println("Nessuna visita trovata per l'animale con ID: " + idAnimale);
+        }
         return visiteVeterinarie;
+    }
+
+
+    @Override
+    public Connection getConnection() {
+        return this.connection;
     }
 }

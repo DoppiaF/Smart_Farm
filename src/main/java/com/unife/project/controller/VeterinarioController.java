@@ -10,6 +10,7 @@ import com.unife.project.model.mo.Utente;
 import com.unife.project.model.mo.VisitaVeterinaria;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ public class VeterinarioController {
 
     //tabella visite
     @FXML
-    private TableView<VisitaVeterinaria> visitaTable;
+    private TableView<VisitaVeterinaria> visiteTable;
     @FXML
     private TableColumn<VisitaVeterinaria, String> nomeColumn;
     @FXML
@@ -46,51 +47,59 @@ public class VeterinarioController {
 
     private Utente utente = null;
     private Animale animale = null;
-    private List<VisitaVeterinaria> visiteData = FXCollections.observableArrayList();
+    private ObservableList<VisitaVeterinaria> visiteData = FXCollections.observableArrayList();
 
 
 
     public void initialize() {
         try{
-            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome_veterinario"));
-            cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognome_veterinario"));
+            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nomeVeterinario"));
+            cognomeColumn.setCellValueFactory(new PropertyValueFactory<>("cognomeVeterinario"));
             dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
             diagnosiColumn.setCellValueFactory(new PropertyValueFactory<>("diagnosi"));
-            curaColumn.setCellValueFactory(new PropertyValueFactory<>("cura_prescritta"));
-            programmataColumn.setCellValueFactory(new PropertyValueFactory<>("prossima_visita"));
+            curaColumn.setCellValueFactory(new PropertyValueFactory<>("curaPrescritta"));
+            programmataColumn.setCellValueFactory(new PropertyValueFactory<>("prossimaVisita"));
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Errore inizializzazione tabella visite");
         }
 
         
-        //loadVeterinarioData();
-    }
-
-    public void loadVeterinarioData() {
-        if(animale != null){
-            visiteData = DAOFactory.getVisitaVeterinariaDAO().findByIdAnimale(animale.getId_animale());
-                //DAOFactory.getVisitaVeterinariaDAO().findByIdAnimale(animale.getId_animale()));
-        }
-        System.out.println("Numero di elementi nella lista visite: " + visiteData.size());
-
-    
-    }
-
-
-    public void setAnimale(Animale animale) {
-        this.animale = animale;
         loadVeterinarioData();
     }
 
+    public void loadVeterinarioData() {
+        try {
+            if (animale != null) {
+                visiteData.setAll(DAOFactory.getVisitaVeterinariaDAO().findByIdAnimale(animale.getId_animale()));
+            } else {
+                visiteData.clear();
+            }
+            visiteTable.setItems(visiteData);
+            System.out.println("Numero di elementi nella lista visite: " + visiteData.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare i dati delle visite veterinarie.");
+        }
+    }
 
-
+    public void setAnimale(Animale animale) {
+        this.animale = animale;
+        if (animale != null) {
+            System.out.println("Animale settato: " + animale.getId_animale());
+            loadVeterinarioData();
+        } else {
+            System.out.println("Animale nullo");
+            visiteData.clear();
+            visiteTable.setItems(visiteData);
+        }
+    }
 
     //logica di gestione utente e schermata default------------------------------------
         public void setUser(Utente utente) {
             this.utente = utente;
             updateMenuBar();
-            updateVerticalMenuBar();
+            //updateVerticalMenuBar();
         }
         private void updateVerticalMenuBar(){
             try{

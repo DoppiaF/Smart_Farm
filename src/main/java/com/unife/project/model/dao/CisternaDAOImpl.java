@@ -24,7 +24,7 @@ public class CisternaDAOImpl implements CisternaDAO{
 
     @Override
     public void save(Cisterna cisterna) {
-        String sql = "INSERT INTO cisterna (capacità, quantità, tipoAlimentazione, nomeStalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cisterna (capacità, quantita, tipoAlimentazione, nomeStalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, cisterna.getCapacita());
@@ -45,7 +45,7 @@ public class CisternaDAOImpl implements CisternaDAO{
     @Override
     public void update(Cisterna cisterna) {
         String sql ="UPDATE cisterna" +
-                    "SET capacità = ?, quantità = ?" + 
+                    "SET capacità = ?, quantita = ?" + 
                     "WHERE id_cisterna = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class CisternaDAOImpl implements CisternaDAO{
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     Cisterna cisterna = new Cisterna(rs.getInt("capacità"),
-                        rs.getInt("quantità"));
+                        rs.getInt("quantita"));
                     return cisterna;
                 } else {
                     System.out.println("Cisterna non trovata");
@@ -109,7 +109,7 @@ public class CisternaDAOImpl implements CisternaDAO{
                 else{
                     while (rs.next()){
                         Cisterna cisterna = new Cisterna(rs.getInt("capacità"),
-                        rs.getInt("quantità"));
+                        rs.getInt("quantita"));
 
                         cisterne.add(cisterna);
                         

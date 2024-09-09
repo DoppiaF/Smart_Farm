@@ -14,7 +14,7 @@ public class UserServiceTest {
 
         // Dati di test
         String testUsername = "Ale";
-        String testPassword = "AZ";
+        String testPassword = "az";
 
         // Autentica l'utente
         Utente utente = userService.authenticate(testUsername, testPassword);

@@ -1,5 +1,6 @@
 package com.unife.project.model.dao;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,4 +10,5 @@ public interface VisitaVeterinariaDAO extends GenericDAO<VisitaVeterinaria> {
     //metodi specifici per visitaVeterinaria
     List<VisitaVeterinaria> findByDataAndIdentificativoAnimale(LocalDate data, int identificativoAnimale);
     List<VisitaVeterinaria> findByIdAnimale(int idAnimale);
+    public Connection getConnection();
 }

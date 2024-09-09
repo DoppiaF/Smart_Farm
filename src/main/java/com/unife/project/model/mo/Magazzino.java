@@ -2,12 +2,12 @@ package com.unife.project.model.mo;
 
 public class Magazzino {
     private String tipo_magime;
-    private int quantità;
+    private int quantita;
     private float prezzo_kg;
 
     public Magazzino(String tipoMangime, int quantita, float prezzo_kg) {
         this.tipo_magime = tipoMangime;
-        this.quantità = quantita;
+        this.quantita = quantita;
         this.prezzo_kg = prezzo_kg;
     }
 
@@ -20,11 +20,11 @@ public class Magazzino {
     }
 
     public int getQuantita() {
-        return quantità;
+        return quantita;
     }
 
     public void setQuantita(int quantita) {
-        this.quantità = quantita;
+        this.quantita = quantita;
     }
 
     public float getPrezzo_kg() {
@@ -37,11 +37,11 @@ public class Magazzino {
 
     @Override
     public String toString() {
-        return "Magazzino{tipoMangime='" + tipo_magime + "', quantità=" + quantità + ", prezzo_kg=" + prezzo_kg + '}';
+        return "Magazzino{tipoMangime='" + tipo_magime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
     }
 
     /*
      * esempio insert stalla
-     INSERT INTO magazzino (tipo_mangime,quantità,`prezzo/kg`) VALUES ('granoturco',1000,5.8);
+     INSERT INTO magazzino (tipo_mangime,quantita,`prezzo/kg`) VALUES ('granoturco',1000,5.8);
      */
 }

@@ -94,7 +94,7 @@ public class Raccolta {
     public String toString() {
         return "Raccolta{id_raccolta=" + id_raccolta + 
         ", tipoPianta='" + tipoPianta + 
-        "', quantità=" + quantita + 
+        "', quantita=" + quantita + 
         ", dataRaccolta=" + dataRaccolta + 
         ", stato='" + stato + 
         "', macchinario='" + macchinario + 

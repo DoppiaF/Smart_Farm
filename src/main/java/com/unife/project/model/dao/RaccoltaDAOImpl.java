@@ -20,7 +20,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
 
     @Override
     public void save(Raccolta raccolta) {
-        String sql = "INSERT INTO raccolta (tipoPianta, quantità, data_raccolta, stato, macchinario, operatore, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO raccolta (tipoPianta, quantita, data_raccolta, stato, macchinario, operatore, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, raccolta.getTipoPianta());
@@ -48,7 +48,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
     @Override
     public void update(Raccolta raccolta) {
         String sql ="UPDATE raccolta" +
-                    "SET tipoPianta = ?, quantità = ?, data_raccolta = ?, stato = ?, macchinario = ?, operatore = ?, id_piantagione = ?" + 
+                    "SET tipoPianta = ?, quantita = ?, data_raccolta = ?, stato = ?, macchinario = ?, operatore = ?, id_piantagione = ?" + 
                     "WHERE id_raccolta = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -95,7 +95,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
                     Raccolta raccolta = new Raccolta(
                         rs.getInt("id_raccolta"),
                         rs.getString("tipo_pianta"),
-                        rs.getInt("quantità"),
+                        rs.getInt("quantita"),
                         rs.getDate("data_raccolta").toLocalDate(),
                         rs.getString("stato"),
                         rs.getInt("operatore"),
@@ -129,7 +129,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
                         Raccolta raccolta = new Raccolta(
                             rs.getInt("id_raccolta"),
                             rs.getString("tipo_pianta"),
-                            rs.getInt("quantità"),
+                            rs.getInt("quantita"),
                             rs.getDate("data_raccolta").toLocalDate(),
                             rs.getString("stato"),
                             rs.getInt("operatore"),

@@ -25,7 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class ZoneIrrigazioneController {
+public class ZoneRaccoltaController {
     
     private Utente utente;
     private Piantagione piantagione;
@@ -37,39 +37,20 @@ public class ZoneIrrigazioneController {
 
     
     @FXML
-    private BorderPane zoneIrrigazioneRoot;
+    private BorderPane zoneRaccoltaRoot;
     
     @FXML
-    private BorderPane zoneIrrigazioneNested;
-
-    @FXML
-    private TableView<Irrigazione> irrigationsTable;
-    
-    @FXML
-    private TableColumn<Irrigazione, List> irrigationsTabColumn;
+    private BorderPane zoneRaccoltaNested;
 
     @FXML
     private GridPane fieldMap;
     
     @FXML
-    private ProgressBar livello_cisterna;
-    
-    @FXML
-    private RadioButton irrigazioneAutomatica;
-
-    @FXML
-    private Button avviaIrrigazione;
-
-    @FXML
     private void initialize() {
-        loadIrrigazioneData();
-        irrigationsTable.setItems(irrigazioniData);
-        livello_cisterna.setProgress(cisterna.getQuantita()/cisterna.getCapacita());
-        irrigazioneAutomatica.setSelected(irrigazione.isAuto());
-        if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
+        loadSensoriData();
     }
     
-    private void loadIrrigazioneData() {
+    private void loadSensoriData() {
         irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId());
         irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
         cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());

@@ -21,8 +21,6 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddStalla" text="Aggiungi" />
-                      <Button onAction="#handleEditAnimale" text="Modifica" />
-                      <Button onAction="#handleRemoveAnimale" text="Rimuovi" />
                   </HBox>
                   <TableView fx:id="stalleTable">
                       <columns>

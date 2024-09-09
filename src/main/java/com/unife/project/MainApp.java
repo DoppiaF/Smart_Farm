@@ -32,7 +32,7 @@ public class MainApp extends Application {
 
             // Imposta la scena
             primaryStage.setScene(new Scene(root, 800, 600)); // Imposta la dimensione iniziale della finestra
-            primaryStage.setTitle("Home");
+            primaryStage.setTitle("SmartFarm"); // Imposta il titolo della finestra
             //primaryStage.setMinWidth(800); // Imposta la larghezza minima
             //primaryStage.setMinHeight(600); // Imposta l'altezza minima    
             WindowUtil.setWindowSize(primaryStage);

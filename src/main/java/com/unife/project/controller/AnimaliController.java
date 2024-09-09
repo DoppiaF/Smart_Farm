@@ -16,6 +16,7 @@ import com.unife.project.model.mo.Utente;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import com.unife.project.model.dao.DAOFactory;
 
@@ -40,42 +41,74 @@ public class AnimaliController {
     @FXML 
     private TableColumn<Animale, String> mangimeColumn;
     @FXML
-    private TableColumn<Animale, Date> nascitaColumn;
+    private TableColumn<Animale, LocalDate> nascitaColumn;
     @FXML
-    private TableColumn<Animale, Date> vaccinoColumn;
+    private TableColumn<Animale, LocalDate> ingressoColumn;
     @FXML
-    private TableColumn<Animale, Date> uscitaColumn;
+    private TableColumn<Animale, LocalDate> vaccinoColumn;
     @FXML
-    private TableColumn<Animale, Date> morteColumn;
+    private TableColumn<Animale, LocalDate> uscitaColumn;
     @FXML
-    private TableColumn<Animale, Integer> etaColumn;
+    private TableColumn<Animale, LocalDate> morteColumn;
+    /*@FXML
+    private TableColumn<Animale, Integer> etaColumn;*/
 
     private ObservableList<Animale> animaliData = FXCollections.observableArrayList();
-    private Stalla stalla;
-    private Utente utente;
+    private Stalla stalla = new Stalla();
+    private Utente utente = new Utente();
 
     @FXML
     private void initialize() {
-        // Inizializza le colonne della tabella
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        pesoColumn.setCellValueFactory(new PropertyValueFactory<>("peso"));
-        razzaColumn.setCellValueFactory(new PropertyValueFactory<>("razza"));
-        sessoColumn.setCellValueFactory(new PropertyValueFactory<>("sesso"));
-        mangimeColumn.setCellValueFactory(new PropertyValueFactory<>("mangime"));
-        nascitaColumn.setCellValueFactory(new PropertyValueFactory<>("nascita"));
-        vaccinoColumn.setCellValueFactory(new PropertyValueFactory<>("vaccino"));
-        uscitaColumn.setCellValueFactory(new PropertyValueFactory<>("uscita"));
-        morteColumn.setCellValueFactory(new PropertyValueFactory<>("morte"));
-        etaColumn.setCellValueFactory(new PropertyValueFactory<>("eta"));
-        
 
-        // Carica i dati degli animali dal database
-        animaliTable.setItems(animaliData);
+
+        try{
+            // Verifica che la stalla non sia null prima di utilizzarla
+            if (stalla != null) {
+                System.out.println("Caricamento dati animali. stalla selezionata: " + stalla.toString());
+            } else {
+                System.out.println("Stalla non inizializzata.");
+            }
+
+            // Inizializza le colonne della tabella
+            
+
+            
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id_animale"));
+            pesoColumn.setCellValueFactory(new PropertyValueFactory<>("peso"));
+            razzaColumn.setCellValueFactory(new PropertyValueFactory<>("razza"));
+            sessoColumn.setCellValueFactory(new PropertyValueFactory<>("sesso"));
+            mangimeColumn.setCellValueFactory(new PropertyValueFactory<>("tipoAlimentazione"));
+            nascitaColumn.setCellValueFactory(new PropertyValueFactory<>("data_nascita"));
+            ingressoColumn.setCellValueFactory(new PropertyValueFactory<>("data_ingresso"));
+            vaccinoColumn.setCellValueFactory(new PropertyValueFactory<>("data_vaccino"));
+            uscitaColumn.setCellValueFactory(new PropertyValueFactory<>("data_uscita"));
+            morteColumn.setCellValueFactory(new PropertyValueFactory<>("data_morte"));
+            //etaColumn.setCellValueFactory(new PropertyValueFactory<>("eta"));
+            
+            // Carica i dati degli animali
+            //System.out.println("Caricamento dati animali. stalla selezionata: " + stalla.toString());
+
+            
+
+            // Carica i dati degli animali dal database
+            //System.out.println("Caricamento dati animali completato. primo animale" + animaliData.get(0).toString());
+            //animaliTable.setItems(animaliData);
+        }catch (Exception e) {
+            
+            showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
+        }
     }
 
     public void setStalla(Stalla stalla) {
         this.stalla = stalla;
         loadAnimaliData();
+        if (!animaliData.isEmpty()) {
+            System.out.println("Caricamento dati animali completato. primo animale: " + animaliData.get(0).toString());
+        } else {
+            System.out.println("Nessun animale trovato.");
+        }
+
+        
     }
 
     public void setUtente(Utente utente) {
@@ -128,6 +161,7 @@ public class AnimaliController {
         if (stalla != null) {
             animaliData.setAll(DAOFactory.getAnimaleDAO().findByStalla(stalla.getEtichettaStalla()));
         }
+        animaliTable.setItems(animaliData);
     }
 
     private void showErrorDialog(String title, String message) {

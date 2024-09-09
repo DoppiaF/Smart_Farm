@@ -9,8 +9,8 @@ public class Animale {
     private int peso;
     private char sesso;
     private String razza;
-    private String tipoAlimentazione;  //foreign key riferita a Magazzino
-    private String nomeStalla;
+    private String tipo_alimentazione;  //foreign key riferita a Magazzino
+    private String nome_stalla;
     private LocalDate data_nascita;
     private LocalDate data_ingresso;
     private LocalDate data_uscita;
@@ -22,17 +22,18 @@ public class Animale {
     public Animale() {
     }
 
-    public Animale(int peso, 
+    public Animale(int id_animale, int peso, 
             char sesso, String razza, String tipoAlimentazione, 
             String nomeStalla, LocalDate data_nascita, 
             LocalDate data_ingresso, LocalDate data_uscita, 
             LocalDate data_morte, LocalDate data_vaccino) {
                 
+        this.id_animale = id_animale;
         this.peso = peso;
         this.sesso = sesso;
         this.razza = razza;
-        this.tipoAlimentazione = tipoAlimentazione;
-        this.nomeStalla = nomeStalla;
+        this.tipo_alimentazione = tipoAlimentazione;
+        this.nome_stalla = nomeStalla;
         this.data_nascita = data_nascita;
         this.data_ingresso = data_ingresso;
         this.data_uscita = data_uscita;
@@ -73,19 +74,19 @@ public class Animale {
     }
     
     public String getTipoAlimentazione() {
-        return tipoAlimentazione;
+        return tipo_alimentazione;
     }
     
     public void setTipoAlimentazione(String tipoAlimentazione) {
-        this.tipoAlimentazione = tipoAlimentazione;
+        this.tipo_alimentazione = tipoAlimentazione;
     }
     
     public String getNomeStalla() {
-        return nomeStalla;
+        return nome_stalla;
     }
     
     public void setNomeStalla(String nomeStalla) {
-        this.nomeStalla = nomeStalla;
+        this.nome_stalla = nomeStalla;
     }
     
     public LocalDate getData_nascita() {
@@ -143,8 +144,8 @@ public class Animale {
                 "id=" + id_animale +
                 ", peso=" + peso +
                 ", razza='" + razza + '\'' +
-                ", tipoAlimentazione=" + tipoAlimentazione + '\'' +
-                ", nomeStalla='" + nomeStalla + '\'' +
+                ", tipoAlimentazione=" + tipo_alimentazione + '\'' +
+                ", nomeStalla='" + nome_stalla + '\'' +
                 ", data_nascita=" + data_nascita + '\'' +
                 ", data_ingresso=" + data_ingresso + '\'' +
                 ", data_uscita=" + data_uscita + '\'' +

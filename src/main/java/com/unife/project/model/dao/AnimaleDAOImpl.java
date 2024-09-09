@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class AnimaleDAOImpl implements AnimaleDAO {
     private List<Animale> animali = null;
@@ -100,11 +101,13 @@ public class AnimaleDAOImpl implements AnimaleDAO {
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
-                    Animale animale = new Animale(rs.getInt("peso"),
+                    Animale animale = new Animale(
+                        rs.getInt("id_animale"),
+                        rs.getInt("peso"),
                         rs.getString("sesso").charAt(0),
                         rs.getString("razza"),
-                        rs.getString("tipoAlimentazione"),
-                        rs.getString("nomeStalla"),
+                        rs.getString("tipo_alimentazione"),
+                        rs.getString("nome_stalla"),
                         rs.getDate("data_nascita").toLocalDate(),
                         rs.getDate("data_ingresso").toLocalDate(),
                         rs.getDate("data_uscita").toLocalDate(),
@@ -132,16 +135,18 @@ public class AnimaleDAOImpl implements AnimaleDAO {
                 if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati animali");
                 else{
                     while (rs.next()){
-                        Animale animale = new Animale(rs.getInt("peso"),
-                            rs.getString("sesso").charAt(0),
-                            rs.getString("razza"),
-                            rs.getString("tipoAlimentazione"),
-                            rs.getString("nomeStalla"),
-                            rs.getDate("data_nascita").toLocalDate(),
-                            rs.getDate("data_ingresso").toLocalDate(),
-                            rs.getDate("data_uscita").toLocalDate(),
-                            rs.getDate("data_morte").toLocalDate(),
-                            rs.getDate("data_vaccino").toLocalDate());
+                        Animale animale = new Animale();
+                            animale.setId_animale(rs.getInt("id_animale"));
+                            animale.setPeso(rs.getInt("peso"));
+                            animale.setSesso(rs.getString("sesso").charAt(0));
+                            animale.setRazza(rs.getString("razza"));
+                            animale.setTipoAlimentazione(rs.getString("tipo_alimentazione"));
+                            animale.setNomeStalla(rs.getString("nome_stalla"));
+                            animale.setData_nascita(rs.getDate("data_nascita").toLocalDate());
+                            animale.setData_ingresso(rs.getDate("data_ingresso").toLocalDate());
+                            animale.setData_uscita(rs.getDate("data_uscita").toLocalDate());
+                            animale.setData_morte(rs.getDate("data_morte").toLocalDate());
+                            animale.setData_vaccino(rs.getDate("data_vaccino").toLocalDate());
 
                         animali.add(animale);
                         
@@ -158,7 +163,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public List<Animale> findByStalla(String etichettaStalla){
-        String sql = "SELECT * FROM animale WHERE nomeStalla = ?";
+        String sql = "SELECT * FROM animale WHERE nome_stalla = ?";
         animali = new ArrayList<Animale>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
@@ -167,17 +172,26 @@ public class AnimaleDAOImpl implements AnimaleDAO {
                 if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati animali nella stalla " + etichettaStalla);
                 else{
                     while (rs.next()){
-                        Animale animale = new Animale(rs.getInt("peso"),
+                        // Gestione delle date che possono essere null
+                        LocalDate dataNascita = rs.getDate("data_nascita") != null ? rs.getDate("data_nascita").toLocalDate() : null;
+                        LocalDate dataIngresso = rs.getDate("data_ingresso") != null ? rs.getDate("data_ingresso").toLocalDate() : null;
+                        LocalDate dataUscita = rs.getDate("data_uscita") != null ? rs.getDate("data_uscita").toLocalDate() : null;
+                        LocalDate dataMorte = rs.getDate("data_morte") != null ? rs.getDate("data_morte").toLocalDate() : null;
+                        LocalDate dataVaccino = rs.getDate("data_vaccino") != null ? rs.getDate("data_vaccino").toLocalDate() : null;
+
+                        Animale animale = new Animale(
+                            rs.getInt("id_animale"),
+                            rs.getInt("peso"),
                             rs.getString("sesso").charAt(0),
                             rs.getString("razza"),
-                            rs.getString("tipoAlimentazione"),
-                            rs.getString("nomeStalla"),
-                            rs.getDate("data_nascita").toLocalDate(),
-                            rs.getDate("data_ingresso").toLocalDate(),
-                            rs.getDate("data_uscita").toLocalDate(),
-                            rs.getDate("data_morte").toLocalDate(),
-                            rs.getDate("data_vaccino").toLocalDate());
-
+                            rs.getString("tipo_alimentazione"),
+                            rs.getString("nome_stalla"),
+                            dataNascita,
+                            dataIngresso,
+                            dataUscita,
+                            dataMorte,
+                            dataVaccino
+                        );
                         animali.add(animale);
                         
                     }

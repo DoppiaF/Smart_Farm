@@ -127,15 +127,6 @@ public class PiantagioneController {
     
     }
 
-    @FXML
-    private void handleEditPiantagione() {
-        // Logica per modificare una piantagione esistente
-    }
-
-    @FXML
-    private void handleRemovePiantagione() {
-        // Logica per rimuovere una piantagione
-    }
 
     private void loadPiantagioneData() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella

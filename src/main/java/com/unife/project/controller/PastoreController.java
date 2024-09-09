@@ -9,12 +9,14 @@ import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -373,8 +375,10 @@ public class PastoreController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Stalla stalla = getTableView().getItems().get(getIndex());
-                            goToAnimaleView(stalla);
+                            Stalla stalla_selezionata = getTableView().getItems().get(getIndex());
+
+                            System.out.println("Vai a Animali nella stalla: " + stalla_selezionata.toString());
+                            goToAnimaleView(stalla_selezionata, event);
                         });
                     }
 
@@ -410,22 +414,31 @@ public class PastoreController {
     }
 
 
-    private void goToAnimaleView(Stalla stalla) {
+    private void goToAnimaleView(Stalla stalla, ActionEvent event) {
         try {
+            String etichetta = stalla.getEtichettaStalla();
+            System.out.println("Stalla passata ad animali: " + etichetta );
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/animaleView.fxml"));
-            Parent root = loader.load();
+            Parent animaleRoot = loader.load();
 
             // Ottieni il controller e passa i dati
             AnimaliController controller = loader.getController();
+            
             controller.setStalla(stalla);
             controller.setUtente(utente);
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Animali nella Stalla" + stalla.getEtichettaStalla());
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
+            // Imposta la nuova scena
+            Scene scene = new Scene(animaleRoot);
+            //stage.setTitle("Animali nella Stalla: " + stalla.getEtichettaStalla());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Errore nel caricamento della schermata Animali.");
         }
     }
 

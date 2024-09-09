@@ -20,7 +20,9 @@
          <center>
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
-                      <Button onAction="#handleAddPiantagione" text="Aggiungi" />
+                      <Button onAction="#handleAddPiantagione" text="Aggiungi piantagione" />
+                      <Button onAction="#handleGoToIrrigazione" mnemonicParsing="false" text="Mostra irrigazione per la piantagione selezionata" />
+                      <Button onAction="#handleGoToSensori" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Mostra sensori per la piantagione selezionata" />
                   </HBox>
                   <TableView fx:id="piantagioneTable">
                       <columns>

@@ -6,13 +6,16 @@ import java.util.List;
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -22,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -127,6 +131,73 @@ public class PiantagioneController {
     
     }
 
+    @FXML
+    private void handleGoToIrrigazione(ActionEvent event) {
+        Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
+        if(piantagioneSelezionata != null){
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneIrrigazione.fxml"));
+                Parent zoneIrrigazioneRoot = loader.load();
+
+                ZoneIrrigazioneController zoneIrrigazioneController = loader.getController();
+
+                zoneIrrigazioneController.setUser(utente);
+                zoneIrrigazioneController.setPiantagione(piantagioneSelezionata);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                WindowUtil.setWindowSize(stage);
+
+                Scene scene = new Scene(zoneIrrigazioneRoot);
+                stage.setScene(scene);
+                stage.show();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    
+    }
+
+    
+    @FXML
+    private void handleGoToSensori(ActionEvent event) {
+        Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
+        if(piantagioneSelezionata != null){
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneRaccolta.fxml"));
+                Parent zoneRaccoltaRoot = loader.load();
+
+                ZoneRaccoltaController zoneRaccoltaController = loader.getController();
+
+                zoneRaccoltaController.setUser(utente);
+                zoneRaccoltaController.setPiantagione(piantagioneSelezionata);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                WindowUtil.setWindowSize(stage);
+
+                Scene scene = new Scene(zoneRaccoltaRoot);
+                stage.setScene(scene);
+                stage.show();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    
+    }
+
+
+    @FXML
+    private void handleEditPiantagione() {
+        // Logica per modificare una piantagione esistente
+    }
+
+    @FXML
+    private void handleRemovePiantagione() {
+        // Logica per rimuovere una piantagione
+    }
 
     private void loadPiantagioneData() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella

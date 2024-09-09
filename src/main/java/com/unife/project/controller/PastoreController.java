@@ -24,8 +24,12 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalTimeStringConverter;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class PastoreController {
 
@@ -53,10 +57,10 @@ public class PastoreController {
     private TableColumn<Stalla, String> razzaColumn;
 
     @FXML
-    private TableColumn<Stalla, String> pranzoColumn;
+    private TableColumn<Stalla, LocalTime> pranzoColumn;
 
     @FXML
-    private TableColumn<Stalla, String> cenaColumn;
+    private TableColumn<Stalla, LocalTime> cenaColumn;
 
     @FXML
     private BarChart<String, Number> costiChart;
@@ -72,6 +76,26 @@ public class PastoreController {
         razzaColumn.setCellValueFactory(new PropertyValueFactory<>("razza"));
         pranzoColumn.setCellValueFactory(new PropertyValueFactory<>("oraPranzo"));
         cenaColumn.setCellValueFactory(new PropertyValueFactory<>("oraCena"));
+
+
+        // Imposta i converter per le colonne LocalTime
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        StringConverter<LocalTime> localTimeStringConverter = new LocalTimeStringConverter(timeFormatter, null);
+
+        //rende le colonne editabili
+        stalleTable.setEditable(true);
+        nomeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        capienzaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        razzaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        pranzoColumn.setCellFactory(TextFieldTableCell.forTableColumn(localTimeStringConverter));
+        cenaColumn.setCellFactory(TextFieldTableCell.forTableColumn(localTimeStringConverter));
+        
+        //gestisci modifiche delle celle
+        nomeColumn.setOnEditCommit(event -> event.getRowValue().setEtichettaStalla(event.getNewValue()));
+        capienzaColumn.setOnEditCommit(event -> event.getRowValue().setCapienza(event.getNewValue()));
+        razzaColumn.setOnEditCommit(event -> event.getRowValue().setRazza(event.getNewValue()));
+        pranzoColumn.setOnEditCommit(event -> event.getRowValue().setOraPranzo(event.getNewValue()));
+        cenaColumn.setOnEditCommit(event -> event.getRowValue().setOraCena(event.getNewValue()));
 
         // Carica i dati delle stalle dal database
         loadStalleData();
@@ -177,12 +201,35 @@ public class PastoreController {
             public TableCell<Stalla, Void> call(final TableColumn<Stalla, Void> param) {
                 final TableCell<Stalla, Void> cell = new TableCell<Stalla, Void>() {
 
-                    private final Button btn = new Button("Conferma");
+                    private final Button btn = new Button();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Stalla stalla = getTableView().getItems().get(getIndex());
-                            confermaStalla(stalla);
+                            int index = getIndex();
+                            if (index >= 0 && index < getTableView().getItems().size()) {
+                                Stalla stalla = getTableView().getItems().get(index);
+                                List<String> etichette = DAOFactory.getStallaDAO().findAllEtichette();
+
+                                if (etichette.contains(stalla.getEtichettaStalla())) {
+                                    // chiama il metodo DAO update, etichetta già esistente.
+                                    DAOFactory.getStallaDAO().update(stalla);
+                                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                                    alert.setTitle("Stalla modificata.");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("Stalla esistente modificata con successo.");
+                                    alert.showAndWait();
+                                } else {
+                                    // Chiama il metodo DAO save, etichetta non esistente.
+                                    DAOFactory.getStallaDAO().save(stalla);
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Stalla Aggiunta");
+                                    alert.setHeaderText(null);
+                                    alert.setContentText("La nuova stalla è stata aggiunta con successo.");
+                                    alert.showAndWait();
+                                }
+                            } else {
+                                System.out.println("Indice non valido: " + index);
+                            }
                         });
                     }
 
@@ -192,15 +239,120 @@ public class PastoreController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(btn);
+                            int index = getIndex();
+                            Stalla stalla = getTableView().getItems().get(index);
+                            if (getTableView().getSelectionModel().isSelected(index)) {
+                                List<String> etichette = DAOFactory.getStallaDAO().findAllEtichette();
+
+                                if (etichette.contains(stalla.getEtichettaStalla())) {
+                                    btn.setText("Modifica");
+                                    btn.setDisable(false);
+                                } else {
+                                    btn.setText("Aggiungi");
+                                    btn.setDisable(false);
+                                }
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+
+                            // Aggiungi un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                            getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                if (newSelection == stalla) {
+                                    List<String> etichette = DAOFactory.getStallaDAO().findAllEtichette();
+                                    if (etichette.contains(stalla.getEtichettaStalla())) {
+                                        btn.setText("Modifica");
+                                        btn.setDisable(false);
+                                    } else {
+                                        btn.setText("Aggiungi");
+                                        btn.setDisable(false);
+                                    }
+                                    setGraphic(btn);
+                                } else {
+                                    setGraphic(null);
+                                }
+                            });
                         }
                     }
                 };
                 return cell;
             }
         };
-          colBtn.setCellFactory(cellFactory);
+        colBtn.setCellFactory(cellFactory);
         stalleTable.getColumns().add(colBtn);
+
+        // Aggiungi una nuova colonna per il pulsante "Elimina"
+        TableColumn<Stalla, Void> colDeleteBtn = new TableColumn<>("Elimina");
+
+        Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>> deleteCellFactory = new Callback<TableColumn<Stalla, Void>, TableCell<Stalla, Void>>() {
+            @Override
+            public TableCell<Stalla, Void> call(final TableColumn<Stalla, Void> param) {
+                final TableCell<Stalla, Void> cell = new TableCell<Stalla, Void>() {
+
+                    private final Button btn = new Button("Elimina");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            // Ottieni l'indice della riga corrente
+                            int index = getIndex();
+                            
+                            // Controlla se l'indice è valido
+                            if (index >= 0 && index < getTableView().getItems().size()) {
+                                // Ottieni la stalla corrente
+                                Stalla stalla = getTableView().getItems().get(index);
+                                
+                                // Controlla se l'etichetta della stalla è univoca
+                                boolean etichettaUnica = stalleData.stream()
+                                    .filter(s -> !s.equals(stalla))
+                                    .noneMatch(s -> s.getEtichettaStalla().equals(stalla.getEtichettaStalla()));
+                                
+                                if (etichettaUnica) {
+                                    // Rimuovi la stalla dalla lista
+                                    stalleData.remove(stalla);
+                                    
+                                    // Puoi anche aggiungere la logica per rimuovere la stalla dal database qui
+                                    DAOFactory.getStallaDAO().delete(stalla);
+                                } else {
+                                    System.out.println("Etichetta già esistente: " + stalla.getEtichettaStalla());
+                                }
+                            } else {
+                                System.out.println("Indice non valido: " + index);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            // Controlla se la riga è selezionata
+                            if (getTableView().getSelectionModel().isSelected(getIndex())) {
+                                setGraphic(btn);
+                            } else {
+                                setGraphic(null);
+                            }
+
+                            // Aggiungi un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                            getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                int index = getIndex();
+                                if (index >= 0 && index < getTableView().getItems().size() && newSelection == getTableView().getItems().get(index)) {
+                                    setGraphic(btn);
+                                } else {
+                                    setGraphic(null);
+                                }
+                            });
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colDeleteBtn.setCellFactory(deleteCellFactory);
+        stalleTable.getColumns().add(colDeleteBtn);
+
     }
 
     private void confermaStalla(Stalla stalla) {

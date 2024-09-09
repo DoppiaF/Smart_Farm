@@ -141,4 +141,24 @@ public class StallaDAOImpl implements StallaDAO{
         return stalle;
     }
     
+    @Override
+    public List<String> findAllEtichette(){
+        String sql = "SELECT etichetta_stalla FROM stalla";
+        List<String> etichette = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate stalle");
+                else{
+                    while(rs.next()) {
+                        etichette.add(rs.getString("etichetta_stalla"));
+                    }
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle etichette delle stalle");
+        }
+        return etichette;
+    }
 }

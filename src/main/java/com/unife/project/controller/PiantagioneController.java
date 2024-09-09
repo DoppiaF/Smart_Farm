@@ -257,30 +257,30 @@ public class PiantagioneController {
         piantagioneTable.getColumns().add(colBtn);
 
         // Aggiungi una nuova colonna per il pulsante "Elimina"
-    TableColumn<Piantagione, Void> colDeleteBtn = new TableColumn<>("Elimina");
+        TableColumn<Piantagione, Void> colDeleteBtn = new TableColumn<>("Elimina");
 
-    Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>> deleteCellFactory = new Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>>() {
-        @Override
-        public TableCell<Piantagione, Void> call(final TableColumn<Piantagione, Void> param) {
-            final TableCell<Piantagione, Void> cell = new TableCell<Piantagione, Void>() {
+        Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>> deleteCellFactory = new Callback<TableColumn<Piantagione, Void>, TableCell<Piantagione, Void>>() {
+            @Override
+            public TableCell<Piantagione, Void> call(final TableColumn<Piantagione, Void> param) {
+                final TableCell<Piantagione, Void> cell = new TableCell<Piantagione, Void>() {
 
-                private final Button btn = new Button("Elimina");
+                    private final Button btn = new Button("Elimina");
 
-                {
-                    btn.setOnAction((ActionEvent event) -> {
-                        // Controllo l'indice corrente per evitare eccezioni su riga non selezionata
-                        int index = getIndex();
-                        if (index >= 0 && index < getTableView().getItems().size()) {
-                            // Rimuovi la piantagione corrispondente alla riga
-                            Piantagione piantagione = getTableView().getItems().get(index);
-                            piantagioneData.remove(piantagione);
-                            // Puoi anche aggiungere la logica per rimuovere la piantagione dal database qui
-                            DAOFactory.getPiantagioneDAO().delete(piantagione);
-                        } else {
-                            System.out.println("Indice fuori dai limiti: " + index);
-                        }
-                    });
-                }
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            // Controllo l'indice corrente per evitare eccezioni su riga non selezionata
+                            int index = getIndex();
+                            if (index >= 0 && index < getTableView().getItems().size()) {
+                                // Rimuovi la piantagione corrispondente alla riga
+                                Piantagione piantagione = getTableView().getItems().get(index);
+                                piantagioneData.remove(piantagione);
+                                // Puoi anche aggiungere la logica per rimuovere la piantagione dal database qui
+                                DAOFactory.getPiantagioneDAO().delete(piantagione);
+                            } else {
+                                System.out.println("Indice fuori dai limiti: " + index);
+                            }
+                        });
+                    }
 
                 @Override
                 public void updateItem(Void item, boolean empty) {

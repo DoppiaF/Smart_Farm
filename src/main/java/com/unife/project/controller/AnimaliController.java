@@ -85,6 +85,7 @@ public class AnimaliController {
             uscitaColumn.setCellValueFactory(new PropertyValueFactory<>("data_uscita"));
             morteColumn.setCellValueFactory(new PropertyValueFactory<>("data_morte"));
             
+            
             //rende le colonne editabili
             animaliTable.setEditable(true);
             pesoColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -97,6 +98,19 @@ public class AnimaliController {
             uscitaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
             morteColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
 
+
+            //gestione modifiche celle
+            pesoColumn.setOnEditCommit(event -> event.getRowValue().setPeso(event.getNewValue()));
+            razzaColumn.setOnEditCommit(event -> event.getRowValue().setRazza(event.getNewValue()));
+            sessoColumn.setOnEditCommit(event -> event.getRowValue().setSesso(event.getNewValue()));
+            mangimeColumn.setOnEditCommit(event -> event.getRowValue().setTipoAlimentazione(event.getNewValue()));
+            nascitaColumn.setOnEditCommit(event -> event.getRowValue().setData_nascita(event.getNewValue()));
+            ingressoColumn.setOnEditCommit(event -> event.getRowValue().setData_ingresso(event.getNewValue()));
+            vaccinoColumn.setOnEditCommit(event -> event.getRowValue().setData_vaccino(event.getNewValue()));
+            uscitaColumn.setOnEditCommit(event -> event.getRowValue().setData_uscita(event.getNewValue()));
+            morteColumn.setOnEditCommit(event -> event.getRowValue().setData_morte(event.getNewValue()));
+
+            
         }catch (Exception e) {            
             showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
         }
@@ -158,7 +172,9 @@ public class AnimaliController {
 
     private void loadAnimaliData() {
         if (stalla != null) {
+            //animaliTable.refresh();
             animaliData.setAll(DAOFactory.getAnimaleDAO().findByStalla(stalla.getEtichettaStalla()));
+            
         }
         animaliTable.setItems(animaliData);
     }
@@ -169,11 +185,11 @@ public class AnimaliController {
         Animale nuovoAnimale = new Animale();
 
         // Imposta i valori di default
-        nuovoAnimale.setId_animale(0); // id_animale
+        nuovoAnimale.setId_animale(animaliData.size()+1); // id_animale
         nuovoAnimale.setPeso(0); // peso
         nuovoAnimale.setSesso('M'); // sesso
         nuovoAnimale.setRazza("Bovino"); // razza
-        nuovoAnimale.setTipoAlimentazione("grano"); // tipoAlimentazione
+        nuovoAnimale.setTipoAlimentazione("granoturco"); // tipoAlimentazione
         nuovoAnimale.setNomeStalla(stalla.getEtichettaStalla()); // nomeStalla
         nuovoAnimale.setData_nascita(null); // data_nascita
         nuovoAnimale.setData_ingresso(null); // data_ingresso
@@ -181,8 +197,10 @@ public class AnimaliController {
         nuovoAnimale.setData_morte(null); // data_morte
         nuovoAnimale.setData_vaccino(null); // data_vaccino        
 
-        // Aggiungi il nuovo animale alla lista
-        animaliData.add(nuovoAnimale);
+        //aggiungi l'animale al database
+        DAOFactory.getAnimaleDAO().save(nuovoAnimale);
+
+        loadAnimaliData();
     }
 
     @FXML
@@ -192,9 +210,22 @@ public class AnimaliController {
             animaliData.remove(animaleSelezionato);
             //elimina l'animale dal database
             DAOFactory.getAnimaleDAO().delete(animaleSelezionato);
-            animaliTable.refresh();
+            loadAnimaliData();
         } else {
             showErrorDialog("Errore", "Seleziona dalla lista un animale da eliminare.");
+        }
+    }
+
+    @FXML
+    public void handleModifyAnimale(){
+        Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
+        if(animaleSelezionato != null){
+            System.out.println("Modifica animale: " + animaleSelezionato.toString());
+            //modifica l'animale nel database
+            DAOFactory.getAnimaleDAO().update(animaleSelezionato);
+            loadAnimaliData();
+        } else {
+            showErrorDialog("Errore", "Seleziona dalla lista un animale da modificare.");
         }
     }
 

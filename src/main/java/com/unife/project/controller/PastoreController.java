@@ -434,7 +434,6 @@ public class PastoreController {
 
             // Imposta la nuova scena
             Scene scene = new Scene(animaleRoot);
-            //stage.setTitle("Animali nella Stalla: " + stalla.getEtichettaStalla());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

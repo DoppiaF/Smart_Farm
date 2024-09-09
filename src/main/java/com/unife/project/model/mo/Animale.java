@@ -144,7 +144,7 @@ public class Animale {
                 "id=" + id_animale +
                 ", peso=" + peso +
                 ", razza='" + razza + '\'' +
-                ", tipoAlimentazione=" + tipo_alimentazione + '\'' +
+                ", tipoAlimentazione='" + tipo_alimentazione + '\'' +
                 ", nomeStalla='" + nome_stalla + '\'' +
                 ", data_nascita=" + data_nascita + '\'' +
                 ", data_ingresso=" + data_ingresso + '\'' +

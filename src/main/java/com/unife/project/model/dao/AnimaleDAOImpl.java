@@ -24,7 +24,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public void save(Animale animale) {
-        String sql = "INSERT INTO animale (peso, sesso, razza, tipoAlimentazione, nomeStalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO animale (peso, sesso, razza, tipo_alimentazione, nome_stalla, data_nascita, data_ingresso, data_uscita, data_morte, data_vaccino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, animale.getPeso());
@@ -40,6 +40,8 @@ public class AnimaleDAOImpl implements AnimaleDAO {
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Un nuovo animale è stato inserito correttamente!");
+            } else{
+                System.out.println("animale non inserito");
             }
 
         } catch (SQLException e){
@@ -50,8 +52,8 @@ public class AnimaleDAOImpl implements AnimaleDAO {
 
     @Override
     public void update(Animale animale) {
-        String sql ="UPDATE animale" +
-                    "SET peso = ?, sesso = ?, razza = ?, tipoAlimentazione = ?, nomeStalla = ?, data_nascita = ?, data_ingresso = ?, data_uscita = ?, data_morte = ?, data_vaccino = ?" + 
+        String sql ="UPDATE animale " +
+                    "SET peso = ?, sesso = ?, razza = ?, tipo_alimentazione = ?, nome_stalla = ?, data_nascita = ?, data_ingresso = ?, data_uscita = ?, data_morte = ?, data_vaccino = ? " + 
                     "WHERE id_animale = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -17,12 +17,12 @@
                <children>
                   <HBox prefHeight="38.0" prefWidth="792.0">
                      <children>
-                        <Label fx:id="etichettaStallaLabel" text="Stalla">
+                        <Label fx:id="etichettaStallaLabel" style="-fx-background-color: #b50d2e;" text="Stalla" textFill="#290136">
                            <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
                            </HBox.margin>
                            <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                            </padding>
                         </Label>
                         <Button mnemonicParsing="false" onAction="#handleAddAnimale" text="Inserisci nuovo animale">
@@ -31,6 +31,11 @@
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#handleDeleteAnimale" text="Elimina animale selezionato">
+                           <HBox.margin>
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleModifyAnimale" text="Modifica selezione">
                            <HBox.margin>
                               <Insets bottom="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

@@ -1,30 +1,30 @@
 package com.unife.project.model.mo;
 
 public class Magazzino {
-    private String tipoMangime;
-    private int quantita;
+    private String tipo_magime;
+    private int quantità;
     private float prezzo_kg;
 
     public Magazzino(String tipoMangime, int quantita, float prezzo_kg) {
-        this.tipoMangime = tipoMangime;
-        this.quantita = quantita;
+        this.tipo_magime = tipoMangime;
+        this.quantità = quantita;
         this.prezzo_kg = prezzo_kg;
     }
 
     public String getTipoMangime() {
-        return tipoMangime;
+        return tipo_magime;
     }
 
     public void setTipoMangime(String tipoMangime) {
-        this.tipoMangime = tipoMangime;
+        this.tipo_magime = tipoMangime;
     }
 
     public int getQuantita() {
-        return quantita;
+        return quantità;
     }
 
     public void setQuantita(int quantita) {
-        this.quantita = quantita;
+        this.quantità = quantita;
     }
 
     public float getPrezzo_kg() {
@@ -37,7 +37,7 @@ public class Magazzino {
 
     @Override
     public String toString() {
-        return "Magazzino{tipoMangime='" + tipoMangime + "', quantità=" + quantita + ", prezzo_kg=" + prezzo_kg + '}';
+        return "Magazzino{tipoMangime='" + tipo_magime + "', quantità=" + quantità + ", prezzo_kg=" + prezzo_kg + '}';
     }
 
     /*

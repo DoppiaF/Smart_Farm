@@ -36,26 +36,35 @@ import javafx.scene.layout.StackPane;
         private Magazzino magazzino = null;
         
 
-
+        public void initialize() {
+            //loadMagazzinoData();
+        }
 
 
         //logica di visualizzazione grafico---------------------------------------------------
-        private void loadMagazzinoData() {
+        public void loadMagazzinoData() {
             List<Magazzino> items = DAOFactory.getMagazzinoDAO().findAll();
+            System.out.println("Numero di elementi nel magazzino: " + items.size());
+            System.out.println("primo elemento lista" + items.get(0).toString());
             populateBarChart(items);
         }
 
         private void populateBarChart(List<Magazzino> items) {
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             for (Magazzino item : items) {
-                XYChart.Data<String, Number> data = new XYChart.Data<>(item.getNomeAlimento(), item.getQuantita());
+                XYChart.Data<String, Number> data = new XYChart.Data<>(item.getTipoMangime(), item.getQuantita());
                 series.getData().add(data);
-
-                // Aggiungi il prezzo al chilo sopra la barra
-                Label label = new Label(String.format("%.2f €/kg", item.getPrezzoAlChilo()));
-                StackPane stackPane = new StackPane();
-                stackPane.getChildren().addAll(data.getNode(), label);
-                data.setNode(stackPane);
+                System.out.println(item.toString());
+    
+                // Aggiungi un listener per attendere la creazione del nodo
+                data.nodeProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        // Aggiungi il prezzo al chilo sopra la barra
+                        Label label = new Label(String.format("%.2f €/kg", item.getPrezzo_kg()));
+                        StackPane stackPane = (StackPane) newValue;
+                        stackPane.getChildren().add(label);
+                    }
+                });
             }
             barChart.getData().add(series);
         }
@@ -65,7 +74,7 @@ import javafx.scene.layout.StackPane;
         public void setUser(Utente utente) {
             this.utente = utente;
             updateMenuBar();
-            updateVerticalMenuBar();
+            //updateVerticalMenuBar();
         }
         private void updateVerticalMenuBar(){
             try{

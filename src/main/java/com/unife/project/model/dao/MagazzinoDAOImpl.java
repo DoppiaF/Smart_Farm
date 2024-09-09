@@ -115,7 +115,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
                         Magazzino mangime = new Magazzino(
                             rs.getString("tipo_mangime"),
                             rs.getInt("quantità"),
-                            rs.getFloat("`prezzo/kg`"));
+                            rs.getFloat("prezzo_kg"));
 
                         mangimi.add(mangime);
                         

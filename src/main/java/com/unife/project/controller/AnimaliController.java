@@ -229,6 +229,26 @@ public class AnimaliController {
         }
     }
 
+    @FXML
+    public void handleGoToMagazzino(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/magazzinoPage.fxml"));
+            Parent magazzinoRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            MagazzinoController magazzinoController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            magazzinoController.setUser(utente);
+            magazzinoController.loadMagazzinoData();
+
+            // Aggiungi la barra di menu alla root
+            rootPane.setCenter(magazzinoRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la schermata del magazzino.");
+        }
+    }
+
     private void showErrorDialog(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

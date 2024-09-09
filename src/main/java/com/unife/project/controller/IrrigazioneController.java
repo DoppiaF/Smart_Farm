@@ -25,7 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class ZoneIrrigazioneController {
+public class IrrigazioneController {
     
     private Utente utente;
     private Piantagione piantagione;

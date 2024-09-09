@@ -139,7 +139,7 @@ public class PiantagioneController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneIrrigazione.fxml"));
                 Parent zoneIrrigazioneRoot = loader.load();
 
-                ZoneIrrigazioneController zoneIrrigazioneController = loader.getController();
+                IrrigazioneController zoneIrrigazioneController = loader.getController();
 
                 zoneIrrigazioneController.setUser(utente);
                 zoneIrrigazioneController.setPiantagione(piantagioneSelezionata);

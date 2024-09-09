@@ -82,7 +82,7 @@ public class ZoneRaccoltaController {
 
             
             // Aggiungi la barra di menu alla root
-            zoneIrrigazioneRoot.setTop(menuBarRoot);
+            zoneRaccoltaNested.setTop(menuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
@@ -101,7 +101,7 @@ public class ZoneRaccoltaController {
 
             
             // Aggiungi la barra di menu alla root
-            zoneIrrigazioneRoot.setLeft(verticalMenuBarRoot);
+            zoneRaccoltaRoot.setLeft(verticalMenuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

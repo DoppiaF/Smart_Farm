@@ -268,7 +268,31 @@ public class AnimaliController {
 
     @FXML
     public void handleGoToProdotto(){
-        //to be implemented
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/prodottoPage.fxml"));
+            Parent prodottoRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            ProdottoController prodottoController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            prodottoController.setUser(utente);
+            prodottoController.loadProdottiData();
+            prodottoController.setStalla(stalla);
+
+            Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
+            if(animaleSelezionato != null){
+                prodottoController.loadAnimale(animaleSelezionato);
+            } else {
+                showErrorDialog("Errore", "Seleziona dalla lista un animale da modificare.");
+            }
+            
+
+            // Aggiungi la barra di menu alla root
+            rootPane.setCenter(prodottoRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la schermata del prodotto.");
+        }
     }
 
     @FXML

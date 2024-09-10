@@ -23,7 +23,7 @@ public class ZonaDAOImpl implements ZonaDAO {
 
     @Override
     public void save(Zona zona) {
-        String sql = "INSERT INTO zona (coordX, coordY, portataSensore, statoTerreno, sensoreIlluminazione, sensoreUmidita, sensoreTemperatura, sensorePH, sensoreVento, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO zona (coord_x, coord_y, portata_sensore, stato_terreno, sensore_illuminazione, sensore_umidita, sensore_temperatura, sensore_PH, sensore_vento, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, zona.getCoordX());
@@ -51,7 +51,7 @@ public class ZonaDAOImpl implements ZonaDAO {
 
     @Override
     public void update(Zona zona) {
-        String sql = "UPDATE zona SET portataSensore = ?, statoTerreno = ?, sensoreIlluminazione = ?, sensoreUmidita = ?, sensoreTemperatura = ?, sensorePH = ?, sensoreVento = ? WHERE id_piantagione = ? and coordX = ? and coordY = ?";
+        String sql = "UPDATE zona SET portata_sensore = ?, stato_terreno = ?, sensore_illuminazione = ?, sensore_umidita = ?, sensoreTemperatura = ?, sensore_PH = ?, sensore_vento = ? WHERE id_piantagione = ? and coord_x = ? and coord_x = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, zona.getPortataSensore());
@@ -78,7 +78,7 @@ public class ZonaDAOImpl implements ZonaDAO {
 
     @Override
     public void delete(Zona zona) {
-        String sql = "DELETE FROM zona WHERE coordX = ? and coordY = ? and id_piantagione = ?";
+        String sql = "DELETE FROM zona WHERE coord_x = ? and coord_y = ? and id_piantagione = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, zona.getCoordX());
@@ -115,15 +115,15 @@ public class ZonaDAOImpl implements ZonaDAO {
                 } else {
                     while (rs.next()) {
                         Zona zona = new Zona(
-                            rs.getInt("coordX"),
-                            rs.getInt("coordY"),
-                            rs.getInt("portataSensore"),
-                            rs.getString("statoTerreno"),
-                            rs.getFloat("sensoreIlluminazione"),
-                            rs.getFloat("sensoreUmidita"),
-                            rs.getFloat("sensoreTemperatura"),
-                            rs.getFloat("sensorePH"),
-                            rs.getFloat("sensoreVento"),
+                            rs.getInt("coord_x"),
+                            rs.getInt("coord_y"),
+                            rs.getInt("portata_sensore"),
+                            rs.getString("stato_terreno"),
+                            rs.getFloat("sensore_illuminazione"),
+                            rs.getFloat("sensore_umidita"),
+                            rs.getFloat("sensore_temperatura"),
+                            rs.getFloat("sensore_PH"),
+                            rs.getFloat("sensore_vento"),
                             rs.getInt("id_piantagione")
                             );
 
@@ -143,7 +143,7 @@ public class ZonaDAOImpl implements ZonaDAO {
     @Override
     public Zona findByCoordAndPiantagione(int coordX, int coordY, int id_piantagione) {
         Zona zona = null;
-        String sql = "SELECT * FROM zona WHERE coordX = ? and coordY = ? and id_piantagione = ?";
+        String sql = "SELECT * FROM zona WHERE coord_x = ? and coord_y = ? and id_piantagione = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, coordX);
@@ -153,15 +153,15 @@ public class ZonaDAOImpl implements ZonaDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     zona = new Zona(
-                        rs.getInt("coordX"),
-                        rs.getInt("coordY"),
-                        rs.getInt("portataSensore"),
-                        rs.getString("statoTerreno"),
-                        rs.getFloat("sensoreIlluminazione"),
-                        rs.getFloat("sensoreUmidita"),
-                        rs.getFloat("sensoreTemperatura"),
-                        rs.getFloat("sensorePH"),
-                        rs.getFloat("sensoreVento"),
+                        rs.getInt("coord_x"),
+                        rs.getInt("coord_y"),
+                        rs.getInt("portata_sensore"),
+                        rs.getString("stato_terreno"),
+                        rs.getFloat("sensore_illuminazione"),
+                        rs.getFloat("sensore_umidita"),
+                        rs.getFloat("sensore_temperatura"),
+                        rs.getFloat("sensore_PH"),
+                        rs.getFloat("sensore_vento"),
                         rs.getInt("id_piantagione")
                         );
                 } else {
@@ -177,8 +177,9 @@ public class ZonaDAOImpl implements ZonaDAO {
     }
 
     
-    @Override
+    
     public List<Zona> findByPiantagione(int id_piantagione) {
+        zone = new ArrayList<Zona>();
         Zona zona = null;
         String sql = "SELECT * FROM zona WHERE id_piantagione = ?";
 
@@ -191,15 +192,15 @@ public class ZonaDAOImpl implements ZonaDAO {
                 } else {
                     while (rs.next()) {
                         zona = new Zona(
-                            rs.getInt("coordX"),
-                            rs.getInt("coordY"),
-                            rs.getInt("portataSensore"),
-                            rs.getString("statoTerreno"),
-                            rs.getFloat("sensoreIlluminazione"),
-                            rs.getFloat("sensoreUmidita"),
-                            rs.getFloat("sensoreTemperatura"),
-                            rs.getFloat("sensorePH"),
-                            rs.getFloat("sensoreVento"),
+                            rs.getInt("coord_x"),
+                            rs.getInt("coord_y"),
+                            rs.getInt("portata_sensore"),
+                            rs.getString("stato_terreno"),
+                            rs.getFloat("sensore_illuminazione"),
+                            rs.getFloat("sensore_umidita"),
+                            rs.getFloat("sensore_temperatura"),
+                            rs.getFloat("sensore_PH"),
+                            rs.getFloat("sensore_vento"),
                             rs.getInt("id_piantagione")
                             );
 
@@ -213,6 +214,6 @@ public class ZonaDAOImpl implements ZonaDAO {
         }
 
         return zone;
-    }
+    }   
 
 }

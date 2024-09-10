@@ -112,6 +112,8 @@ public class IrrigazioneController {
             " irrigazioniData: " + irrigazioniData.toString() );
 
             Double riempimento = (double)cisterna.getQuantita()/(double)cisterna.getCapacita();
+
+            //qui resta da caricare fieldMap
             System.out.println("riempimento cisterna = " + riempimento);
 
             livello_cisterna.setProgress(riempimento);

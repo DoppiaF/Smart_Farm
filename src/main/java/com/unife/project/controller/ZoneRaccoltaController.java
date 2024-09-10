@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
+import com.unife.project.model.dao.ZonaDAO;
 import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.model.mo.Zona;
@@ -16,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class ZoneRaccoltaController {
     
@@ -36,34 +38,51 @@ public class ZoneRaccoltaController {
     
     @FXML
     private void initialize() {
-        loadSensoriData();
+        System.out.println("Caricamento pagina");
     }
     
     private void loadSensoriData() {
-        listaZone.clear();
-        listaZone = DAOFactory.getZonaDAO().findByPiantagione(piantagione.getId());
-        
-        
-        int row = 0;
-        int col = 0;
-        int numberOfColumns = 5; // Adjust as needed
+        if(piantagione != null){
+            ZonaDAO zonaDAO = DAOFactory.getZonaDAO();
+            listaZone = zonaDAO.findByPiantagione(piantagione.getId());
+            
+            if(listaZone != null){
+                int row = 0;
+                int col = 0;
+                int numberOfColumns = 5; // Adjust as needed
 
-        for (Zona zona : listaZone) {
-            Node node = new Label(zona.toString());
-            fieldMap.add(node, col, row);
-            col++;
-            if (col == numberOfColumns) {
-                col = 0;
-                row++;
-            }
+                for (Zona zona : listaZone) {
+                    Pane cell = new Pane();
+                    cell.setStyle("-fx-border-color:green;");
+                    cell.setOnMouseClicked(event -> {
+                        //System.out.println("Cella selezionata: (" + row + ", " + col + ")");
+                        cell.setStyle("-fx-border-color: orange;");
+                    });
+                    fieldMap.add(cell, col, row);
+                    col++;
+                    if (col == numberOfColumns) {
+                        col = 0;
+                        row++;
+                    }
+                }
+            } else {System.out.println("In questa piantagione non sono state trovate zone");}
+        }else{
+            System.out.println("Piantagione non trovata, non è possibile caricare i dati della sua irrigazione");
         }
 
         
     }
+    /* 
+    private void handleSelectedZone(){
+        
+    }*/
 
     //metodo da chiamare da altri controller per passare l'utente alla home
     public void setPiantagione(Piantagione piantagione){
+        System.out.println("Settaggio piantagione");
         this.piantagione = piantagione;
+        
+        loadSensoriData();
     }
     
     //metodo da chiamare da altri controller per passare l'utente alla home

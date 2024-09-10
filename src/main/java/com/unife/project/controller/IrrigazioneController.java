@@ -37,10 +37,10 @@ public class IrrigazioneController {
 
     
     @FXML
-    private BorderPane zoneIrrigazioneRoot;
+    private BorderPane irrigazioneRoot;
     
     @FXML
-    private BorderPane zoneIrrigazioneNested;
+    private BorderPane irrigazioneNested;
 
     @FXML
     private TableView<Irrigazione> irrigationsTable;
@@ -62,16 +62,25 @@ public class IrrigazioneController {
 
     @FXML
     private void initialize() {
-        loadIrrigazioneData();
     }
     
     private void loadIrrigazioneData() {
         irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
+        irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
+        cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
+        irrigazioniData.addAll(irrigazione);
+        irrigationsTable.setItems(irrigazioniData);
+        
+
+        livello_cisterna.setProgress(cisterna.getQuantita()/cisterna.getCapacita());
+        irrigazioneAutomatica.setSelected(irrigazione.isAuto());
+        if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
     }
 
     //metodo da chiamare da altri controller per passare l'utente alla home
     public void setPiantagione(Piantagione piantagione){
         this.piantagione = piantagione;
+        loadIrrigazioneData();
     }
     
     //metodo da chiamare da altri controller per passare l'utente alla home
@@ -94,7 +103,7 @@ public class IrrigazioneController {
 
             
             // Aggiungi la barra di menu alla root
-            zoneIrrigazioneRoot.setTop(menuBarRoot);
+            irrigazioneNested.setTop(menuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
@@ -113,7 +122,7 @@ public class IrrigazioneController {
 
             
             // Aggiungi la barra di menu alla root
-            zoneIrrigazioneRoot.setLeft(verticalMenuBarRoot);
+            irrigazioneRoot.setLeft(verticalMenuBarRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la barra di menu.");

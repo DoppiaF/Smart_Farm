@@ -136,7 +136,7 @@ public class PiantagioneController {
         Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
         if(piantagioneSelezionata != null){
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneIrrigazione.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/irrigazionePage.fxml"));
                 Parent zoneIrrigazioneRoot = loader.load();
 
                 IrrigazioneController zoneIrrigazioneController = loader.getController();
@@ -156,6 +156,14 @@ public class PiantagioneController {
             }catch (IOException e){
                 e.printStackTrace();
             }
+        }
+        else{
+                // Mostra un popup con un messaggio per l'utente
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Informazione");
+            alert.setHeaderText(null);
+            alert.setContentText("Selezionare una piantagione per poterne visualizzare il sistema di irrigazione o i valori dei sensori.");
+            alert.showAndWait();
         }
     
     }

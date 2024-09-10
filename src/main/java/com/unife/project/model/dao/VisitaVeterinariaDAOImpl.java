@@ -25,16 +25,17 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void save(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "INSERT INTO visita_veterinaria (data, diagnosi, identificativo_animale, prossima_visita, nome_veterinario, cognome_veterinario, cura_prescritta) VALUES (?, ?, ?, ?, ?, ? , ?)";
+        String sql = "INSERT INTO visita_veterinaria (data, diagnosi, identificativo_animale, nome_veterinario, cognome_veterinario, cura_prescritta, stato_animale, programmata) VALUES (?, ?, ?, ?, ?, ? , ?, ?)";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setObject(1, visitaVeterinaria.getData());
             ps.setString(2, visitaVeterinaria.getDiagnosi());
             ps.setInt(3, visitaVeterinaria.getIdentificativoAnimale());
-            ps.setObject(4, visitaVeterinaria.getProssimaVisita());
-            ps.setString(5, visitaVeterinaria.getNomeVeterinario());
-            ps.setString(6, visitaVeterinaria.getCognomeVeterinario());
-            ps.setString(7, visitaVeterinaria.getCuraPrescritta());
+            ps.setString(4, visitaVeterinaria.getNomeVeterinario());
+            ps.setString(5, visitaVeterinaria.getCognomeVeterinario());
+            ps.setString(6, visitaVeterinaria.getCuraPrescritta());
+            ps.setString(7, visitaVeterinaria.getStatoAnimale());
+            ps.setBoolean(8, visitaVeterinaria.getProgrammata());
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
@@ -49,11 +50,10 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void update(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "UPDATE visita_veterinaria SET diagnosi = ?, prossima_programmata = ?, nome_veterinario = ?, cognome_veterinario = ?, cura_prescritta = ? WHERE data = ? and identificativo_animale = ?";
+        String sql = "UPDATE visita_veterinaria SET diagnosi = ?, nome_veterinario = ?, cognome_veterinario = ?, cura_prescritta = ? WHERE data = ? and identificativo_animale = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, visitaVeterinaria.getDiagnosi());
-            ps.setObject(2, visitaVeterinaria.getProssimaVisita());
             ps.setString(3, visitaVeterinaria.getNomeVeterinario());
             ps.setString(4, visitaVeterinaria.getCognomeVeterinario());
             ps.setString(5, visitaVeterinaria.getCuraPrescritta());

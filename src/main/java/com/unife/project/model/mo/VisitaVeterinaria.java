@@ -5,20 +5,23 @@ import java.time.LocalDate;
 public class VisitaVeterinaria {
     private LocalDate data;     //PK
     private String diagnosi;
-    private int identificativoAnimale; //FK di animale  //PK
-    private LocalDate prossimaVisita;
-    private String nomeVeterinario;
-    private String cognomeVeterinario;
-    private String curaPrescritta;
+    private int identificativo_animale; //FK di animale  //PK
+    private String cura_prescritta;
+    private String nome_veterinario;
+    private String cognome_veterinario;
+    private String stato_animale;
+    private boolean programmata;
+    
 
-    public VisitaVeterinaria(LocalDate data, String diagnosi, int identificativoAnimale, LocalDate prossimaVisita, String nomeVeterinario, String cognomeVeterinario, String curaPrescritta) {
+    public VisitaVeterinaria(LocalDate data, String diagnosi, int identificativoAnimale, String nomeVeterinario, String cognomeVeterinario, String curaPrescritta, String stato_animale, boolean programmata) {
         this.data = data;
         this.diagnosi = diagnosi;
-        this.identificativoAnimale = identificativoAnimale;
-        this.prossimaVisita = prossimaVisita;
-        this.nomeVeterinario = nomeVeterinario;
-        this.cognomeVeterinario = cognomeVeterinario;
-        this.curaPrescritta = curaPrescritta;
+        this.identificativo_animale = identificativoAnimale;
+        this.nome_veterinario = nomeVeterinario;
+        this.cognome_veterinario = cognomeVeterinario;
+        this.cura_prescritta = curaPrescritta;
+        this.stato_animale = stato_animale;
+        this.programmata = programmata;
     }
 
     public LocalDate getData() {
@@ -38,43 +41,51 @@ public class VisitaVeterinaria {
     }
 
     public int getIdentificativoAnimale() {
-        return identificativoAnimale;
+        return identificativo_animale;
     }
 
     public void setIdentificativoAnimale(int identificativoAnimale) {
-        this.identificativoAnimale = identificativoAnimale;
-    }
-
-    public LocalDate getProssimaVisita() {
-        return prossimaVisita;
-    }
-
-    public void setProssimaVisita(LocalDate prossimaVisita) {
-        this.prossimaVisita = prossimaVisita;
+        this.identificativo_animale = identificativoAnimale;
     }
 
     public String getNomeVeterinario() {
-        return nomeVeterinario;
+        return nome_veterinario;
     }
 
     public void setNomeVeterinario(String nomeVeterinario) {
-        this.nomeVeterinario = nomeVeterinario;
+        this.nome_veterinario = nomeVeterinario;
     }
 
     public String getCognomeVeterinario() {
-        return cognomeVeterinario;
+        return cognome_veterinario;
     }
 
     public void setCognomeVeterinario(String cognomeVeterinario) {
-        this.cognomeVeterinario = cognomeVeterinario;
+        this.cognome_veterinario = cognomeVeterinario;
     }
 
     public String getCuraPrescritta() {
-        return curaPrescritta;
+        return cura_prescritta;
     }
 
     public void setCuraPrescritta(String curaPrescritta) {
-        this.curaPrescritta = curaPrescritta;
+        this.cura_prescritta = curaPrescritta;
+    }
+
+    public String getStatoAnimale(){
+        return stato_animale;
+    }
+
+    public void setStatoAnimale(String stato_animale){
+        this.stato_animale = stato_animale;
+    }
+
+    public boolean getProgrammata(){
+        return programmata;
+    }
+
+    public void setProgrammata(boolean programmata){
+        this.programmata = programmata;
     }
 
 
@@ -83,11 +94,12 @@ public class VisitaVeterinaria {
         return "VisitaVeterinaria{" +
                 "data=" + data +
                 ", diagnosi='" + diagnosi + '\'' +
-                ", identificativoAnimale=" + identificativoAnimale +
-                ", prossimaVisita=" + prossimaVisita +
-                ", nomeVeterinario='" + nomeVeterinario + '\'' +
-                ", cognomeVeterinario='" + cognomeVeterinario + '\'' +
-                ", curaPrescritta='" + curaPrescritta + '\'' +
+                ", identificativoAnimale=" + identificativo_animale +
+                ", nomeVeterinario='" + nome_veterinario + '\'' +
+                ", cognomeVeterinario='" + cognome_veterinario + '\'' +
+                ", curaPrescritta='" + cura_prescritta + '\'' +
+                ", stato_animale='" + stato_animale + '\'' +
+                ", programmata=" + programmata +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.unife.project.model.dao;
 
+import java.util.List;
+
 import com.unife.project.model.mo.Zona;
 
 public interface ZonaDAO extends GenericDAO<Zona> {
@@ -13,4 +15,6 @@ public interface ZonaDAO extends GenericDAO<Zona> {
     //List<Zona> findByNomeAndCapienzaAndTipo(String nome, int capienza, String tipo);
     
     Zona findByCoordAndPiantagione(int coordX, int coordY, int id_piantagione);
+    
+    List<Zona> findByPiantagione(int id_piantagione);
 }

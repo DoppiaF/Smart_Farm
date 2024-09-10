@@ -63,17 +63,10 @@ public class IrrigazioneController {
     @FXML
     private void initialize() {
         loadIrrigazioneData();
-        irrigationsTable.setItems(irrigazioniData);
-        livello_cisterna.setProgress(cisterna.getQuantita()/cisterna.getCapacita());
-        irrigazioneAutomatica.setSelected(irrigazione.isAuto());
-        if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
     }
     
     private void loadIrrigazioneData() {
-        irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId());
-        irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
-        cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
-        irrigazioniData.addAll(irrigazione);
+        irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
     }
 
     //metodo da chiamare da altri controller per passare l'utente alla home

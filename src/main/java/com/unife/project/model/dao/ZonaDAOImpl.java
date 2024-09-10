@@ -176,4 +176,43 @@ public class ZonaDAOImpl implements ZonaDAO {
         return zona;
     }
 
+    
+    @Override
+    public List<Zona> findByPiantagione(int id_piantagione) {
+        Zona zona = null;
+        String sql = "SELECT * FROM zona WHERE id_piantagione = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id_piantagione);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if(!rs.isBeforeFirst()){
+                    System.out.println("Non sono state trovate zone per la piantagione selezionata");
+                } else {
+                    while (rs.next()) {
+                        zona = new Zona(
+                            rs.getInt("coordX"),
+                            rs.getInt("coordY"),
+                            rs.getInt("portataSensore"),
+                            rs.getString("statoTerreno"),
+                            rs.getFloat("sensoreIlluminazione"),
+                            rs.getFloat("sensoreUmidita"),
+                            rs.getFloat("sensoreTemperatura"),
+                            rs.getFloat("sensorePH"),
+                            rs.getFloat("sensoreVento"),
+                            rs.getInt("id_piantagione")
+                            );
+
+                        zone.add(zona);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca delle zone della piantagione " + id_piantagione);
+        }
+
+        return zone;
+    }
+
 }

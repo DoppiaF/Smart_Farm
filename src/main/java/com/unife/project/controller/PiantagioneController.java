@@ -144,11 +144,12 @@ public class PiantagioneController {
                 zoneIrrigazioneController.setUser(utente);
                 zoneIrrigazioneController.setPiantagione(piantagioneSelezionata);
 
+                
+                Scene scene = new Scene(zoneIrrigazioneRoot);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 WindowUtil.setWindowSize(stage);
 
-                Scene scene = new Scene(zoneIrrigazioneRoot);
                 stage.setScene(scene);
                 stage.show();
 

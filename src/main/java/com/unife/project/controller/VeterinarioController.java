@@ -42,7 +42,9 @@ public class VeterinarioController {
     @FXML
     private TableColumn<VisitaVeterinaria, String> curaColumn;
     @FXML
-    private TableColumn<VisitaVeterinaria, LocalDate> programmataColumn;
+    private TableColumn<VisitaVeterinaria, Boolean> programmataColumn;
+    @FXML
+    private TableColumn<VisitaVeterinaria, String> statoAnimaleColumn;
 
 
     private Utente utente = null;
@@ -58,7 +60,8 @@ public class VeterinarioController {
             dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
             diagnosiColumn.setCellValueFactory(new PropertyValueFactory<>("diagnosi"));
             curaColumn.setCellValueFactory(new PropertyValueFactory<>("curaPrescritta"));
-            programmataColumn.setCellValueFactory(new PropertyValueFactory<>("prossimaVisita"));
+            programmataColumn.setCellValueFactory(new PropertyValueFactory<>("programmata"));
+            statoAnimaleColumn.setCellValueFactory(new PropertyValueFactory<>("statoAnimale"));
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Errore inizializzazione tabella visite");

@@ -21,7 +21,8 @@
                       <TableColumn fx:id="dataColumn" prefWidth="75.0" text="Data Visita" />
                       <TableColumn fx:id="diagnosiColumn" prefWidth="75.0" text="Diagnosi" />
                       <TableColumn fx:id="curaColumn" prefWidth="75.0" text="Cura prescritta" />
-                      <TableColumn fx:id="programmataColumn" prefWidth="75.0" text="Prossima Visita Programmata" />
+                      <TableColumn fx:id="programmataColumn" prefWidth="75.0" text="Da Eseguire" />
+                      <TableColumn fx:id="statoAnimaleColumn" prefWidth="75.0" text="Stato Animale" />
                     </columns>
                   </TableView>
                   <Label prefHeight="18.0" prefWidth="210.0" text="prenota visita veterinaria" />

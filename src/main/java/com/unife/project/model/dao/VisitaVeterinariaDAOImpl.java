@@ -50,15 +50,17 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
 
     @Override
     public void update(VisitaVeterinaria visitaVeterinaria) {
-        String sql = "UPDATE visita_veterinaria SET diagnosi = ?, nome_veterinario = ?, cognome_veterinario = ?, cura_prescritta = ? WHERE data = ? and identificativo_animale = ?";
+        String sql = "UPDATE visita_veterinaria SET diagnosi = ?, nome_veterinario = ?, cognome_veterinario = ?, cura_prescritta = ?, stato_animale = ?, programmata = ? WHERE data = ? and identificativo_animale = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, visitaVeterinaria.getDiagnosi());
-            ps.setString(3, visitaVeterinaria.getNomeVeterinario());
-            ps.setString(4, visitaVeterinaria.getCognomeVeterinario());
-            ps.setString(5, visitaVeterinaria.getCuraPrescritta());
-            ps.setObject(6, visitaVeterinaria.getData());
-            ps.setInt(7, visitaVeterinaria.getIdentificativoAnimale());
+            ps.setString(2, visitaVeterinaria.getNomeVeterinario());
+            ps.setString(3, visitaVeterinaria.getCognomeVeterinario());
+            ps.setString(4, visitaVeterinaria.getCuraPrescritta());
+            ps.setString(5, visitaVeterinaria.getStatoAnimale());
+            ps.setBoolean(6, visitaVeterinaria.getProgrammata());
+            ps.setObject(7, visitaVeterinaria.getData());
+            ps.setInt(8, visitaVeterinaria.getIdentificativoAnimale());
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -108,11 +110,12 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
                         VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
                             rs.getDate("data").toLocalDate(),
                             rs.getString("diagnosi"), 
-                            rs.getInt("identificativoAnimale"),
-                            rs.getDate("prossimaVisita").toLocalDate(),
-                            rs.getString("nomeVeterinario"),
-                            rs.getString("cognomeVeterinario"),
-                            rs.getString("curaPrescritta"));
+                            rs.getInt("identificativo_animale"),
+                            rs.getString("nome_veterinario"),
+                            rs.getString("cognome_veterinario"),
+                            rs.getString("cura_prescritta"),
+                            rs.getString("stato_animale"),
+                            rs.getBoolean("programmata"));  
 
                         visiteVeterinarie.add(visitaVeterinaria);
                     }
@@ -144,11 +147,12 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
                         VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
                             rs.getDate("data").toLocalDate(),
                             rs.getString("diagnosi"), 
-                            rs.getInt("identificativoAnimale"),
-                            rs.getDate("prossimaVisita").toLocalDate(),
-                            rs.getString("nomeVeterinario"),
-                            rs.getString("cognomeVeterinario"),
-                            rs.getString("curaPrescritta"));
+                            rs.getInt("identificativo_animale"),
+                            rs.getString("nome_veterinario"),
+                            rs.getString("cognome_veterinario"),
+                            rs.getString("cura_prescritta"),
+                            rs.getString("stato_animale"),
+                            rs.getBoolean("programmata"));
 
                         visiteVeterinarie.add(visitaVeterinaria);
                     }
@@ -181,18 +185,19 @@ public class VisitaVeterinariaDAOImpl implements VisitaVeterinariaDAO {
                     return null;
                 } else {
                     while(rs.next()){
-                        LocalDate prossimaProgrammata = null;
+                        /*LocalDate prossimaProgrammata = null;
                         if (rs.getDate("prossima_programmata") != null) {
                             prossimaProgrammata = rs.getDate("prossima_programmata").toLocalDate();
-                        }
+                        }*/
                         VisitaVeterinaria visitaVeterinaria = new VisitaVeterinaria(
                             rs.getDate("data").toLocalDate(),
                             rs.getString("diagnosi"), 
                             rs.getInt("identificativo_animale"),
-                            prossimaProgrammata,
                             rs.getString("nome_veterinario"),
                             rs.getString("cognome_veterinario"),
-                            rs.getString("cura_prescritta"));
+                            rs.getString("cura_prescritta"),
+                            rs.getString("stato_animale"),
+                            rs.getBoolean("programmata"));
 
                         visiteVeterinarie.add(visitaVeterinaria);
                     }

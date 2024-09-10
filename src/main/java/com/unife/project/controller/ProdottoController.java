@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -31,7 +32,10 @@ public class ProdottoController {
     private Stalla stalla;
     private Animale animale;
 
-
+    @FXML
+    private Label labelAnnoMese;
+    @FXML
+    private Button toggleButton;
     @FXML
     private Label tot;
     @FXML
@@ -70,11 +74,21 @@ public class ProdottoController {
         }
     }
 
+    public void handleVediUltimoMese(ActionEvent event) {
+        loadProdottiDataUltimoMese();
+        toggleButton.setText("Vedi Ultimo Anno");
+        toggleButton.setOnAction(this::handleVediUltimoAnno);
+        labelAnnoMese.setText("VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO MESE");
+    }
+    public void handleVediUltimoAnno(ActionEvent event) {
+        loadProdottiDataUltimoAnno();
+        toggleButton.setText("Vedi Ultimo Mese");
+        toggleButton.setOnAction(this::handleVediUltimoMese);
+        labelAnnoMese.setText("VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO ANNO");
+    }
     //logica di visualizzazione grafico---------------------------------------------------
 
-    public void loadProdottiData() {
-        //List<Prodotto> prodotti = DAOFactory.getProdottoDAO().findAll();
-
+    public void loadProdottiDataUltimoAnno() {
         //gestione prodotti per l'ultimo anno
         List<Prodotto> prodottiAnno = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
 
@@ -82,7 +96,7 @@ public class ProdottoController {
         Map<String, Integer> prodottiPerTipo = prodottiAnno.stream()
                 .collect(Collectors.groupingBy(Prodotto::getTipoProdotto, Collectors.summingInt(Prodotto::getQuantita)));
 
-        //recupera listino prezzi
+        //recupera listino prezzi aggiornato
         List<Listino> listino = DAOFactory.getListinoDAO().findAllPrezzoAggiornato();
         // Crea una mappa dei prezzi per tipo_prodotto
         Map<String, Float> prezziPerTipo = listino.stream()
@@ -95,26 +109,57 @@ public class ProdottoController {
                     .mapToDouble(entry -> entry.getValue() * prezziPerTipo.getOrDefault(entry.getKey(), 0.0f))
                     .sum();
 
-            populateBarChartPerAnno(prodottiPerTipo);
-            System.out.println("Numero di elementi prodotti: " + prodottiAnno.size());
+            //System.out.println("Numero di elementi prodotti: " + prodottiAnno.size());
             // Aggiorna la Label con il guadagno totale
             tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
+            populateBarChart(prodottiPerTipo);
         } else {
             System.out.println("Nessun elemento prodotto");
         }
     }
 
-    private void populateBarChartPerAnno(Map<String, Integer> prodottiPerTipo) {
+    private void populateBarChart(Map<String, Integer> prodottiPerTipo) {
         // Crea le serie di dati per il BarChart
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (Map.Entry<String, Integer> entry : prodottiPerTipo.entrySet()) {
             series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
         }
-
         // Aggiungi le serie di dati al BarChart
+        graficoProdotti.getData().clear(); // Pulisci i dati esistenti
+        graficoProdotti.layout(); // Aggiorna il layout forzando la pulizia
         graficoProdotti.getData().add(series);
     }
 
+    public void loadProdottiDataUltimoMese() {
+        // Recupera i dati dei prodotti dell'ultimo mese
+        List<Prodotto> prodottiMese = DAOFactory.getProdottoDAO().findProdottiUltimoMese();
+
+        // Raggruppa i prodotti per tipo_prodotto e calcola la quantità totale
+        Map<String, Integer> prodottiPerTipoMese = prodottiMese.stream()
+                .collect(Collectors.groupingBy(Prodotto::getTipoProdotto, Collectors.summingInt(Prodotto::getQuantita)));
+
+        // Recupera il listino prezzi aggiornato
+        List<Listino> listino = DAOFactory.getListinoDAO().findAllPrezzoAggiornato();
+        // Crea una mappa dei prezzi per tipo_prodotto
+        Map<String, Float> prezziPerTipo = listino.stream()
+                .collect(Collectors.toMap(Listino::getTipo_prodotto, Listino::getPrezzo));
+
+        if (prodottiMese != null && !prodottiMese.isEmpty()) {
+            // Calcola il guadagno totale
+            float guadagnoTotale = (float) prodottiPerTipoMese.entrySet().stream()
+                    .mapToDouble(entry -> entry.getValue() * prezziPerTipo.getOrDefault(entry.getKey(), 0.0f))
+                    .sum();
+
+            // Aggiorna la Label con il guadagno totale
+            tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
+
+            // Popola il BarChart
+            populateBarChart(prodottiPerTipoMese);
+            System.out.println("Numero di elementi prodotti: " + prodottiMese.size());
+        } else {
+            System.out.println("Nessun elemento prodotto");
+        }
+    }
 
     public void setUser(Utente utente) {
         this.utente = utente;
@@ -129,14 +174,14 @@ public class ProdottoController {
     }
 
 
-    public void populateBarChart(List<Prodotto> prodotti){
+     /*public void populateBarChart(List<Prodotto> prodotti){
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (Prodotto prodotto : prodotti) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(prodotto.getTipoProdotto(), prodotto.getQuantita());
             series.getData().add(data);
             System.out.println("\n Prodotto: " + prodotto.getTipoProdotto() + " Quantità: " + prodotto.getQuantita());
 
-            /*
+           
             // Aggiungi un listener per attendere la creazione del nodo
             data.nodeProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
@@ -145,9 +190,9 @@ public class ProdottoController {
                     StackPane stackPane = (StackPane) newValue;
                     stackPane.getChildren().add(label);
                 }
-            });  */
+            }); 
             
             graficoProdotti.getData().add(series);
         }
-    }
+    } */
 }

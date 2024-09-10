@@ -13,7 +13,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="883.0" text="VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO ANNO" textAlignment="CENTER" />
+            <Label fx:id="labelAnnoMese" alignment="CENTER" prefHeight="18.0" prefWidth="883.0" text="VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO ANNO" textAlignment="CENTER" />
             <BarChart fx:id="graficoProdotti">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
@@ -25,7 +25,8 @@
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label fx:id="tot" alignment="CENTER" prefHeight="47.0" prefWidth="882.0" text="Guadagno totale: " />
-                  <Button onAction="#handleGoBackStalla" layoutX="805.0" layoutY="11.0" mnemonicParsing="false" text="Indietro" />
+                  <Button layoutX="805.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleGoBackStalla" text="Indietro" />
+                  <Button fx:id="toggleButton" onAction="#handleVediUltimoMese" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Vedi Ultimo Mese" />
                </children>
             </Pane>
          </children>

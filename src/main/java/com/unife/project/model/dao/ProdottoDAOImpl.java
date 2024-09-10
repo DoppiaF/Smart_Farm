@@ -171,4 +171,36 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         }
         return prodotti;
     }
+
+
+    
+    @Override
+    public List<Prodotto> findProdottiUltimoMese() {
+        String sql = "SELECT * FROM prodotto WHERE data_produzione >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+        List<Prodotto> prodotti = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non sono stati trovati prodotti");
+                } else {
+                    while (rs.next()) {
+                        Prodotto prodotto = new Prodotto();
+                        prodotto.setId_prodotto(rs.getInt("id_prodotto"));
+                        prodotto.setQuantita(rs.getInt("quantita"));
+                        prodotto.setDataProduzione(rs.getDate("data_produzione").toLocalDate());
+                        prodotto.setTipoProdotto(rs.getString("tipo_prodotto"));
+                        prodotto.setSpecie(rs.getString("specie"));
+                        prodotto.setStalla(rs.getString("stalla"));
+
+                        prodotti.add(prodotto);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni di tutti gli animali");
+        }
+        return prodotti;
+    }
 }

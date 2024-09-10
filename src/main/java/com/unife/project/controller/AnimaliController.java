@@ -276,7 +276,7 @@ public class AnimaliController {
             ProdottoController prodottoController = loader.getController();
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             prodottoController.setUser(utente);
-            prodottoController.loadProdottiData();
+            prodottoController.loadProdottiDataUltimoAnno();
             prodottoController.setStalla(stalla);
 
             Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();

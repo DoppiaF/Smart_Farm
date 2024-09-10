@@ -69,7 +69,7 @@ public class DAOFactory {
     public static UtenteDAO getUtenteDAO() {
         return new UtenteDAOImpl(connection);
     }
-
+    
     public static VisitaVeterinariaDAO getVisitaVeterinariaDAO() {
         return new VisitaVeterinariaDAOImpl(connection);
     }

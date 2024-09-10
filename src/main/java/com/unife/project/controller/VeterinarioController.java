@@ -83,7 +83,7 @@ public class VeterinarioController {
             cognomeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             diagnosiColumn.setCellFactory(TextFieldTableCell.forTableColumn()); 
             curaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-            programmataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+            //programmataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
             statoAnimaleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
             //gestione modifiche celle
@@ -91,7 +91,7 @@ public class VeterinarioController {
             cognomeColumn.setOnEditCommit(event -> event.getRowValue().setCognomeVeterinario(event.getNewValue()));
             diagnosiColumn.setOnEditCommit(event -> event.getRowValue().setDiagnosi(event.getNewValue()));
             curaColumn.setOnEditCommit(event -> event.getRowValue().setCuraPrescritta(event.getNewValue()));
-            programmataColumn.setOnEditCommit(event -> event.getRowValue().setProgrammata((event.getNewValue())));
+            //programmataColumn.setOnEditCommit(event -> event.getRowValue().setProgrammata((event.getNewValue())));
             statoAnimaleColumn.setOnEditCommit(event -> event.getRowValue().setStatoAnimale(event.getNewValue()));
 
             //imposta datePikcer personalizzato
@@ -142,6 +142,7 @@ public class VeterinarioController {
         VisitaVeterinaria visitaSelezionata = visiteTable.getSelectionModel().getSelectedItem();
         if(visitaSelezionata != null) {
             try{
+                visitaSelezionata.setProgrammata(false);
                 System.out.println("Modifica visita selezionata: " + visitaSelezionata.toString());
                 DAOFactory.getVisitaVeterinariaDAO().update(visitaSelezionata);
                 System.out.println("Visita modificata correttamente.");

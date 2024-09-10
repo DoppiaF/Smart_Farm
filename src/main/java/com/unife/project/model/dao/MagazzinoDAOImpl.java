@@ -22,7 +22,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
 
     @Override
     public void save(Magazzino magazzino) {
-        String sql = "INSERT INTO magazzino (tipo_mangime, quantita, `prezzo/kg`) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO magazzino (tipo_mangime, quantita, prezzo_kg) VALUES (?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, magazzino.getTipoMangime());
@@ -43,7 +43,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
     @Override
     public void update(Magazzino magazzino) {
         String sql ="UPDATE magazzino" +
-                    "SET quantita = ?, `prezzo/kg` = ?" + 
+                    "SET quantita = ?, prezzo_kg = ?" + 
                     "WHERE tipo_mangime = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -88,7 +88,7 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantita"),
-                        rs.getFloat("`prezzo/kg`"));
+                        rs.getFloat("prezzo_kg"));
                     return magazzino;
                 } else {
                     System.out.println("Il tipo di mangime richiesto non è stato trovato nel magazzino");

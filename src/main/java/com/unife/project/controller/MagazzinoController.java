@@ -37,16 +37,22 @@ import javafx.scene.layout.StackPane;
         
 
         public void initialize() {
-            loadMagazzinoData();
+            //loadMagazzinoData();
         }
 
 
         //logica di visualizzazione grafico---------------------------------------------------
         public void loadMagazzinoData() {
-            List<Magazzino> items = DAOFactory.getMagazzinoDAO().findAll();
-            System.out.println("Numero di elementi nel magazzino: " + items.size());
-            System.out.println("primo elemento lista" + items.get(0).toString());
-            populateBarChart(items);
+            List<Magazzino> mangimi = DAOFactory.getMagazzinoDAO().findAll();
+            if(mangimi != null && !mangimi.isEmpty()){
+                populateBarChart(mangimi);
+                System.out.println("Numero di elementi nel magazzino: " + mangimi.size());
+                //System.out.println("primo elemento lista" + items.get(0).toString());
+            } else {
+                System.out.println("Nessun elemento nel magazzino");
+            }
+            
+            //populateBarChart(mangimi);
         }
 
         private void populateBarChart(List<Magazzino> items) {

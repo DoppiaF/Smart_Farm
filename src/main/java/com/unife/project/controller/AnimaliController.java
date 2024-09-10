@@ -239,7 +239,7 @@ public class AnimaliController {
             MagazzinoController magazzinoController = loader.getController();
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             magazzinoController.setUser(utente);
-            //magazzinoController.loadMagazzinoData();
+            magazzinoController.loadMagazzinoData();
 
             // Aggiungi la barra di menu alla root
             rootPane.setCenter(magazzinoRoot);

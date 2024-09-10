@@ -1,6 +1,9 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
@@ -22,6 +25,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -46,7 +50,17 @@ public class IrrigazioneController {
     private TableView<Irrigazione> irrigationsTable;
     
     @FXML
-    private TableColumn<Irrigazione, List> irrigationsTabColumn;
+    private TableColumn<Irrigazione, Integer> idColumn;
+    @FXML
+    private TableColumn<Irrigazione, LocalTime> timeColumn;
+    @FXML
+    private TableColumn<Irrigazione, Integer> durationColumn;
+    @FXML
+    private TableColumn<Irrigazione, Boolean> autoColumn;
+    @FXML
+    private TableColumn<Irrigazione, String> stateColumn;
+    @FXML
+    private TableColumn<Irrigazione, Integer> reqLitresColumn;
 
     @FXML
     private GridPane fieldMap;
@@ -62,25 +76,62 @@ public class IrrigazioneController {
 
     @FXML
     private void initialize() {
+        System.out.println("Caricamento pagina");
+
+        try{
+
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
+            timeColumn.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
+            durationColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
+            autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
+            stateColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
+            reqLitresColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Errore inizializzazione tabella irrigazioni");
+        }
+
+        loadIrrigazioneData();
     }
     
     private void loadIrrigazioneData() {
-        irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
-        irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
-        cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
-        irrigazioniData.addAll(irrigazione);
-        irrigationsTable.setItems(irrigazioniData);
+        if(piantagione != null){
+            irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
+
+            irrigazioniData.setAll(irrigazione);
+            irrigationsTable.setItems(irrigazioniData);
+            
+            irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
+            cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
+
+
+            System.out.println("irrigazione, cisterna e la tabella sono stati caricati e settati con successo");
+            System.out.println("irrigazione: " + irrigazione.toString() + 
+            " irrigazione-cisterna: " + irrigazioneCisterna.toString() +
+            " cisterna: " + cisterna.toString() +
+            " irrigazioniData: " + irrigazioniData.toString() );
+
+            Double riempimento = (double)cisterna.getQuantita()/(double)cisterna.getCapacita();
+            System.out.println("riempimento cisterna = " + riempimento);
+
+            livello_cisterna.setProgress(riempimento);
+            irrigazioneAutomatica.setSelected(irrigazione.isAuto());
+            if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
+        }else{
+            System.out.println("Piantagione non trovata, non è possibile caricare i dati della sua irrigazione");
+            irrigazioniData.clear();
+        }
+        
         
 
-        livello_cisterna.setProgress(cisterna.getQuantita()/cisterna.getCapacita());
-        irrigazioneAutomatica.setSelected(irrigazione.isAuto());
-        if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
     }
 
     //metodo da chiamare da altri controller per passare l'utente alla home
     public void setPiantagione(Piantagione piantagione){
+        
+        System.out.println("Settaggio piantagione");
         this.piantagione = piantagione;
-        loadIrrigazioneData();
+        initialize();
     }
     
     //metodo da chiamare da altri controller per passare l'utente alla home

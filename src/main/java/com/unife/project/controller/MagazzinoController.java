@@ -5,11 +5,16 @@ import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Magazzino;
+import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -18,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
     public class MagazzinoController {
 
@@ -34,6 +40,7 @@ import javafx.scene.layout.StackPane;
         private BorderPane magazzinoRoot;
         private Utente utente = null;
         private Magazzino magazzino = null;
+        private Stalla stalla = null;
         
 
         public void initialize() {
@@ -73,6 +80,36 @@ import javafx.scene.layout.StackPane;
                 });
             }
             barChart.getData().add(series);
+        }
+
+        public void setStalla(Stalla stalla) {
+            this.stalla = stalla;
+        }
+        public void handleGoBackStalla(ActionEvent event){
+            try {
+                String etichetta = stalla.getEtichettaStalla();
+                System.out.println("Stalla passata ad animali: " + etichetta );
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/animalePage.fxml"));
+                Parent animaleRoot = loader.load(); 
+
+                // Ottieni il controller e passa i dati
+                AnimaliController controller = loader.getController();
+                
+                controller.setStalla(stalla);
+                controller.setUtente(utente);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                // Imposta le dimensioni della finestra utilizzando il metodo statico
+                WindowUtil.setWindowSize(stage);
+
+                // Imposta la nuova scena
+                Scene scene = new Scene(animaleRoot);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("Errore nel caricamento della schermata Animali.");
+            }
         }
 
 

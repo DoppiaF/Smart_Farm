@@ -3,6 +3,7 @@ package com.unife.project.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -19,6 +20,7 @@ import javafx.util.converter.LocalDateStringConverter;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import com.unife.project.model.mo.Animale;
+import com.unife.project.model.mo.Magazzino;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
 
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
 
@@ -64,6 +67,8 @@ public class AnimaliController {
 
     @FXML
     private Label etichettaStallaLabel;
+    @FXML
+    private PieChart pieMagazzino;
     
     private ObservableList<Animale> animaliData = FXCollections.observableArrayList();
     private Stalla stalla = new Stalla();
@@ -114,6 +119,7 @@ public class AnimaliController {
         }catch (Exception e) {            
             showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
         }
+        loadMagazzinoData();
     }
 
     public void setStalla(Stalla stalla) {
@@ -179,6 +185,16 @@ public class AnimaliController {
         animaliTable.setItems(animaliData);
     }
 
+    private void loadMagazzinoData() {
+        List<Magazzino> magazzinoData = DAOFactory.getMagazzinoDAO().findAll();
+
+        ObservableList<PieChart.Data> pieMagazzinoData = FXCollections.observableArrayList();
+        for (Magazzino mangime : magazzinoData) {
+            pieMagazzinoData.add(new PieChart.Data(mangime.getTipoMangime(), mangime.getQuantita()));
+        }
+        pieMagazzino.setData(pieMagazzinoData);
+    }
+
     @FXML
     private void handleAddAnimale() {
         // Crea un nuovo animale con valori di default
@@ -240,6 +256,7 @@ public class AnimaliController {
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             magazzinoController.setUser(utente);
             magazzinoController.loadMagazzinoData();
+            magazzinoController.setStalla(stalla);
 
             // Aggiungi la barra di menu alla root
             rootPane.setCenter(magazzinoRoot);
@@ -247,6 +264,11 @@ public class AnimaliController {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la schermata del magazzino.");
         }
+    }
+
+    @FXML
+    public void handleGoToProdotto(){
+        //to be implemented
     }
 
     @FXML

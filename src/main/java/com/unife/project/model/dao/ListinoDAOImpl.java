@@ -125,4 +125,32 @@ public class ListinoDAOImpl implements ListinoDAO{
     }
 
 
+    @Override
+    public List<Listino> findAllPrezzoAggiornato() {
+        List<Listino> listini = new ArrayList<>();
+        String sql = "SELECT l1.tipo_prodotto, l1.prezzo " +
+                     "FROM listino l1 " +
+                     "INNER JOIN ( " +
+                     "    SELECT tipo_prodotto, MAX(data_prezzamento) AS max_data " +
+                     "    FROM listino " +
+                     "    GROUP BY tipo_prodotto " +
+                     ") l2 ON l1.tipo_prodotto = l2.tipo_prodotto AND l1.data_prezzamento = l2.max_data";
+   
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try(ResultSet rs = ps.executeQuery()) {
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non ci sono prodotti nel listino");
+                } else {
+                    while (rs.next()) {
+                    Listino listino = new Listino(rs.getString("tipo_prodotto"), rs.getFloat("prezzo"));
+                    listini.add(listino);
+                    }
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca di un prodotto in listino");
+        }
+        return listini;
+    }
 }

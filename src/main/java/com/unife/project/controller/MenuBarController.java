@@ -87,9 +87,8 @@ public class MenuBarController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
 
-            stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Login");
 
             stage.show();
         } catch (Exception e) {
@@ -120,14 +119,7 @@ public class MenuBarController {
 
             appStage.setScene(areaPersonaleScene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(appStage);
-
-            areaPersonaleScene.setOnKeyPressed(keyEvent -> {
-                if (keyEvent.getCode() == KeyCode.F11) {
-                    appStage.setFullScreen(!appStage.isFullScreen());
-                    appStage.show();
-                }
-            });
+            WindowUtil.setWindow(appStage,areaPersonaleScene,"SmartFarm - Area Personale");
 
             appStage.show();
 
@@ -193,9 +185,8 @@ public class MenuBarController {
             }
             Scene scene = new Scene(root);
 
-            stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Home");
 
             stage.show();
         } catch (Exception e) {

@@ -59,12 +59,11 @@ public class VerticalMenuBarController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(homeRoot);
-            stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Home");
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,12 +88,10 @@ public class VerticalMenuBarController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(adminRoot);
-            stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Area amministratore");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,12 +116,11 @@ public class VerticalMenuBarController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(piantagioneRoot);
-            stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Piantagione");
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -149,12 +145,11 @@ public class VerticalMenuBarController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(pastoreRoot);
-            stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Area pastore");
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -105,7 +105,7 @@ public class LoginController {
 
             appStage.setScene(homeScene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(appStage);
+            WindowUtil.setWindow(appStage,homeScene,"Smartfarm - Home");
 
             appStage.show();
 

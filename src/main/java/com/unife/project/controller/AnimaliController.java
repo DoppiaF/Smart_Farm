@@ -268,8 +268,7 @@ public class AnimaliController {
             //AZ Aggiunto ActionEvent come parametro del metodo, + queste 4 righe per regolare la finestra quando viene caricata
             Scene scene = new Scene(magazzinoRoot);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage,scene,"Smartfarm - Magazzino");
 
             // Aggiungi la barra di menu alla root
             rootPane.setCenter(magazzinoRoot);

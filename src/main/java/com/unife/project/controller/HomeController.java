@@ -128,9 +128,8 @@ public class HomeController {
 
             // Imposta la nuova scena
             Scene scene = new Scene(piantagioneRoot);
-            stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage,scene,"Smartfarm - Piantagione");
 
             stage.show();
         } catch (IOException e) {
@@ -160,7 +159,7 @@ public class HomeController {
             Scene scene = new Scene(adminRoot);
             stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Area amministratore");
 
             stage.show();
         } catch (IOException e) {
@@ -188,9 +187,9 @@ public class HomeController {
 
             // Imposta la nuova scena
             Scene scene = new Scene(pastoreRoot);
-            stage.setScene(scene);
+            
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Area pastore");
             
             stage.show();
         } catch (IOException e) {

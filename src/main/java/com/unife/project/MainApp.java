@@ -33,16 +33,7 @@ public class MainApp extends Application {
 
             // Imposta la scena
             Scene scene = new Scene(root);
-            primaryStage.setScene(scene); // Imposta la dimensione iniziale della finestra
-            primaryStage.setTitle("SmartFarm"); // Imposta il titolo della finestra
-            //primaryStage.setMinWidth(800); // Imposta la larghezza minima
-            //primaryStage.setMinHeight(600); // Imposta l'altezza minima    
-            WindowUtil.setWindowSize(primaryStage);
-            scene.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.F11) {
-                    primaryStage.setFullScreen(!primaryStage.isFullScreen());
-                }
-            });
+            WindowUtil.setWindow(primaryStage, scene, "Smartfarm - Home");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

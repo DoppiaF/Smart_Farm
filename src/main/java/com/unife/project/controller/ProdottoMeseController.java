@@ -119,7 +119,8 @@ public class ProdottoMeseController {
             prodottoController.setStalla(stalla);
 
             Stage stage = (Stage) toggleButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            WindowUtil.setWindow(stage, scene,"Smart Farm - Animali");
         } catch (IOException e) {
             e.printStackTrace();
         }

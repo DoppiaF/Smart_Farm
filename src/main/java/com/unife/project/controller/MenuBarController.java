@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -87,9 +88,8 @@ public class MenuBarController {
             Scene scene = new Scene(root);
 
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Login");
 
-            stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,11 +117,10 @@ public class MenuBarController {
             Scene areaPersonaleScene = new Scene(personalRoot);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(appStage);
-
             appStage.setScene(areaPersonaleScene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(appStage,areaPersonaleScene,"SmartFarm - Area Personale");
+
             appStage.show();
 
         }catch(IOException e){
@@ -187,9 +186,8 @@ public class MenuBarController {
             Scene scene = new Scene(root);
 
             // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Home");
 
-            stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

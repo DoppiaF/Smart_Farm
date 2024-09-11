@@ -148,9 +148,8 @@ public class PiantagioneController {
                 Scene scene = new Scene(zoneIrrigazioneRoot);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                WindowUtil.setWindowSize(stage);
+                WindowUtil.setWindow(stage, scene, "Smartfarm - Irrigazione");
 
-                stage.setScene(scene);
                 stage.show();
 
             }catch (IOException e){
@@ -185,9 +184,8 @@ public class PiantagioneController {
                 Scene scene = new Scene(zoneRaccoltaRoot);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                WindowUtil.setWindowSize(stage);
+                WindowUtil.setWindow(stage, scene, "Smartfarm - zone");
 
-                stage.setScene(scene);
                 stage.show();
 
             }catch (IOException e){

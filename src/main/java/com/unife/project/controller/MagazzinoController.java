@@ -100,12 +100,11 @@ import javafx.stage.Stage;
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                // Imposta le dimensioni della finestra utilizzando il metodo statico
-                WindowUtil.setWindowSize(stage);
 
                 // Imposta la nuova scena
                 Scene scene = new Scene(animaleRoot);
-                stage.setScene(scene);
+                // Imposta le dimensioni della finestra utilizzando il metodo statico
+                WindowUtil.setWindow(stage, scene, "Smartfarm - animale");
                 stage.show();
             } catch (IOException e) {
                 System.out.println("Errore nel caricamento della schermata Animali.");
@@ -117,7 +116,8 @@ import javafx.stage.Stage;
         public void setUser(Utente utente) {
             this.utente = utente;
             updateMenuBar();
-            //updateVerticalMenuBar();
+            //AZ decommentato da me per tenere la menu bar verticale posizionata nel modo corretto
+            updateVerticalMenuBar();
         }
         private void updateVerticalMenuBar(){
             try{

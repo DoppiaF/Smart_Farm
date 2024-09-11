@@ -328,6 +328,7 @@ public class PastoreController {
                         });
                     }
 
+                    //non è questo metodo a causare la comparsa di un secondo pulsante
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -429,12 +430,11 @@ public class PastoreController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(animaleRoot);
-            stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindow(stage, scene, "SmartFarm - Animale");
+
             stage.show();
         } catch (IOException e) {
             System.out.println("Errore nel caricamento della schermata Animali.");

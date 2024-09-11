@@ -51,7 +51,7 @@
       <fx:include source="menuBar.fxml" />
    </top>
    <center>
-      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="598.0" prefWidth="654.0">
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" nodeOrientation="LEFT_TO_RIGHT">
          <children>
             <AnchorPane layoutX="120.9000015258789" layoutY="41.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
                <children>

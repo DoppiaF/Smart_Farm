@@ -2,6 +2,7 @@ package com.unife.project.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -20,17 +21,21 @@ import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.CharacterStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Magazzino;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.WindowUtil;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import javax.swing.Action;
 
 import com.unife.project.model.dao.DAOFactory;
 
@@ -248,7 +253,7 @@ public class AnimaliController {
     }
 
     @FXML
-    public void handleGoToMagazzino(){
+    public void handleGoToMagazzino(ActionEvent event){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/magazzinoPage.fxml"));
             Parent magazzinoRoot = loader.load();
@@ -259,6 +264,11 @@ public class AnimaliController {
             magazzinoController.setUser(utente);
             magazzinoController.loadMagazzinoData();
             magazzinoController.setStalla(stalla);
+
+            //AZ Aggiunto ActionEvent come parametro del metodo, + queste 4 righe per regolare la finestra quando viene caricata
+            Scene scene = new Scene(magazzinoRoot);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            WindowUtil.setWindow(stage,scene,"Smartfarm - Magazzino");
 
             // Aggiungi la barra di menu alla root
             rootPane.setCenter(magazzinoRoot);

@@ -45,20 +45,18 @@ public class StallaDAOImpl implements StallaDAO{
 
     @Override
     public void update(Stalla stalla) {
-        String sql ="UPDATE stalla" +
-                    "SET capienza = ?, razza = ?, ora_pranzo = ?, ora_cena = ?" + 
-                    "WHERE etichetta_stalla = ?";
+        String sql ="UPDATE stalla SET capienza = ?, razza = ?, ora_pranzo = ?, ora_cena = ? WHERE etichetta_stalla = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, stalla.getEtichettaStalla());
-            ps.setInt(2, stalla.getCapienza());
-            ps.setString(3, stalla.getRazza());
-            ps.setObject(4, stalla.getOraPranzo());
-            ps.setObject(5, stalla.getOraCena());
+            ps.setInt(1, stalla.getCapienza());
+            ps.setString(2, stalla.getRazza());
+            ps.setObject(3, stalla.getOraPranzo());
+            ps.setObject(4, stalla.getOraCena());
+            ps.setString(5, stalla.getEtichettaStalla());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Errore nell'aggiornamento della stalla " + stalla.getEtichettaStalla());
+            System.out.println("\n\n\nErrore nell'aggiornamento della stalla: " + stalla.getEtichettaStalla() + "**************************");
         }
     }
 

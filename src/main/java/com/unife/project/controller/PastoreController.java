@@ -216,10 +216,12 @@ public class PastoreController {
                             if (index >= 0 && index < getTableView().getItems().size()) {
                                 Stalla stalla = getTableView().getItems().get(index);
                                 List<String> etichette = DAOFactory.getStallaDAO().findAllEtichette();
-
+                                System.out.println("\n\n\n stalla da modificare coi parametri recuperati: " + stalla.toString());
                                 if (etichette.contains(stalla.getEtichettaStalla())) {
                                     // chiama il metodo DAO update, etichetta già esistente.
                                     DAOFactory.getStallaDAO().update(stalla);
+                                    
+                                    System.out.println("\n\n\n stalla da modificare coi parametri recuperati \n\n\n post update\n: " + stalla.toString());
                                     Alert alert = new Alert(Alert.AlertType.WARNING);
                                     alert.setTitle("Stalla modificata.");
                                     alert.setHeaderText(null);

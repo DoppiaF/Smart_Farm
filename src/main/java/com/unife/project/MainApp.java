@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 //import java.sql.Connection;
@@ -31,11 +32,17 @@ public class MainApp extends Application {
             Parent root = loader.load();*/
 
             // Imposta la scena
-            primaryStage.setScene(new Scene(root/*, 800, 600*/)); // Imposta la dimensione iniziale della finestra
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene); // Imposta la dimensione iniziale della finestra
             primaryStage.setTitle("SmartFarm"); // Imposta il titolo della finestra
             //primaryStage.setMinWidth(800); // Imposta la larghezza minima
             //primaryStage.setMinHeight(600); // Imposta l'altezza minima    
             WindowUtil.setWindowSize(primaryStage);
+            scene.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.F11) {
+                    primaryStage.setFullScreen(!primaryStage.isFullScreen());
+                }
+            });
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

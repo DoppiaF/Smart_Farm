@@ -103,10 +103,10 @@ public class LoginController {
             Scene homeScene = new Scene(homeRoot);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+            appStage.setScene(homeScene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
             WindowUtil.setWindowSize(appStage);
 
-            appStage.setScene(homeScene);
             appStage.show();
 
         }catch(IOException e){

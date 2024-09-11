@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -86,10 +87,10 @@ public class MenuBarController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
 
+            stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
             WindowUtil.setWindowSize(stage);
 
-            stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,11 +118,17 @@ public class MenuBarController {
             Scene areaPersonaleScene = new Scene(personalRoot);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-
+            appStage.setScene(areaPersonaleScene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
             WindowUtil.setWindowSize(appStage);
 
-            appStage.setScene(areaPersonaleScene);
+            areaPersonaleScene.setOnKeyPressed(keyEvent -> {
+                if (keyEvent.getCode() == KeyCode.F11) {
+                    appStage.setFullScreen(!appStage.isFullScreen());
+                    appStage.show();
+                }
+            });
+
             appStage.show();
 
         }catch(IOException e){
@@ -186,10 +193,10 @@ public class MenuBarController {
             }
             Scene scene = new Scene(root);
 
+            stage.setScene(scene);
             // Imposta le dimensioni della finestra utilizzando il metodo statico
             WindowUtil.setWindowSize(stage);
 
-            stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

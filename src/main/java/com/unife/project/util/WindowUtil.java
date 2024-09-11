@@ -1,5 +1,8 @@
 package com.unife.project.util;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class WindowUtil {
@@ -9,9 +12,12 @@ public class WindowUtil {
         if (stage != null) {
             stage.setWidth(1920);
             stage.setHeight(1080);
-            stage.centerOnScreen();
+            stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
+            stage.setY((Screen.getPrimary().getVisualBounds().getHeight() - stage.getHeight()) / 2);
             stage.setFullScreen(true);
-            stage.setResizable(false);
+            stage.setFullScreenExitHint("Press F11 to exit fullscreen");
+            stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("F11"));
+            
         }
     }
 }

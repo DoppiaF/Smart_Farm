@@ -126,12 +126,12 @@ public class HomeController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(piantagioneRoot);
             stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -156,12 +156,12 @@ public class HomeController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-
             // Imposta la nuova scena
             Scene scene = new Scene(adminRoot);
             stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,12 +186,12 @@ public class HomeController {
             // Ottieni lo stage corrente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Imposta le dimensioni della finestra utilizzando il metodo statico
-            WindowUtil.setWindowSize(stage);
-            
             // Imposta la nuova scena
             Scene scene = new Scene(pastoreRoot);
             stage.setScene(scene);
+            // Imposta le dimensioni della finestra utilizzando il metodo statico
+            WindowUtil.setWindowSize(stage);
+            
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

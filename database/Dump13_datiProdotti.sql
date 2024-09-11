@@ -50,7 +50,7 @@ CREATE TABLE `animale` (
 
 LOCK TABLES `animale` WRITE;
 /*!40000 ALTER TABLE `animale` DISABLE KEYS */;
-INSERT INTO `animale` VALUES (4,100,'M','frisona','2020-01-01','granoturco','stalla_A','2021-01-01',NULL,NULL,'2021-01-01'),(23,200,'M','Bovino','2021-06-04','grano','stalla_A','2021-07-20',NULL,NULL,NULL),(24,300,'M','Bovino',NULL,'crusca','stalla_A',NULL,NULL,NULL,NULL);
+INSERT INTO `animale` VALUES (4,100,'M','frisona','2020-01-01','granoturco','stalla_A','2021-01-01',NULL,NULL,'2021-01-01'),(23,200,'M','Bovino','2021-06-04','grano','stalla_A','2021-07-20',NULL,NULL,NULL),(24,300,'M','Bovino','2010-10-10','crusca','stalla_A',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `animale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +142,8 @@ DROP TABLE IF EXISTS `listino`;
 CREATE TABLE `listino` (
   `tipo_prodotto` varchar(15) NOT NULL,
   `prezzo` float DEFAULT NULL,
-  PRIMARY KEY (`tipo_prodotto`)
+  `data_prezzamento` date NOT NULL,
+  PRIMARY KEY (`tipo_prodotto`,`data_prezzamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -152,6 +153,7 @@ CREATE TABLE `listino` (
 
 LOCK TABLES `listino` WRITE;
 /*!40000 ALTER TABLE `listino` DISABLE KEYS */;
+INSERT INTO `listino` VALUES ('Carne Bovino',24,'2024-10-10'),('Carne Cavallo',22,'2022-01-01'),('Groviera',45,'2022-01-01'),('Lana Pecora',9,'2024-10-10'),('Latte Mucca',0.9,'2022-01-01'),('Latte Mucca',1,'2024-10-10'),('Latte Pecora',0.5,'2022-01-01'),('Latte Pecora',0.8,'2024-10-10');
 /*!40000 ALTER TABLE `listino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +166,7 @@ DROP TABLE IF EXISTS `magazzino`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `magazzino` (
   `tipo_mangime` varchar(20) NOT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `prezzo_kg` float DEFAULT NULL,
   PRIMARY KEY (`tipo_mangime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -224,11 +226,10 @@ CREATE TABLE `prodotto` (
   `quantita` int DEFAULT NULL,
   `tipo_prodotto` varchar(20) NOT NULL,
   `data_produzione` date NOT NULL,
-  `data_scadenza` date DEFAULT NULL,
-  PRIMARY KEY (`id_prodotto`),
-  KEY `tipo_prodotto_idx` (`tipo_prodotto`),
-  CONSTRAINT `tipo_prodotto` FOREIGN KEY (`tipo_prodotto`) REFERENCES `listino` (`tipo_prodotto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `specie` varchar(45) DEFAULT NULL,
+  `stalla` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_prodotto`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,6 +238,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
+INSERT INTO `prodotto` VALUES (2,100,'Latte Mucca','2024-10-10','Bovino','Stalla_A'),(3,100,'Latte Pecora','2024-09-10','Ovino','Stalla_B'),(4,20,'Groviera','2023-01-12','Bovino','Stalla_C'),(5,300,'Carne Cavallo','2024-10-10','Cavallo','Stalla_D'),(6,50,'Latte Mucca','2024-05-05','Bovino','Stalla_A');
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,7 +390,7 @@ CREATE TABLE `visita_veterinaria` (
 
 LOCK TABLES `visita_veterinaria` WRITE;
 /*!40000 ALTER TABLE `visita_veterinaria` DISABLE KEYS */;
-INSERT INTO `visita_veterinaria` VALUES ('2022-01-01','infezione fegato',4,'antibiotici','francesco','furini',NULL,NULL),('2022-10-10','infezione fegato',4,'antibiotici','francesco','furini',NULL,NULL);
+INSERT INTO `visita_veterinaria` VALUES ('2022-01-01','infezione fegato',4,'antibiotici','francesco','furini',NULL,NULL),('2022-10-10','infezione fegato',4,'antibiotici','francesco','furini',NULL,NULL),('2024-09-10','Da compilare',24,'Da compilare','Da compilare','Da compilare','Da compilare',1),('2024-09-11','Da compilare',4,'Da compilare','Da compilare','Da compilare','Da compilare',1),('2024-09-11','Da compilare',24,'Da compilare','Da compilare','Da compilare','Da compilare',1),('2024-09-12','malato',4,'sciroppo','roberto','Da vecchioni','non buono',0),('2024-09-12','compressione torace',24,'riposo','roberto','guidetti','buono',1),('2024-09-13','Da compilare',4,'Da compilare','Da compilare','Da compilare','Da compilare',1),('2024-09-13','stato di salute ottimale',24,'nessuna','Antonio','galetta','eccellente',0),('2024-09-19','Da compilare',4,'Da compilare','Da compilare','Da compilare','Da compilare',1);
 /*!40000 ALTER TABLE `visita_veterinaria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,4 +436,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-10 11:15:45
+-- Dump completed on 2024-09-11 11:36:04

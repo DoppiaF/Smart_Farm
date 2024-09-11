@@ -104,7 +104,7 @@ import javafx.stage.Stage;
                 // Imposta la nuova scena
                 Scene scene = new Scene(animaleRoot);
                 // Imposta le dimensioni della finestra utilizzando il metodo statico
-                WindowUtil.setWindow(stage, scene, "Smartfarm - animale");
+                WindowUtil.setWindow(stage, scene, "Smartfarm - Animale");
                 stage.show();
             } catch (IOException e) {
                 System.out.println("Errore nel caricamento della schermata Animali.");

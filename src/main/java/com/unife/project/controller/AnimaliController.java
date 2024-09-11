@@ -271,7 +271,7 @@ public class AnimaliController {
             WindowUtil.setWindow(stage,scene,"Smartfarm - Magazzino");
 
             // Aggiungi la barra di menu alla root
-            rootPane.setCenter(magazzinoRoot);
+            //rootPane.setCenter(magazzinoRoot);
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la schermata del magazzino.");
@@ -307,6 +307,7 @@ public class AnimaliController {
             // Imposta la nuova scena sullo stage principale
             stage.setScene(scene);
             // Mostra lo stage principale con la nuova scena
+            WindowUtil.setWindowSize(stage, scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

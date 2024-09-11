@@ -8,4 +8,5 @@ import com.unife.project.model.mo.Prodotto;
 public interface ProdottoDAO extends GenericDAO<Prodotto> {
     List<Prodotto> findProdottiUltimoAnno();
     List<Prodotto> findProdottiUltimoMese();
+    List<Prodotto> findProdottoUltimoAnnoPerRazza(String specie);
 }

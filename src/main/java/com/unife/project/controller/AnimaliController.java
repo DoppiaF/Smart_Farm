@@ -210,7 +210,13 @@ public class AnimaliController {
 
     private void loadProdottiData() {
         // Recupera i dati dei prodotti
-        List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
+        //List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
+        List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottoUltimoAnnoPerRazza(stalla.getRazza());
+
+        if(prodottiData == null || prodottiData.isEmpty()){
+            System.out.println("Specie non trovata. Caricamento di tutti i prodotti.");
+            prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
+        }
 
         // Crea una mappa per sommare le quantità per tipo di prodotto
         Map<String, Integer> prodottiPerTipo = new HashMap<>();

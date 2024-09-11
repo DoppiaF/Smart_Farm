@@ -328,6 +328,7 @@ public class PastoreController {
                         });
                     }
 
+                    //non è questo metodo a causare la comparsa di un secondo pulsante
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);

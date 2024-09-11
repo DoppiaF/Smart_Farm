@@ -117,7 +117,8 @@ import javafx.stage.Stage;
         public void setUser(Utente utente) {
             this.utente = utente;
             updateMenuBar();
-            //updateVerticalMenuBar();
+            //AZ decommentato da me per tenere la menu bar verticale posizionata nel modo corretto
+            updateVerticalMenuBar();
         }
         private void updateVerticalMenuBar(){
             try{

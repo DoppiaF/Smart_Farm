@@ -13,6 +13,7 @@ public class WindowUtil {
             stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
             stage.setY((Screen.getPrimary().getVisualBounds().getHeight() - stage.getHeight()) / 2);
             stage.centerOnScreen();
+            stage.setFullScreen(true); 
             stage.setFullScreen(false); 
             stage.setWidth(1080);
             stage.setHeight(720);

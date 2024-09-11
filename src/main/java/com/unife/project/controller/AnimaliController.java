@@ -3,6 +3,7 @@ package com.unife.project.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.CharacterStringConverter;
@@ -276,7 +278,7 @@ public class AnimaliController {
             ProdottoController prodottoController = loader.getController();
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             prodottoController.setUser(utente);
-            prodottoController.loadProdottiDataUltimoAnno();
+            //prodottoController.loadProdottiDataUltimoAnno();
             prodottoController.setStalla(stalla);
 
             Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
@@ -284,11 +286,18 @@ public class AnimaliController {
                 prodottoController.loadAnimale(animaleSelezionato);
             } else {
                 showErrorDialog("Errore", "Seleziona dalla lista un animale da modificare.");
+                return;
             }
             
 
-            // Aggiungi la barra di menu alla root
-            rootPane.setCenter(prodottoRoot);
+            // Ottieni lo stage principale
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            // Crea una nuova scena con il contenuto della nuova vista
+            Scene scene = new Scene(prodottoRoot);
+            // Imposta la nuova scena sullo stage principale
+            stage.setScene(scene);
+            // Mostra lo stage principale con la nuova scena
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la schermata del prodotto.");

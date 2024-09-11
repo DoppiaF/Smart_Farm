@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ProdottoController">
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ProdottoMeseController">
    <center>
       <BorderPane fx:id="nestedPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="882.0">
          <center>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="labelAnnoMese" alignment="CENTER" prefHeight="18.0" prefWidth="883.0" text="VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO ANNO" textAlignment="CENTER" />
+                  <Label fx:id="labelMese" alignment="CENTER" prefHeight="18.0" prefWidth="883.0" text="VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO MESE" textAlignment="CENTER" />
                   <BarChart fx:id="graficoProdotti" layoutX="50" layoutY="50" prefHeight="400" prefWidth="600">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
@@ -29,7 +29,7 @@
                      <children>
                         <Label fx:id="tot" alignment="CENTER" prefHeight="47.0" prefWidth="882.0" text="Guadagno totale: " />
                         <Button layoutX="805.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleGoBackStalla" text="Indietro" />
-                        <Button fx:id="toggleButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleVediUltimoMese" text="Vedi Ultimo Mese" />
+                        <Button fx:id="toggleButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleVediUltimoAnno" text="Vedi Ultimo Anno" />
                      </children>
                   </Pane>
                </children>

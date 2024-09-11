@@ -20,10 +20,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ProdottoController {
@@ -33,6 +35,10 @@ public class ProdottoController {
     private Animale animale;
 
     @FXML
+    private BorderPane rootPane;
+    @FXML
+    private BorderPane nestedPane;
+    @FXML
     private Label labelAnnoMese;
     @FXML
     private Button toggleButton;
@@ -40,10 +46,16 @@ public class ProdottoController {
     private Label tot;
     @FXML
     private BarChart<String, Number> graficoProdotti;
+    @FXML
+    private NumberAxis xAxis;
+    @FXML 
+    private NumberAxis yAxis;   
+    //@FXML
+    //private Scene scene;
 
     @FXML
     public void initialize() {
-        //loadProdottiData();
+        loadProdottiDataUltimoAnno();
     }
 
 
@@ -74,34 +86,44 @@ public class ProdottoController {
         }
     }
 
-    public void handleVediUltimoMese(ActionEvent event) {
-        loadProdottiDataUltimoMese();
-        toggleButton.setText("Vedi Ultimo Anno");
-        toggleButton.setOnAction(this::handleVediUltimoAnno);
-        labelAnnoMese.setText("VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO MESE");
+    @FXML
+    private void handleVediUltimoMese(ActionEvent event) {
+        try {
+            // Carica la vista dell'ultimo mese
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/prodottoPageMese.fxml"));
+            Parent root = loader.load();
+
+            //unifico la view per le due pagine
+            ProdottoMeseController prodottoMeseController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            prodottoMeseController.setUser(utente);
+            //prodottoController.loadProdottiDataUltimoAnno();
+            prodottoMeseController.setStalla(stalla);
+            //aggiunge animale selezionato
+            prodottoMeseController.loadAnimale(animale);
+
+            Stage stage = (Stage) toggleButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            System.out.println("Errore nel caricamento della schermata ProdottoMese.");
+        }
     }
-    public void handleVediUltimoAnno(ActionEvent event) {
-        loadProdottiDataUltimoAnno();
-        toggleButton.setText("Vedi Ultimo Mese");
-        toggleButton.setOnAction(this::handleVediUltimoMese);
-        labelAnnoMese.setText("VISTA DELLA SOMMA TOTALE DEI PRODOTTI NELL'ULTIMO ANNO");
-    }
+
     //logica di visualizzazione grafico---------------------------------------------------
 
     public void loadProdottiDataUltimoAnno() {
-        //gestione prodotti per l'ultimo anno
+        // Recupera i dati dei prodotti dell'ultimo anno
         List<Prodotto> prodottiAnno = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
 
         // Raggruppa i prodotti per tipo_prodotto e calcola la quantità totale
         Map<String, Integer> prodottiPerTipo = prodottiAnno.stream()
                 .collect(Collectors.groupingBy(Prodotto::getTipoProdotto, Collectors.summingInt(Prodotto::getQuantita)));
 
-        //recupera listino prezzi aggiornato
+        // Recupera il listino prezzi aggiornato
         List<Listino> listino = DAOFactory.getListinoDAO().findAllPrezzoAggiornato();
         // Crea una mappa dei prezzi per tipo_prodotto
         Map<String, Float> prezziPerTipo = listino.stream()
                 .collect(Collectors.toMap(Listino::getTipo_prodotto, Listino::getPrezzo));
-
 
         if (prodottiAnno != null && !prodottiAnno.isEmpty()) {
             // Calcola il guadagno totale
@@ -109,9 +131,10 @@ public class ProdottoController {
                     .mapToDouble(entry -> entry.getValue() * prezziPerTipo.getOrDefault(entry.getKey(), 0.0f))
                     .sum();
 
-            //System.out.println("Numero di elementi prodotti: " + prodottiAnno.size());
             // Aggiorna la Label con il guadagno totale
             tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
+
+            // Popola il BarChart
             populateBarChart(prodottiPerTipo);
         } else {
             System.out.println("Nessun elemento prodotto");
@@ -124,13 +147,21 @@ public class ProdottoController {
         for (Map.Entry<String, Integer> entry : prodottiPerTipo.entrySet()) {
             series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
         }
-        // Aggiungi le serie di dati al BarChart
-        graficoProdotti.getData().clear(); // Pulisci i dati esistenti
-        graficoProdotti.layout(); // Aggiorna il layout forzando la pulizia
+
+        // Pulisci i dati esistenti
+        graficoProdotti.getData().clear();
+        
+        // Forza il layout per assicurarsi che il grafico venga aggiornato
+        graficoProdotti.layout();
+
+        // Aggiungi le nuove serie di dati al BarChart
         graficoProdotti.getData().add(series);
+        
+        // Forza un altro layout per assicurarsi che il grafico venga ridisegnato correttamente
+        graficoProdotti.layout();
     }
 
-    public void loadProdottiDataUltimoMese() {
+    /*public void loadProdottiDataUltimoMese() {
         // Recupera i dati dei prodotti dell'ultimo mese
         List<Prodotto> prodottiMese = DAOFactory.getProdottoDAO().findProdottiUltimoMese();
 
@@ -154,15 +185,18 @@ public class ProdottoController {
             tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
 
             // Popola il BarChart
-            populateBarChart(prodottiPerTipoMese);
+            populateBarChart(graficoProdottiMese, prodottiPerTipoMese);
+            //refreshScene();
             System.out.println("Numero di elementi prodotti: " + prodottiMese.size());
         } else {
             System.out.println("Nessun elemento prodotto");
         }
-    }
+    }*/
 
     public void setUser(Utente utente) {
         this.utente = utente;
+        updateVerticalMenuBar();
+        updateMenuBar();
     }
 
     public void setStalla(Stalla stalla) {
@@ -195,4 +229,60 @@ public class ProdottoController {
             graficoProdotti.getData().add(series);
         }
     } */
+
+    /*private void refreshScene() {
+        // Controlla se la scena è null
+        if (graficoProdotti.getScene() != null) {
+            // Forza il layout del nodo principale
+            graficoProdotti.getScene().getRoot().requestLayout();
+
+            // Riapplica la scena al palco principale
+            Stage stage = (Stage) graficoProdotti.getScene().getWindow();
+            stage.setScene(graficoProdotti.getScene());
+        }
+    }*/
+
+     private void updateVerticalMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/verticalMenuBar.fxml"));
+            Parent verticalMenuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            VerticalMenuBarController verticalMenuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            verticalMenuBarController.setUserStatus(utente);
+     
+            // Aggiungi la barra di menu alla root
+            rootPane.setLeft(verticalMenuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
+    private void updateMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/menuBar.fxml"));
+            Parent menuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            MenuBarController menuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            menuBarController.setUserStatus(utente);
+
+            // Aggiungi la barra di menu alla root
+            nestedPane.setTop(menuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

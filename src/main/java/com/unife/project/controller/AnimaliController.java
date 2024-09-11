@@ -307,6 +307,7 @@ public class AnimaliController {
             // Imposta la nuova scena sullo stage principale
             stage.setScene(scene);
             // Mostra lo stage principale con la nuova scena
+            WindowUtil.setWindowSize(stage, scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

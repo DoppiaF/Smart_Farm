@@ -102,7 +102,9 @@ public class ProdottoController {
             prodottoMeseController.loadAnimale(animale);
 
             Stage stage = (Stage) toggleButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            WindowUtil.setWindowSize(stage, scene);
         } catch (IOException e) {
             System.out.println("Errore nel caricamento della schermata ProdottoMese.");
         }

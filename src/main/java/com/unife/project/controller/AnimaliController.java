@@ -288,7 +288,7 @@ public class AnimaliController {
             ProdottoController prodottoController = loader.getController();
             //passa utente al controller menu bar e aggiorna visibilità bottoni
             prodottoController.setUser(utente);
-            prodottoController.loadProdottiDataUltimoAnno();
+            //prodottoController.loadProdottiDataUltimoAnno();
             prodottoController.setStalla(stalla);
 
             Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
@@ -296,11 +296,18 @@ public class AnimaliController {
                 prodottoController.loadAnimale(animaleSelezionato);
             } else {
                 showErrorDialog("Errore", "Seleziona dalla lista un animale da modificare.");
+                return;
             }
             
 
-            // Aggiungi la barra di menu alla root
-            rootPane.setCenter(prodottoRoot);
+            // Ottieni lo stage principale
+            Stage stage = (Stage) rootPane.getScene().getWindow();
+            // Crea una nuova scena con il contenuto della nuova vista
+            Scene scene = new Scene(prodottoRoot);
+            // Imposta la nuova scena sullo stage principale
+            stage.setScene(scene);
+            // Mostra lo stage principale con la nuova scena
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog("Errore", "Impossibile caricare la schermata del prodotto.");

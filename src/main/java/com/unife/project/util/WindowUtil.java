@@ -13,7 +13,9 @@ public class WindowUtil {
             stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
             stage.setY((Screen.getPrimary().getVisualBounds().getHeight() - stage.getHeight()) / 2);
             stage.centerOnScreen();
-            stage.setFullScreen(true);
+            stage.setFullScreen(false); 
+            stage.setWidth(1080);
+            stage.setHeight(720);
 
             
             scene.setOnKeyPressed(event -> {
@@ -29,12 +31,14 @@ public class WindowUtil {
         if (stage != null) {
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.setMaximized(true);
+            //stage.setMaximized(true);
             stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
             stage.setY((Screen.getPrimary().getVisualBounds().getHeight() - stage.getHeight()) / 2);
             stage.centerOnScreen();
             stage.setFullScreen(true);
-            stage.setFullScreenExitHint("Press F11 to exit fullscreen");
+            stage.setFullScreen(false);            
+            stage.setWidth(1080);
+            stage.setHeight(720);
             //stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("F11"));
             
             scene.setOnKeyPressed(event -> {

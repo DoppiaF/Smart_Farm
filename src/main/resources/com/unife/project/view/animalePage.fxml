@@ -74,7 +74,7 @@
                   </ButtonBar>
                   <ButtonBar layoutX="10.0" layoutY="308.0" prefHeight="114.0" prefWidth="792.0" style="-fx-background-color: #b02d0e;">
                      <buttons>
-                        <PieChart prefHeight="112.0" />
+                        <PieChart fx:id="pieProdotto" prefHeight="112.0" />
                         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGoToProdotto" prefHeight="72.0" prefWidth="209.0" text="PRODOTTI" textFill="#b02d0e" />
                      </buttons>
                      <padding>

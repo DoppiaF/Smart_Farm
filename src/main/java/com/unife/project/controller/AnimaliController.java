@@ -25,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Magazzino;
+import com.unife.project.model.mo.Prodotto;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.util.WindowUtil;
@@ -33,7 +34,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Action;
 
@@ -76,6 +79,8 @@ public class AnimaliController {
     private Label etichettaStallaLabel;
     @FXML
     private PieChart pieMagazzino;
+    @FXML
+    private PieChart pieProdotto;
     
     private ObservableList<Animale> animaliData = FXCollections.observableArrayList();
     private Stalla stalla = new Stalla();
@@ -127,6 +132,7 @@ public class AnimaliController {
             showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
         }
         loadMagazzinoData();
+        loadProdottiData();
     }
 
     public void setStalla(Stalla stalla) {
@@ -202,6 +208,26 @@ public class AnimaliController {
         pieMagazzino.setData(pieMagazzinoData);
     }
 
+    private void loadProdottiData() {
+        // Recupera i dati dei prodotti
+        List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
+
+        // Crea una mappa per sommare le quantità per tipo di prodotto
+        Map<String, Integer> prodottiPerTipo = new HashMap<>();
+        for (Prodotto prodotto : prodottiData) {
+            prodottiPerTipo.merge(prodotto.getTipoProdotto(), prodotto.getQuantita(), Integer::sum);
+        }
+
+        // Crea una lista osservabile per i dati della PieChart
+        ObservableList<PieChart.Data> pieProdottiData = FXCollections.observableArrayList();
+        for (Map.Entry<String, Integer> entry : prodottiPerTipo.entrySet()) {
+            pieProdottiData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
+
+        // Imposta i dati nella PieChart
+        pieProdotto.setData(pieProdottiData);
+    }
+
     @FXML
     private void handleAddAnimale() {
         // Crea un nuovo animale con valori di default
@@ -211,7 +237,7 @@ public class AnimaliController {
         nuovoAnimale.setId_animale(animaliData.size()+1); // id_animale
         nuovoAnimale.setPeso(0); // peso
         nuovoAnimale.setSesso('M'); // sesso
-        nuovoAnimale.setRazza("Bovino"); // razza
+        nuovoAnimale.setRazza(stalla.getRazza()); // razza
         nuovoAnimale.setTipoAlimentazione("granoturco"); // tipoAlimentazione
         nuovoAnimale.setNomeStalla(stalla.getEtichettaStalla()); // nomeStalla
         nuovoAnimale.setData_nascita(null); // data_nascita

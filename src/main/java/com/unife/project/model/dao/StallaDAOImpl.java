@@ -2,11 +2,9 @@ package com.unife.project.model.dao;
 
 import java.util.List;
 
-import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Stalla;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,20 +45,18 @@ public class StallaDAOImpl implements StallaDAO{
 
     @Override
     public void update(Stalla stalla) {
-        String sql ="UPDATE stalla" +
-                    "SET capienza = ?, razza = ?, ora_pranzo = ?, ora_cena = ?" + 
-                    "WHERE etichetta_stalla = ?";
+        String sql ="UPDATE stalla SET capienza = ?, razza = ?, ora_pranzo = ?, ora_cena = ? WHERE etichetta_stalla = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, stalla.getEtichettaStalla());
-            ps.setInt(2, stalla.getCapienza());
-            ps.setString(3, stalla.getRazza());
-            ps.setObject(4, stalla.getOraPranzo());
-            ps.setObject(5, stalla.getOraCena());
+            ps.setInt(1, stalla.getCapienza());
+            ps.setString(2, stalla.getRazza());
+            ps.setObject(3, stalla.getOraPranzo());
+            ps.setObject(4, stalla.getOraCena());
+            ps.setString(5, stalla.getEtichettaStalla());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Errore nell'aggiornamento della stalla " + stalla.getEtichettaStalla());
+            System.out.println("\n\n\nErrore nell'aggiornamento della stalla: " + stalla.getEtichettaStalla() + "**************************");
         }
     }
 
@@ -100,7 +96,7 @@ public class StallaDAOImpl implements StallaDAO{
                         rs.getString("razza"),
                         rs.getTime("ora_pranzo").toLocalTime(),
                         rs.getTime("ora_cena").toLocalTime()
-                    )
+                    );
                     return stalla;
                 } else {
                     System.out.println("Stalla non trovata");
@@ -117,28 +113,50 @@ public class StallaDAOImpl implements StallaDAO{
     public List<Stalla> findAll() {
         
         String sql = "SELECT * FROM stalla";
+        stalle = new ArrayList<Stalla>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             
             try (ResultSet rs = ps.executeQuery()){
-                if (rs.next()) {
-                    Stalla stalla = new Stalla(
-                        rs.getString("etichetta_stalla"),
-                        rs.getInt("capienza"),
-                        rs.getString("razza"),
-                        rs.getTime("ora_pranzo").toLocalTime(),
-                        rs.getTime("ora_cena").toLocalTime()
-                    )
-                    stalle.add(stalla);
-                } else {
-                    System.out.println("Stalla non trovata");
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate stalle");
+                else{
+                    while(rs.next()) {
+                        Stalla stalla = new Stalla(
+                            rs.getString("etichetta_stalla"),
+                            rs.getInt("capienza"),
+                            rs.getString("razza"),
+                            rs.getTime("ora_pranzo").toLocalTime(),
+                            rs.getTime("ora_cena").toLocalTime()
+                        );
+                        stalle.add(stalla);
+                    }
                 }
             } 
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nel recupero delle informazioni di tutte le stalle ");
         }
-        return null;
+        return stalle;
     }
     
+    @Override
+    public List<String> findAllEtichette(){
+        String sql = "SELECT etichetta_stalla FROM stalla";
+        List<String> etichette = new ArrayList<>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try(ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate stalle");
+                else{
+                    while(rs.next()) {
+                        etichette.add(rs.getString("etichetta_stalla"));
+                    }
+                }
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle etichette delle stalle");
+        }
+        return etichette;
+    }
 }

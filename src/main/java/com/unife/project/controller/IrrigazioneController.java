@@ -1,0 +1,198 @@
+package com.unife.project.controller;
+
+import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+import com.unife.project.model.dao.DAOFactory;
+import com.unife.project.model.mo.Cisterna;
+import com.unife.project.model.mo.Irrigazione;
+import com.unife.project.model.mo.IrrigazioneCisterna;
+import com.unife.project.model.mo.Piantagione;
+import com.unife.project.model.mo.Stalla;
+import com.unife.project.model.mo.Utente;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+
+public class IrrigazioneController {
+    
+    private Utente utente;
+    private Piantagione piantagione;
+    private Irrigazione irrigazione;
+    private IrrigazioneCisterna irrigazioneCisterna;
+    private Cisterna cisterna;
+    private ObservableList<Irrigazione> irrigazioniData = FXCollections.observableArrayList();
+
+
+    
+    @FXML
+    private BorderPane irrigazioneRoot;
+    
+    @FXML
+    private BorderPane irrigazioneNested;
+
+    @FXML
+    private TableView<Irrigazione> irrigationsTable;
+    
+    @FXML
+    private TableColumn<Irrigazione, Integer> idColumn;
+    @FXML
+    private TableColumn<Irrigazione, LocalTime> timeColumn;
+    @FXML
+    private TableColumn<Irrigazione, Integer> durationColumn;
+    @FXML
+    private TableColumn<Irrigazione, Boolean> autoColumn;
+    @FXML
+    private TableColumn<Irrigazione, String> stateColumn;
+    @FXML
+    private TableColumn<Irrigazione, Integer> reqLitresColumn;
+
+    @FXML
+    private GridPane fieldMap;
+    
+    @FXML
+    private ProgressBar livello_cisterna;
+    
+    @FXML
+    private RadioButton irrigazioneAutomatica;
+
+    @FXML
+    private Button avviaIrrigazione;
+
+    @FXML
+    private void initialize() {
+        System.out.println("Caricamento pagina");
+
+        try{
+
+            idColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
+            timeColumn.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
+            durationColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
+            autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
+            stateColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
+            reqLitresColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Errore inizializzazione tabella irrigazioni");
+        }
+
+        loadIrrigazioneData();
+    }
+    
+    private void loadIrrigazioneData() {
+        if(piantagione != null){
+            irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
+
+            irrigazioniData.setAll(irrigazione);
+            irrigationsTable.setItems(irrigazioniData);
+            
+            irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
+            cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
+
+
+            System.out.println("irrigazione, cisterna e la tabella sono stati caricati e settati con successo");
+            System.out.println("irrigazione: " + irrigazione.toString() + 
+            " irrigazione-cisterna: " + irrigazioneCisterna.toString() +
+            " cisterna: " + cisterna.toString() +
+            " irrigazioniData: " + irrigazioniData.toString() );
+
+            Double riempimento = (double)cisterna.getQuantita()/(double)cisterna.getCapacita();
+
+            //qui resta da caricare fieldMap
+            System.out.println("riempimento cisterna = " + riempimento);
+
+            livello_cisterna.setProgress(riempimento);
+            irrigazioneAutomatica.setSelected(irrigazione.isAuto());
+            if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
+        }else{
+            System.out.println("Piantagione non trovata, non è possibile caricare i dati della sua irrigazione");
+            irrigazioniData.clear();
+        }
+        
+        
+
+    }
+
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setPiantagione(Piantagione piantagione){
+        
+        System.out.println("Settaggio piantagione");
+        this.piantagione = piantagione;
+        loadIrrigazioneData();
+    }
+    
+    //metodo da chiamare da altri controller per passare l'utente alla home
+    public void setUser(Utente utente){
+        this.utente = utente;
+        updateMenuBar();
+        updateVerticalMenuBar();
+    }
+
+        
+    private void updateMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/menuBar.fxml"));
+            Parent menuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            MenuBarController menuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            menuBarController.setUserStatus(utente);
+
+            
+            // Aggiungi la barra di menu alla root
+            irrigazioneNested.setTop(menuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+    }
+
+    private void updateVerticalMenuBar(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/verticalMenuBar.fxml"));
+            Parent verticalMenuBarRoot = loader.load();
+
+            // Ottieni il controller della barra di menu
+            VerticalMenuBarController verticalMenuBarController = loader.getController();
+            //passa utente al controller menu bar e aggiorna visibilità bottoni
+            verticalMenuBarController.setUserStatus(utente);
+
+            
+            // Aggiungi la barra di menu alla root
+            irrigazioneRoot.setLeft(verticalMenuBarRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile caricare la barra di menu.");
+        }
+
+        
+    }
+
+    
+    private void showErrorDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
+
+
+}

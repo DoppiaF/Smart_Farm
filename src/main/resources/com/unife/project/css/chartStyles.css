@@ -1,0 +1,14 @@
+.chart {
+    -fx-font-size: 14px; /* Dimensione del font */
+    -fx-text-fill: #000000; /* Colore del testo nero */
+}
+
+.axis-label {
+    -fx-font-size: 16px; /* Dimensione del font per le etichette degli assi */
+    -fx-text-fill: #000000; /* Colore del testo nero */
+}
+
+.axis {
+    -fx-tick-label-fill: #000000; /* Colore del testo delle etichette dei tick */
+    -fx-font-size: 12px; /* Dimensione del font per le etichette dei tick */
+}

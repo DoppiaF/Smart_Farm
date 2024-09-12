@@ -6,12 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,7 +45,7 @@ public class AnimaleDAOImplTest {
         animale.setSesso('M');
         animale.setPeso(100);
         animale.setRazza("Frisona");
-        animale.setTipoAlimentazione("Erba");
+        animale.setTipoAlimentazione("granoturco");
         animale.setNomeStalla("Stalla A");
         animale.setData_nascita(LocalDate.of(2020, 1, 1));
         animale.setData_ingresso(LocalDate.of(2020, 2, 1));
@@ -83,7 +81,7 @@ public class AnimaleDAOImplTest {
         animale.setPeso(500);
         animale.setSesso('M');
         animale.setRazza("Frisona");
-        animale.setTipoAlimentazione("Erba");
+        animale.setTipoAlimentazione("granoturco");
         animale.setNomeStalla("Stalla A");
         animale.setData_nascita(LocalDate.parse("2020-01-01"));
         animale.setData_ingresso(LocalDate.parse("2020-02-01"));
@@ -129,8 +127,8 @@ public class AnimaleDAOImplTest {
         when(mockResultSet.getInt("peso")).thenReturn(100);
         when(mockResultSet.getString("sesso")).thenReturn("M");
         when(mockResultSet.getString("razza")).thenReturn("Razza1");
-        when(mockResultSet.getString("tipoAlimentazione")).thenReturn("Erba");
-        when(mockResultSet.getString("nomeStalla")).thenReturn("Stalla1");
+        when(mockResultSet.getString("tipo_alimentazione")).thenReturn("granoturco");
+        when(mockResultSet.getString("nome_stalla")).thenReturn("Stalla1");
         when(mockResultSet.getDate("data_nascita")).thenReturn(java.sql.Date.valueOf(LocalDate.of(2020, 1, 1)));
         when(mockResultSet.getDate("data_ingresso")).thenReturn(java.sql.Date.valueOf(LocalDate.of(2020, 2, 1)));
         when(mockResultSet.getDate("data_uscita")).thenReturn(java.sql.Date.valueOf(LocalDate.of(2020, 3, 1)));
@@ -143,7 +141,7 @@ public class AnimaleDAOImplTest {
         assertEquals(100, animale.getPeso());
         assertEquals('M', animale.getSesso());
         assertEquals("Razza1", animale.getRazza());
-        assertEquals("Erba", animale.getTipoAlimentazione());
+        assertEquals("granoturco", animale.getTipoAlimentazione());
         assertEquals("Stalla1", animale.getNomeStalla());
         assertEquals(LocalDate.of(2020, 1, 1), animale.getData_nascita());
         assertEquals(LocalDate.of(2020, 2, 1), animale.getData_ingresso());

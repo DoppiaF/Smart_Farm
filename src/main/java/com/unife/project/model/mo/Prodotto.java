@@ -1,23 +1,29 @@
 package com.unife.project.model.mo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Prodotto {
     private int id_prodotto;
     private int quantita;
-    private LocalDateTime dataProduzione;
-    private LocalDateTime dataScadenza; 
-    private String tipoProdotto;  //FK per listino prezzi
+    private String tipo_prodotto;  //FK per listino prezzi
+    private LocalDate data_produzione;
+    private String specie;  //FK per animale
+    private String stalla;  //FK per stalla
     private List<Animale> animali = new ArrayList<>();    //FK riferita a Animale
 
-    public Prodotto(/*int id_prodotto,*/ int quantita, String tipoProdotto, LocalDateTime dataProduzione, LocalDateTime dataScadenza) {
+    //costruttore vuoto
+    public Prodotto() {
+    }
+
+    public Prodotto( int quantita, String tipoProdotto, LocalDate dataProduzione, String specie, String stalla) {
         //this.id_prodotto = id_prodotto;
         this.quantita = quantita;
-        this.tipoProdotto = tipoProdotto;
-        this.dataProduzione = dataProduzione; 
-        this.dataScadenza = dataScadenza;
+        this.tipo_prodotto = tipoProdotto;
+        this.data_produzione = dataProduzione; 
+        this.specie = specie;
+        this.stalla = stalla;
     }
 
     public int getId_prodotto() {
@@ -37,27 +43,35 @@ public class Prodotto {
     }
 
     public String getTipoProdotto() {
-        return tipoProdotto;
+        return tipo_prodotto;
     }
 
     public void setTipoProdotto(String tipoProdotto) {
-        this.tipoProdotto = tipoProdotto;
+        this.tipo_prodotto = tipoProdotto;
     }
 
-    public LocalDateTime getDataProduzione() {
-        return dataProduzione;
+    public LocalDate getDataProduzione() {
+        return data_produzione;
     }
 
-    public void setDataProduzione(LocalDateTime dataProduzione) {
-        this.dataProduzione = dataProduzione;
+    public void setDataProduzione(LocalDate dataProduzione) {
+        this.data_produzione = dataProduzione;
     }
 
-    public LocalDateTime getDataScadenza() {
-        return dataScadenza;
+    public String getSpecie() {
+        return specie;
     }
 
-    public void setDataScadenza(LocalDateTime dataScadenza) {
-        this.dataScadenza = dataScadenza;
+    public void setSpecie(String specie) {
+        this.specie = specie;
+    }
+
+    public String getStalla() {
+        return stalla;
+    }
+
+    public void setStalla(String stalla) {
+        this.stalla = stalla;
     }
 
     public List<Animale> getAnimali() {
@@ -73,8 +87,10 @@ public class Prodotto {
     public String toString() {
         return "Prodotto{id_prodotto=" + id_prodotto + 
         ", quantita=" + quantita + 
-        ", dataProduzione=" + dataProduzione + 
-        ", dataScadenza=" + dataScadenza +
+        ", dataProduzione=" + data_produzione + 
+        ", tipoProdotto=" + tipo_prodotto +
+        ", specie=" + specie +
+        ", stalla=" + stalla +
         '}';
     }
 }

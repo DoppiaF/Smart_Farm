@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "VisitaVeterinariaDAOImplTest",
+            "request": "launch",
+            "mainClass": "com.unife.project.model.dao.VisitaVeterinariaDAOImplTest",
+            "projectName": "smart-farm-management"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) MainAPP",
+            "request": "launch",
+            "mainClass": "com.unife.project.MainApp",
+            "vmArgs": "--module-path \"${workspaceFolder}\"/target/dependency --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "com.unife.project.MainApp",
+            "projectName": "smart-farm-management"
+        }
+    ]
+}

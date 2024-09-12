@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="pastoreRoot" prefHeight="600.0" prefWidth="817.0" stylesheets="@chartStyles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
+    <left>
+        <fx:include source="verticalMenuBar.fxml" />
+    </left>
+   <center>
+      <BorderPane fx:id="pastoreNested" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+              <VBox spacing="10.0" BorderPane.alignment="CENTER">
+                  <HBox spacing="10.0">
+                      <Button onAction="#handleAddStalla" text="Aggiungi" />
+                      <Button mnemonicParsing="false" onAction="#eliminaMangime" text="Automatizza Mangime" />
+                      <Button mnemonicParsing="false" onAction="#eliminaMangimeManual" text="Consuma Mangime Per Oggi" />
+                  </HBox>
+                  <TableView fx:id="stalleTable">
+                      <columns>
+                          <TableColumn fx:id="nomeColumn" text="Nome Stalla" />
+                          <TableColumn fx:id="capienzaColumn" text="Capienza" />
+                          <TableColumn fx:id="razzaColumn" text="Razza" />
+                          <TableColumn fx:id="pranzoColumn" text="Orario Primo Pasto" />
+                          <TableColumn fx:id="cenaColumn" text="Orario Secondo Pasto" />
+                      </columns>
+                  </TableView>
+               <HBox prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                     <LineChart fx:id="costiChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0">
+                       <xAxis>
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxis" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis fx:id="yAxis" label="Costo (€)" side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart fx:id="guadagniChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0">
+                       <xAxis>
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxisGuadagni" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis fx:id="yAxisGuadagni" label="Costo (€)" side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                  </children>
+               </HBox>
+              </VBox>
+         </center>
+         <top>
+              <fx:include source="menuBar.fxml" />
+         </top>
+      </BorderPane>
+   </center>
+</BorderPane>

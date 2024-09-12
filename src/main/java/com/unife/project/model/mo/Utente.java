@@ -5,23 +5,28 @@ import java.time.LocalDate;
 
 public class Utente {
     private int id;
-    private String userName;
+    private String username;
     private String password;
     private String email;
-    private Timestamp createTime;
-    private LocalDate dataNascita;
+    private Timestamp create_time;   //data di creazione dell'utente, riempita automaticamente dal database
+    private LocalDate data_nascita;
     private Boolean ruolo_raccolta;
     private Boolean ruolo_irrigazione;
     private Boolean ruolo_pastore;
     private Boolean ruolo_admin;
 
-    public Utente(int id, String userName, String password, String email, Timestamp createTime, LocalDate dataNascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
+
+    //costruttore vuoto
+    public Utente() {
+    }
+
+    public Utente(int id, String username, String password, String email, Timestamp create_time, LocalDate data_nascita, Boolean ruolo_raccolta, Boolean ruolo_irrigazione, Boolean ruolo_pastore, Boolean ruolo_admin) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.createTime = createTime;
-        this.dataNascita = dataNascita;
+        this.create_time = create_time;
+        this.data_nascita = data_nascita;
         this.ruolo_raccolta = ruolo_raccolta;
         this.ruolo_irrigazione = ruolo_irrigazione;
         this.ruolo_pastore = ruolo_pastore;
@@ -37,11 +42,11 @@ public class Utente {
     }
     
     public String getUserName() {
-        return userName;
+        return username;
     }
     
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
     
     public String getPassword() {
@@ -61,19 +66,19 @@ public class Utente {
     }
     
     public Timestamp getCreateTime() {
-        return createTime;
+        return create_time;
     }
     
     public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+        this.create_time = createTime;
     }
     
     public LocalDate getDataNascita() {
-        return dataNascita;
+        return data_nascita;
     }
     
     public void setDataNascita(LocalDate dataNascita) {
-        this.dataNascita = dataNascita;
+        this.data_nascita = dataNascita;
     }
     
     public Boolean getRuolo_raccolta() {
@@ -111,14 +116,19 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{id=" + id + 
-               ", userName='" + userName + '\'' + 
+               ", userName='" + username + '\'' + 
                ", email='" + email + '\'' + 
-               ", createTime=" + createTime + 
-               ", dataNascita=" + dataNascita + 
+               ", createTime=" + create_time + 
+               ", dataNascita=" + data_nascita + 
                ", ruolo_raccolta=" + ruolo_raccolta + 
                ", ruolo_irrigazione=" + ruolo_irrigazione + 
                ", ruolo_pastore=" + ruolo_pastore + 
                ", ruolo_admin=" + ruolo_admin + 
+               ", password='" + password + '\'' +
                '}';
     }
+
+    /*
+     INSERT INTO user (username, email, password, data_nascita, ruolo_raccolta, ruolo_irrigazione, ruolo_pastore, ruolo_admin) VALUES ('Ale', 'ale@gmail.com', 'AZ', '1997-03-13',0,0,0,1);
+     */
 }

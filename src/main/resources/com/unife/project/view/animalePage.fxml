@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.AnimaliController">
+   <center>
+      <BorderPane fx:id="nestedPane" BorderPane.alignment="CENTER">
+         <center>
+            <VBox>
+               <children>
+                  <HBox prefHeight="38.0" prefWidth="792.0" style="-fx-background-image: src\main\resources\com\unife\project\images\progettazionePiantagione.jpeg;">
+                     <children>
+                        <Label fx:id="etichettaStallaLabel" style="-fx-background-color: #b50d2e;" text="Stalla" textFill="#290136">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#handleAddAnimale" text="Inserisci nuovo animale">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleDeleteAnimale" text="Elimina animale selezionato">
+                           <HBox.margin>
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleModifyAnimale" text="Modifica selezione">
+                           <HBox.margin>
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleGoToVeterinario" text="aggiorna stato salute">
+                           <HBox.margin>
+                              <Insets bottom="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="animaliTable" prefHeight="244.0" prefWidth="792.0">
+                     <columns>
+                        <TableColumn fx:id="idColumn" text="ID Animale" />
+                        <TableColumn fx:id="razzaColumn" text="Razza" />
+                        <TableColumn fx:id="sessoColumn" text="Sesso" />
+                        <TableColumn fx:id="pesoColumn" text="Peso" />
+                        <TableColumn fx:id="mangimeColumn" text="Alimentazione" />
+                        <TableColumn fx:id="nascitaColumn" text="Data Nascita" />
+                        <TableColumn fx:id="ingressoColumn" text="Data Ingresso" />
+                        <TableColumn fx:id="vaccinoColumn" text="Vaccino" />
+                        <TableColumn fx:id="uscitaColumn" text="Uscita" />
+                        <TableColumn fx:id="morteColumn" text="Morte" />
+                     </columns>
+                  </TableView>
+                  <ButtonBar prefHeight="114.0" prefWidth="792.0" style="-fx-background-color: #b14d0e;">
+                    <buttons>
+                        <PieChart fx:id="pieMagazzino" prefHeight="112.0" />
+                      <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGoToMagazzino" prefHeight="72.0" prefWidth="209.0" text="MAGAZZINO" textFill="#b14d0e" />
+                    </buttons>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </ButtonBar>
+                  <ButtonBar layoutX="10.0" layoutY="308.0" prefHeight="114.0" prefWidth="792.0" style="-fx-background-color: #b02d0e;">
+                     <buttons>
+                        <PieChart fx:id="pieProdotto" prefHeight="112.0" />
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGoToProdotto" prefHeight="72.0" prefWidth="209.0" text="PRODOTTI" textFill="#b02d0e" />
+                     </buttons>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </ButtonBar>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

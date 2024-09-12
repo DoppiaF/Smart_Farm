@@ -1,6 +1,7 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
@@ -20,7 +21,9 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -38,13 +41,19 @@ import javafx.stage.Stage;
         private BorderPane magazzinoNested;
         @FXML
         private BorderPane magazzinoRoot;
+        @FXML
+        private Button inserisciMagazzinoButton;    
+
         private Utente utente = null;
         private Magazzino magazzino = null;
         private Stalla stalla = null;
+
+        private String selectedTipoMangime;
         
 
         public void initialize() {
             //loadMagazzinoData();
+            //setupBarChartSelection();
         }
 
 
@@ -76,6 +85,13 @@ import javafx.stage.Stage;
                         Label label = new Label(String.format("%.2f €/kg", item.getPrezzo_kg()));
                         StackPane stackPane = (StackPane) newValue;
                         stackPane.getChildren().add(label);
+
+                        // Aggiungi un listener per rendere selezionabile la barra
+                        newValue.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                            selectedTipoMangime = item.getTipoMangime();
+                            inserisciMagazzinoButton.setDisable(false);
+                            System.out.println("Selected Tipo Mangime: " + selectedTipoMangime);
+                        });
                     }
                 });
             }
@@ -111,6 +127,22 @@ import javafx.stage.Stage;
             }
         }
 
+
+
+        
+
+        @FXML
+        private void handleInserisciMagazzino() {
+            if (selectedTipoMangime != null) {
+                // Logica per inserire il tipo di prodotto selezionato nel magazzino
+                System.out.println("Inserisci nel magazzino: " + selectedTipoMangime);
+                Magazzino magazzino = new Magazzino();
+                magazzino.setQuantita(1000);
+                magazzino.setTipoMangime(selectedTipoMangime);
+                magazzino.setData(LocalDate.now());
+                DAOFactory.getMagazzinoDAO().save(magazzino);
+            }
+        }
 
         //logica di gestione utente e schermata default------------------------------------
         public void setUser(Utente utente) {

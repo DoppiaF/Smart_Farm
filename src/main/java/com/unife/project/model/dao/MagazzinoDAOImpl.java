@@ -42,8 +42,8 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
 
     @Override
     public void update(Magazzino magazzino) {
-        String sql ="UPDATE magazzino" +
-                    "SET quantita = ?, prezzo_kg = ?" + 
+        String sql ="UPDATE magazzino " +
+                    "SET quantita = ?, prezzo_kg = ? " + 
                     "WHERE tipo_mangime = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -87,8 +87,11 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
             
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
-                    Magazzino magazzino = new Magazzino(tipoMangime, rs.getInt("quantita"),
-                        rs.getFloat("prezzo_kg"));
+                    Magazzino magazzino = new Magazzino();
+                    magazzino.setPrezzo_kg(rs.getFloat("prezzo_kg"));
+                    magazzino.setQuantita(rs.getInt("quantita"));
+                    magazzino.setData(rs.getDate("data").toLocalDate());
+                    magazzino.setTipoMangime(rs.getString("tipo_mangime"));
                     return magazzino;
                 } else {
                     System.out.println("Il tipo di mangime richiesto non è stato trovato nel magazzino");
@@ -112,12 +115,13 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
                 if(!rs.isBeforeFirst()) System.out.println("Non sono stati trovati mangimi");
                 else{
                     while (rs.next()){
-                        Magazzino mangime = new Magazzino(
-                            rs.getString("tipo_mangime"),
-                            rs.getInt("quantita"),
-                            rs.getFloat("prezzo_kg"));
+                        Magazzino magazzino = new Magazzino();
+                        magazzino.setPrezzo_kg(rs.getFloat("prezzo_kg"));
+                        magazzino.setQuantita(rs.getInt("quantita"));
+                        magazzino.setData(rs.getDate("data").toLocalDate());
+                        magazzino.setTipoMangime(rs.getString("tipo_mangime"));
 
-                        mangimi.add(mangime);
+                        mangimi.add(magazzino);
                         
                     }
                 }

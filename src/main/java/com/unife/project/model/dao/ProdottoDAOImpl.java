@@ -210,6 +210,8 @@ public class ProdottoDAOImpl implements ProdottoDAO{
         List<Prodotto> prodotti = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, specie);
+            
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.isBeforeFirst()) {
                     System.out.println("Non sono stati trovati prodotti");
@@ -229,7 +231,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Errore nel recupero delle informazioni di tutti gli animali");
+            System.out.println("Errore nel recupero delle informazioni di tutti gli animali per razza");
         }
         return prodotti;
     }

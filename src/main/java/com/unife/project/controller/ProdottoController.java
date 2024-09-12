@@ -1,6 +1,7 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Listino;
+import com.unife.project.model.mo.Magazzino;
 import com.unife.project.model.mo.Prodotto;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
@@ -25,6 +27,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -33,6 +36,7 @@ public class ProdottoController {
     private Utente utente;
     private Stalla stalla;
     private Animale animale;
+    private String selectedTipoProdotto;
 
     @FXML
     private BorderPane rootPane;
@@ -50,12 +54,15 @@ public class ProdottoController {
     private NumberAxis xAxis;
     @FXML 
     private NumberAxis yAxis;   
+    @FXML
+    private Button inserisciMagazzinoButton;
     //@FXML
     //private Scene scene;
 
     @FXML
     public void initialize() {
         loadProdottiDataUltimoAnno();
+        setupBarChartSelection();
     }
 
 
@@ -160,6 +167,31 @@ public class ProdottoController {
         
         // Forza un altro layout per assicurarsi che il grafico venga ridisegnato correttamente
         graficoProdotti.layout();
+    }
+
+    private void setupBarChartSelection() {
+        for (XYChart.Series<String, Number> series : graficoProdotti.getData()) {
+            for (XYChart.Data<String, Number> data : series.getData()) {
+                data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    selectedTipoProdotto = data.getXValue();
+                    inserisciMagazzinoButton.setDisable(false);
+                    System.out.println("Selected Tipo Prodotto: " + selectedTipoProdotto);
+                });
+            }
+        }
+    }
+
+    @FXML
+    private void handleInserisciMagazzino() {
+        if (selectedTipoProdotto != null) {
+            // Logica per inserire il tipo di prodotto selezionato nel magazzino
+            System.out.println("Inserisci nel magazzino: " + selectedTipoProdotto);
+            Magazzino magazzino = new Magazzino();
+            magazzino.setQuantita(1000);
+            magazzino.setTipoMangime(selectedTipoProdotto);
+            magazzino.setData(LocalDate.now());
+            DAOFactory.getMagazzinoDAO().save(magazzino);
+        }
     }
 
     /*public void loadProdottiDataUltimoMese() {

@@ -9,14 +9,11 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.CharacterStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -32,13 +29,9 @@ import com.unife.project.util.WindowUtil;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.Action;
 
 import com.unife.project.model.dao.DAOFactory;
 
@@ -83,8 +76,8 @@ public class AnimaliController {
     private PieChart pieProdotto;
     
     private ObservableList<Animale> animaliData = FXCollections.observableArrayList();
-    private Stalla stalla = new Stalla();
-    private Utente utente = new Utente();
+    private Stalla stalla = null;
+    private Utente utente = null;
 
     @FXML
     private void initialize() {
@@ -132,7 +125,7 @@ public class AnimaliController {
             showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
         }
         loadMagazzinoData();
-        loadProdottiData();
+        
     }
 
     public void setStalla(Stalla stalla) {
@@ -140,6 +133,7 @@ public class AnimaliController {
         etichettaStallaLabel.setText(stalla.getEtichettaStalla()); // Imposta il testo della Label
         
         loadAnimaliData();
+        loadProdottiData();
         if (!animaliData.isEmpty()) {
             System.out.println("Caricamento dati animali completato. primo animale: " + animaliData.get(0).toString());
         } else {
@@ -209,10 +203,11 @@ public class AnimaliController {
     }
 
     private void loadProdottiData() {
+        System.out.println("Caricamento dati prodotti per la razza: " + stalla.getRazza());
         // Recupera i dati dei prodotti
-        //List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
         List<Prodotto> prodottiData = DAOFactory.getProdottoDAO().findProdottoUltimoAnnoPerRazza(stalla.getRazza());
 
+        System.out.println("Prodotti trovati: " + prodottiData.size());
         if(prodottiData == null || prodottiData.isEmpty()){
             System.out.println("Specie non trovata. Caricamento di tutti i prodotti.");
             prodottiData = DAOFactory.getProdottoDAO().findProdottiUltimoAnno();
@@ -324,12 +319,8 @@ public class AnimaliController {
             prodottoController.setStalla(stalla);
 
             Animale animaleSelezionato = animaliTable.getSelectionModel().getSelectedItem();
-            if(animaleSelezionato != null){
-                prodottoController.loadAnimale(animaleSelezionato);
-            } else {
-                showErrorDialog("Errore", "Seleziona dalla lista un animale da modificare.");
-                return;
-            }
+            prodottoController.loadAnimale(animaleSelezionato);
+            
             
 
             // Ottieni lo stage principale

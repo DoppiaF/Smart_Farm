@@ -133,7 +133,7 @@ public class IrrigazioneController {
         
         System.out.println("Settaggio piantagione");
         this.piantagione = piantagione;
-        initialize();
+        loadIrrigazioneData();
     }
     
     //metodo da chiamare da altri controller per passare l'utente alla home

@@ -141,7 +141,7 @@ public class ProdottoController {
                     .sum();
 
             // Aggiorna la Label con il guadagno totale
-            tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
+            tot.setText(String.format("Guadagno Totale: %.2f euro", guadagnoTotale));
 
             // Popola il BarChart
             populateBarChart(prodottiPerTipo);

@@ -1,15 +1,18 @@
 package com.unife.project.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.unife.project.model.mo.Magazzino;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class MagazzinoDAOImpl implements MagazzinoDAO{
     ArrayList<Magazzino> mangimi = null;
@@ -169,6 +172,46 @@ public class MagazzinoDAOImpl implements MagazzinoDAO{
         return mangimi;
     }
 
-    
+    @Override
+    public void eliminaMangime(){
+        String queryAnimali = "SELECT tipo_alimentazione, COUNT(*) as numero_animali FROM animale GROUP BY tipo_alimentazione";
+        String insertMagazzino = "INSERT INTO magazzino_new (mangime, quantita, data, prezzo_kg) VALUES (?, ?, ?, ?)";
+
+        Map<String, Integer> consumoMangime = new HashMap<>();
+
+        try (PreparedStatement stmtAnimali = connection.prepareStatement(queryAnimali);
+             ResultSet rs = stmtAnimali.executeQuery()) {
+
+            // Recupera e raggruppa gli animali per tipo di alimentazione
+            while (rs.next()) {
+                String tipoAlimentazione = rs.getString("tipo_alimentazione");
+                int numeroAnimali = rs.getInt("numero_animali");
+                int consumo = numeroAnimali * 2; // Ogni animale consuma 2 kg di mangime
+
+                consumoMangime.put(tipoAlimentazione, consumo);
+            }
+
+            // Inserisci i dati nella tabella magazzino_new
+            try (PreparedStatement stmtMagazzino = connection.prepareStatement(insertMagazzino)) {
+                for (Map.Entry<String, Integer> entry : consumoMangime.entrySet()) {
+                    String tipoMangime = entry.getKey();
+                    int quantita = -entry.getValue(); // Quantità negativa
+                    LocalDate dataOdierna = LocalDate.now();
+                    int prezzoKg = 1; // Prezzo per kg impostato a 1
+
+                    stmtMagazzino.setString(1, tipoMangime);
+                    stmtMagazzino.setInt(2, quantita);
+                    stmtMagazzino.setDate(3, java.sql.Date.valueOf(dataOdierna));
+                    stmtMagazzino.setInt(4, prezzoKg);
+
+                    stmtMagazzino.executeUpdate();
+                }
+            }
+
+            System.out.println("Mangime generale eliminato manualmente con successo.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

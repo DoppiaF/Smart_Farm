@@ -20,6 +20,8 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddStalla" text="Aggiungi" />
+                      <Button mnemonicParsing="false" onAction="#eliminaMangime" text="Automatizza Mangime" />
+                      <Button mnemonicParsing="false" onAction="#eliminaMangimeManual" text="Consuma Mangime Per Oggi" />
                   </HBox>
                   <TableView fx:id="stalleTable">
                       <columns>
@@ -34,18 +36,18 @@
                   <children>
                      <LineChart fx:id="costiChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0">
                        <xAxis>
-                         <CategoryAxis fx:id="xAxis"  label="Mese" side="BOTTOM" />
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxis" />
                        </xAxis>
                        <yAxis>
-                         <NumberAxis fx:id="yAxis"  label="Costo (€)" side="LEFT" />
+                         <NumberAxis fx:id="yAxis" label="Costo (€)" side="LEFT" />
                        </yAxis>
                      </LineChart>
                      <LineChart fx:id="guadagniChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0">
                        <xAxis>
-                         <CategoryAxis fx:id="xAxisGuadagni"  label="Mese" side="BOTTOM" />
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxisGuadagni" />
                        </xAxis>
                        <yAxis>
-                         <NumberAxis fx:id="yAxisGuadagni"  label="Costo (€)" side="LEFT" />
+                         <NumberAxis fx:id="yAxisGuadagni" label="Costo (€)" side="LEFT" />
                        </yAxis>
                      </LineChart>
                   </children>

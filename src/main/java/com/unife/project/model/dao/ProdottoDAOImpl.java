@@ -245,13 +245,13 @@ public class ProdottoDAOImpl implements ProdottoDAO{
                "JOIN ( " +
                "    SELECT tipo_prodotto, prezzo " +
                "    FROM listino l1 " +
-               "    WHERE data = ( " +
-               "        SELECT MAX(data) " +
+               "    WHERE data_prezzamento = ( " +
+               "        SELECT MAX(data_prezzamento) " +
                "        FROM listino l2 " +
                "        WHERE l1.tipo_prodotto = l2.tipo_prodotto " +
                "    ) " +
                ") l ON p.tipo_prodotto = l.tipo_prodotto " +
-               "WHERE p.data_produzione >= DATEADD(year, -1, GETDATE())";
+               "WHERE p.data_produzione >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
         
         List<ProdottoConPrezzo> prodottiConPrezzo = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(query)){

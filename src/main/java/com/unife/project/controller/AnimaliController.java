@@ -185,12 +185,17 @@ public class AnimaliController {
     }
 
     private void loadAnimaliData() {
+        if (animaliData == null) {
+            animaliData = FXCollections.observableArrayList();
+        }
         if (stalla != null) {
             //animaliTable.refresh();
             animaliData.setAll(DAOFactory.getAnimaleDAO().findByStalla(stalla.getEtichettaStalla()));
-            
+            animaliTable.setItems(animaliData);
+        }else{
+            showErrorDialog("Errore", "Impossibile caricare i dati degli animali.");
         }
-        animaliTable.setItems(animaliData);
+        
     }
 
     private void loadMagazzinoData() {

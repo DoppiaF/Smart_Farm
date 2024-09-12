@@ -171,7 +171,7 @@ public class AnimaleDAOImpl implements AnimaleDAO {
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setString(1, etichettaStalla);
             try (ResultSet rs = ps.executeQuery()){
-                if(!rs.isBeforeFirst()) {System.out.println("Non sono stati trovati animali nella stalla " + etichettaStalla); return null;}
+                if(!rs.isBeforeFirst()) {System.out.println("Non sono stati trovati animali nella stalla " + etichettaStalla);}
                 else{
                     while (rs.next()){
                         // Gestione delle date che possono essere null

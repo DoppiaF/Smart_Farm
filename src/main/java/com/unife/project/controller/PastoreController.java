@@ -1,6 +1,9 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,6 +18,7 @@ import com.unife.project.model.mo.Prodotto;
 import com.unife.project.model.mo.ProdottoConPrezzo;
 import com.unife.project.model.mo.Stalla;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.util.DatabaseConnection;
 import com.unife.project.util.WindowUtil;
 
 import javafx.collections.FXCollections;
@@ -448,8 +452,9 @@ public class PastoreController {
             // Ottieni il controller e passa i dati
             AnimaliController controller = loader.getController();
             
-            controller.setStalla(stalla);
             controller.setUtente(utente);
+            controller.setStalla(stalla);
+            
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -522,7 +527,7 @@ public class PastoreController {
         costiChart.getData().add(series);
          // Configura gli assi
          xAxis.setLabel("Mese");
-         yAxis.setLabel("Costo (€)");
+         yAxis.setLabel("Costo (euro)");
     }
 
     public void loadGuadagniData() {
@@ -561,6 +566,28 @@ public class PastoreController {
 
         // Configura gli assi
         xAxisGuadagni.setLabel("Mese");
-        yAxisGuadagni.setLabel("Guadagno (€)");
+        yAxisGuadagni.setLabel("Guadagno (euro)");
+    }
+
+
+    public void eliminaMangime() {
+        String query = "CALL EliminaMangime()";
+
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.execute();
+            System.out.println("Mangime eliminato con successo.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminaMangimeManual(){
+        try {
+            DAOFactory.getMagazzinoDAO().eliminaMangime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

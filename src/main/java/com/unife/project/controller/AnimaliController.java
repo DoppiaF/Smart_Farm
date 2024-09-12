@@ -32,6 +32,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.unife.project.model.dao.DAOFactory;
 
@@ -193,12 +194,20 @@ public class AnimaliController {
     }
 
     private void loadMagazzinoData() {
-        List<Magazzino> magazzinoData = DAOFactory.getMagazzinoDAO().findAll();
+        // Recupera i dati del magazzino per l'ultimo anno
+        List<Magazzino> magazzinoData = DAOFactory.getMagazzinoDAO().findAllUltimoAnno();
 
+        // Raggruppa i mangimi per tipo e somma le quantità
+        Map<String, Integer> mangimiPerTipo = magazzinoData.stream()
+                .collect(Collectors.groupingBy(Magazzino::getTipoMangime, Collectors.summingInt(Magazzino::getQuantita)));
+
+        // Crea una lista osservabile per i dati del PieChart
         ObservableList<PieChart.Data> pieMagazzinoData = FXCollections.observableArrayList();
-        for (Magazzino mangime : magazzinoData) {
-            pieMagazzinoData.add(new PieChart.Data(mangime.getTipoMangime(), mangime.getQuantita()));
+        for (Map.Entry<String, Integer> entry : mangimiPerTipo.entrySet()) {
+            pieMagazzinoData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
         }
+
+        // Imposta i dati nel PieChart
         pieMagazzino.setData(pieMagazzinoData);
     }
 

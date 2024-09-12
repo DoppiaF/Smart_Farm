@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="gridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ZonePageV2Controller">
+    <!-- Definisci le colonne e le righe del GridPane -->
+    <columnConstraints>
+        <ColumnConstraints fx:id="col1" />
+        <ColumnConstraints fx:id="col2" />
+        <!-- Aggiungi altre colonne se necessario -->
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints fx:id="row1" />
+        <RowConstraints fx:id="row2" />
+        <!-- Aggiungi altre righe se necessario -->
+    </rowConstraints>
+</GridPane>

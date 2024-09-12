@@ -3,6 +3,8 @@ package com.unife.project.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Magazzino;
@@ -49,6 +51,7 @@ import javafx.stage.Stage;
         private Stalla stalla = null;
 
         private String selectedTipoMangime;
+        private XYChart.Data<String, Number> selectedData;
         
 
         public void initialize() {
@@ -59,9 +62,14 @@ import javafx.stage.Stage;
 
         //logica di visualizzazione grafico---------------------------------------------------
         public void loadMagazzinoData() {
-            List<Magazzino> mangimi = DAOFactory.getMagazzinoDAO().findAll();
+            List<Magazzino> mangimi = DAOFactory.getMagazzinoDAO().findAllUltimoAnno();
+
+
             if(mangimi != null && !mangimi.isEmpty()){
-                populateBarChart(mangimi);
+                Map<String, Integer> mangimiPerTipo = mangimi.stream()
+                        .collect(Collectors.groupingBy(Magazzino::getTipoMangime, Collectors.summingInt(Magazzino::getQuantita)));
+                
+                populateBarChart(mangimiPerTipo);
                 System.out.println("Numero di elementi nel magazzino: " + mangimi.size());
                 //System.out.println("primo elemento lista" + items.get(0).toString());
             } else {
@@ -71,36 +79,49 @@ import javafx.stage.Stage;
             //populateBarChart(mangimi);
         }
 
-        private void populateBarChart(List<Magazzino> items) {
+        private void populateBarChart(Map<String, Integer> mangimiPerTipo) {
             XYChart.Series<String, Number> series = new XYChart.Series<>();
-            for (Magazzino item : items) {
-                XYChart.Data<String, Number> data = new XYChart.Data<>(item.getTipoMangime(), item.getQuantita());
+            for (Map.Entry<String, Integer> entry : mangimiPerTipo.entrySet()) {
+                XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
                 series.getData().add(data);
-                System.out.println(item.toString());
     
                 // Aggiungi un listener per attendere la creazione del nodo
                 data.nodeProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        // Aggiungi il prezzo al chilo sopra la barra
-                        Label label = new Label(String.format("%.2f €/kg", item.getPrezzo_kg()));
-                        StackPane stackPane = (StackPane) newValue;
-                        stackPane.getChildren().add(label);
-
                         // Aggiungi un listener per rendere selezionabile la barra
                         newValue.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                            selectedTipoMangime = item.getTipoMangime();
+                            // Rimuovi l'evidenziazione dalla barra precedentemente selezionata
+                            if (selectedData != null) {
+                                selectedData.getNode().getStyleClass().remove("selected-bar");
+                            }
+
+                            // Evidenzia la barra selezionata
+                            selectedData = data;
+                            selectedData.getNode().getStyleClass().add("selected-bar");
+
+                            // Aggiorna il tipo di mangime selezionato e l'etichetta del pulsante
+                            selectedTipoMangime = entry.getKey();
                             inserisciMagazzinoButton.setDisable(false);
+                            inserisciMagazzinoButton.setText("Aggiungi 1000Kg di: " + selectedTipoMangime);
                             System.out.println("Selected Tipo Mangime: " + selectedTipoMangime);
                         });
                     }
                 });
             }
+            // Pulisci i dati esistenti
+            barChart.getData().clear();            
+            // Forza il layout per assicurarsi che il grafico venga aggiornato
+            barChart.layout();
+            // Aggiungi le nuove serie di dati al BarChart
             barChart.getData().add(series);
+            // Forza un altro layout per assicurarsi che il grafico venga ridisegnato correttamente
+            barChart.layout();
         }
 
         public void setStalla(Stalla stalla) {
             this.stalla = stalla;
         }
+        
         public void handleGoBackStalla(ActionEvent event){
             try {
                 String etichetta = stalla.getEtichettaStalla();
@@ -128,9 +149,6 @@ import javafx.stage.Stage;
         }
 
 
-
-        
-
         @FXML
         private void handleInserisciMagazzino() {
             if (selectedTipoMangime != null) {
@@ -141,6 +159,8 @@ import javafx.stage.Stage;
                 magazzino.setTipoMangime(selectedTipoMangime);
                 magazzino.setData(LocalDate.now());
                 DAOFactory.getMagazzinoDAO().save(magazzino);
+
+                loadMagazzinoData();
             }
         }
 

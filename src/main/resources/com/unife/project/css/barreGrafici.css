@@ -1,0 +1,3 @@
+.selected-bar {
+    -fx-bar-fill: #ff0000; /* Colore rosso per evidenziare la barra selezionata */
+}

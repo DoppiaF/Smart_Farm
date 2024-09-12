@@ -10,6 +10,7 @@ import java.util.List;
 //import com.mysql.cj.jdbc.PreparedStatementWrapper;
 //import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 import com.unife.project.model.mo.Prodotto;
+import com.unife.project.model.mo.ProdottoConPrezzo;
 
 
 
@@ -234,5 +235,40 @@ public class ProdottoDAOImpl implements ProdottoDAO{
             System.out.println("Errore nel recupero delle informazioni di tutti gli animali per razza");
         }
         return prodotti;
+    }
+
+    @Override
+    public List<ProdottoConPrezzo> findProdottoUltimoAnnoConPrezzo(){
+
+        String query = "SELECT p.data_produzione, p.quantita, l.prezzo " +
+               "FROM prodotto p " +
+               "JOIN ( " +
+               "    SELECT tipo_prodotto, prezzo " +
+               "    FROM listino l1 " +
+               "    WHERE data = ( " +
+               "        SELECT MAX(data) " +
+               "        FROM listino l2 " +
+               "        WHERE l1.tipo_prodotto = l2.tipo_prodotto " +
+               "    ) " +
+               ") l ON p.tipo_prodotto = l.tipo_prodotto " +
+               "WHERE p.data_produzione >= DATEADD(year, -1, GETDATE())";
+        
+        List<ProdottoConPrezzo> prodottiConPrezzo = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            try (ResultSet rs = ps.executeQuery()){
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non sono stati trovati prodotti");
+                } else {
+                    while (rs.next()) {
+                        ProdottoConPrezzo prodotto = new ProdottoConPrezzo(rs.getDate("data_produzione").toLocalDate(), rs.getDouble("quantita"), rs.getDouble("prezzo"));
+                        prodottiConPrezzo.add(prodotto);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni prodotti per prezzo");
+        }
+    return prodottiConPrezzo;
     }
 }

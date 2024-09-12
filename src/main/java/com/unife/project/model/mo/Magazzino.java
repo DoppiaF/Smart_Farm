@@ -3,7 +3,8 @@ package com.unife.project.model.mo;
 import java.time.LocalDate;
 
 public class Magazzino {
-    private String tipo_magime;
+    private int id;
+    private String magime;
     private int quantita;
     private float prezzo_kg;
     private LocalDate data;
@@ -12,18 +13,27 @@ public class Magazzino {
     }
 
     public Magazzino(String tipoMangime, int quantita, float prezzo_kg, LocalDate data) {
-        this.tipo_magime = tipoMangime;
+        this.magime = tipoMangime;
         this.quantita = quantita;
         this.prezzo_kg = prezzo_kg;
         this.data = data;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public String getTipoMangime() {
-        return tipo_magime;
+        return magime;
     }
 
     public void setTipoMangime(String tipoMangime) {
-        this.tipo_magime = tipoMangime;
+        this.magime = tipoMangime;
     }
 
     public int getQuantita() {
@@ -52,7 +62,7 @@ public class Magazzino {
 
     @Override
     public String toString() {
-        return "Magazzino{tipoMangime='" + tipo_magime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + ", data=" + data + '}';
+        return "Magazzino{id='" + id + " tipoMangime='" + magime + "', quantita=" + quantita + ", prezzo_kg=" + prezzo_kg + ", data=" + data + '}';
     }
 
     /*

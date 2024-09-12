@@ -37,6 +37,7 @@ public class ProdottoController {
     private Stalla stalla;
     private Animale animale;
     private String selectedTipoProdotto;
+    private XYChart.Data<String, Number> selectedData;
 
     @FXML
     private BorderPane rootPane;
@@ -55,14 +56,14 @@ public class ProdottoController {
     @FXML 
     private NumberAxis yAxis;   
     @FXML
-    private Button inserisciMagazzinoButton;
+    private Button inserisciProdottoButton;
     //@FXML
     //private Scene scene;
 
     @FXML
     public void initialize() {
         loadProdottiDataUltimoAnno();
-        setupBarChartSelection();
+        //setupBarChartSelection();
     }
 
 
@@ -150,10 +151,33 @@ public class ProdottoController {
     }
 
     private void populateBarChart(Map<String, Integer> prodottiPerTipo) {
-        // Crea le serie di dati per il BarChart
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (Map.Entry<String, Integer> entry : prodottiPerTipo.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
+            series.getData().add(data);
+
+            // Aggiungi un listener per attendere la creazione del nodo
+            data.nodeProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    // Aggiungi un listener per rendere selezionabile la barra
+                    newValue.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                        // Rimuovi l'evidenziazione dalla barra precedentemente selezionata
+                        if (selectedData != null) {
+                            selectedData.getNode().getStyleClass().remove("selected-bar");
+                        }
+
+                        // Evidenzia la barra selezionata
+                        selectedData = data;
+                        selectedData.getNode().getStyleClass().add("selected-bar");
+
+                        // Aggiorna il tipo di prodotto selezionato e l'etichetta del pulsante
+                        selectedTipoProdotto = entry.getKey();
+                        inserisciProdottoButton.setDisable(false);
+                        inserisciProdottoButton.setText("Inserisci 100 kg: " + selectedTipoProdotto);
+                        System.out.println("Selected Tipo Prodotto: " + selectedTipoProdotto);
+                    });
+                }
+            });
         }
 
         // Pulisci i dati esistenti
@@ -174,7 +198,7 @@ public class ProdottoController {
             for (XYChart.Data<String, Number> data : series.getData()) {
                 data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     selectedTipoProdotto = data.getXValue();
-                    inserisciMagazzinoButton.setDisable(false);
+                    inserisciProdottoButton.setDisable(false);
                     System.out.println("Selected Tipo Prodotto: " + selectedTipoProdotto);
                 });
             }
@@ -182,15 +206,20 @@ public class ProdottoController {
     }
 
     @FXML
-    private void handleInserisciMagazzino() {
+    private void handleInserisciProdotto() {
         if (selectedTipoProdotto != null) {
             // Logica per inserire il tipo di prodotto selezionato nel magazzino
             System.out.println("Inserisci nel magazzino: " + selectedTipoProdotto);
-            Magazzino magazzino = new Magazzino();
-            magazzino.setQuantita(1000);
-            magazzino.setTipoMangime(selectedTipoProdotto);
-            magazzino.setData(LocalDate.now());
-            DAOFactory.getMagazzinoDAO().save(magazzino);
+            Prodotto prodotto = new Prodotto();
+            prodotto.setQuantita(100);
+            prodotto.setTipoProdotto(selectedTipoProdotto);
+            prodotto.setDataProduzione(LocalDate.now());
+            prodotto.setStalla(stalla.getEtichettaStalla());
+            prodotto.setSpecie(stalla.getRazza());
+            DAOFactory.getProdottoDAO().save(prodotto);
+
+            // Refresh del grafico per mostrare le modifiche
+            loadProdottiDataUltimoAnno();
         }
     }
 

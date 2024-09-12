@@ -1,19 +1,36 @@
-version: '3'
 services:
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: smartfarm
-    ports:
-      - "3306:3306"
   app:
-    build: .
+    #dockerfile: Dockerfile
+    #image: 'app:latest'
     ports:
       - "8080:8080"
+    build:
+      context: .
+    #container_name: ingsaproj
     depends_on:
-      - mysql
+      - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/smartfarm
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      DB_URL: jdbc:mysql://127.0.0.1:3306/fattoria
+      ##DB_URL: jdbc:mysql://localhost:3306/fattoria
+      DB_USERNAME: root
+      DB_PASSWORD: Pannocchie98!?
+    command: ["java", "-jar", "smart-farm-management-1.0-SNAPSHOT.jar"]
+    networks:
+      - mynetwork
+  db:
+    image: mysql:8.1.0
+    container_name: mysql_fattoria
+    #restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Pannocchie98!?
+      MYSQL_DATABASE: fattoria
+    ports:
+      - "3306:3306"
+    volumes:
+      - .\mysql:/var/lib/mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

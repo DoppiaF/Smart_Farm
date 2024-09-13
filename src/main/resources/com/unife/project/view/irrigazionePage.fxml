@@ -98,7 +98,7 @@
                            </GridPane.margin>
                         </TableView>
                         <ProgressBar fx:id="livello_cisterna" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="250.0" prefWidth="200.0" progress="0.73" rotate="-90.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="Livello cisterna =" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                        <Text fx:id="livello_cisterna_text" fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" text="Livello cisterna =" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

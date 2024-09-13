@@ -29,6 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
@@ -72,6 +73,9 @@ public class IrrigazioneController {
     
     @FXML
     private ProgressBar livello_cisterna;
+
+    @FXML
+    private Text livello_cisterna_text;
     
     @FXML
     private RadioButton irrigazioneAutomatica;
@@ -194,6 +198,7 @@ public class IrrigazioneController {
             System.out.println("riempimento cisterna = " + riempimento);
 
             livello_cisterna.setProgress(riempimento);
+            livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + ((int)(riempimento*100)) + " %");
             irrigazioneAutomatica.setSelected(irrigazione.isAuto());
             if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
         }else{

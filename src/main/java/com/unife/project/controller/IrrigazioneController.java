@@ -26,8 +26,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.util.converter.BooleanStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalTimeStringConverter;
 
 public class IrrigazioneController {
     
@@ -45,7 +49,7 @@ public class IrrigazioneController {
     
     @FXML
     private BorderPane irrigazioneNested;
-
+    //per tabella piccola con 1 sola irrigazione, relativa alla piantagione scelta nella pagina delle piantagioni
     @FXML
     private TableView<Irrigazione> irrigationsTable;
     
@@ -62,8 +66,9 @@ public class IrrigazioneController {
     @FXML
     private TableColumn<Irrigazione, Integer> reqLitresColumn;
 
-    @FXML
-    private GridPane fieldMap;
+    //la mappa del campo sembra non essere più necessaria
+    //@FXML
+    //private GridPane fieldMap;
     
     @FXML
     private ProgressBar livello_cisterna;
@@ -74,24 +79,96 @@ public class IrrigazioneController {
     @FXML
     private Button avviaIrrigazione;
 
+    //tabellona_con_tutte le irrigazioni
+    @FXML
+    private TableView<Irrigazione> irrigazioneTable;
+    
+    @FXML
+    private TableColumn<Irrigazione, Boolean> autoColumn2;
+    
+    @FXML
+    private TableColumn<Irrigazione, Integer> durataColumn;
+    
+    @FXML
+    private TableColumn<Irrigazione, Integer> litriColumn;
+    
+    @FXML
+    private TableColumn<Irrigazione, LocalTime> timeColumn2;
+    
+    
+    @FXML
+    private TableColumn<Irrigazione, String> stIrrColumn;
+    
+    @FXML
+    private TableColumn<Cisterna, Integer> cisternaColumn;
+
+
+    private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
+
     @FXML
     private void initialize() {
         System.out.println("Caricamento pagina");
 
         try{
-
+            //inizializzazione colonne tabella piccola
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
             timeColumn.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
             durationColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
             autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
             stateColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
             reqLitresColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
+
+
+            //inizializzazione colonne tabellona
+            autoColumn2.setCellValueFactory(new PropertyValueFactory<>("auto"));
+            durataColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
+            litriColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
+            timeColumn2.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
+            stIrrColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
+            
+            //Imposto la cisterna da utilizzare
+            cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            
+            //le righe della tabellona vengono rese editabili
+            autoColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+            durataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            litriColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            timeColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new LocalTimeStringConverter()));
+            stIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+            cisternaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+            //gestisco le modifiche delle celle
+            autoColumn2.setOnEditCommit(event -> event.getRowValue().setAuto(event.getNewValue()));
+            durataColumn.setOnEditCommit(event -> event.getRowValue().setDurata(event.getNewValue()));
+            litriColumn.setOnEditCommit(event -> event.getRowValue().setLitri_usati(event.getNewValue()));
+            timeColumn2.setOnEditCommit(event -> event.getRowValue().setOra_inizio(event.getNewValue()));
+            stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
+            cisternaColumn.setOnEditCommit(event -> event.getRowValue().setId(event.getNewValue()));
+        
+            // Aggiungi il pulsante di conferma alla tabella delle irrigazione
+            //addConfirmButtonToIrrigationTable();
+
+            // Carica i dati delle irrigazioni dal database nella tabellona
+            loadIrrigazioneData2();
+
+            
+            irrigazioneTable.setItems(irrigazioneData);
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Errore inizializzazione tabella irrigazioni");
         }
 
         loadIrrigazioneData();
+    }
+
+        
+    private void loadIrrigazioneData2() {
+        // Carica i dati delle piantagioni dal database e impostali nella tabella
+        irrigazioneData.clear();
+        List<Irrigazione> irrigazioni = DAOFactory.getIrrigazioneDAO().findAll();
+
+        irrigazioneData.addAll(irrigazioni);
     }
     
     private void loadIrrigazioneData() {

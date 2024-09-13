@@ -267,6 +267,7 @@ public class PiantagioneController {
                 System.out.println("chiamato setPiantagione");
 
                 Scene scene = new Scene(zoneRaccoltaRoot);
+
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 WindowUtil.setWindow(stage, scene, "Smartfarm - zone");

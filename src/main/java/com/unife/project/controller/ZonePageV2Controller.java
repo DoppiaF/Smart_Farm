@@ -6,13 +6,17 @@ import java.util.List;
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.Utente;
+import com.unife.project.model.mo.Zona;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 public class ZonePageV2Controller {
 
@@ -40,7 +44,8 @@ public class ZonePageV2Controller {
     public void setPiantagione(Piantagione piantagione){
         this.piantagione = piantagione;
         calcolaNM();
-        creaMatrice();
+        displayMatrice();
+        creaZone();
     }
 
     public void setRigheColonne(int righe, int colonne){
@@ -81,24 +86,45 @@ public class ZonePageV2Controller {
             
             for (int row = 0; row < righe; row++) {
                 for (int col = 0; col < colonne; col++) {
-                    //add zona con queste coordinate (row, col)
+                    Zona zona = new Zona();
+                    zona.setCoordX(col);
+                    zona.setCoordY(row);
+                    zona.setPortataSensore(0);
+                    zona.setStatoTerreno("buono");
+                    zona.setSensoreIluminazione(0);
+                    zona.setSensoreUmidita(0);
+                    zona.setSensoreTemperatura(0);
+                    zona.setSensorePH(0);
+                    zona.setId_piantagione(piantagione.getId());
+                    DAOFactory.getZonaDAO().save(zona);
                 }
             }
             //ultima riga con colonne variabili (righe -1 perchè partito da 0)
             if(resto != 0){
                 for (int col = 0; col < resto; col++){
-                   //add zona (righe,col)
+                    Zona zona = new Zona();
+                    zona.setCoordX(col);
+                    zona.setCoordY(righe);
+                    zona.setPortataSensore(0);
+                    zona.setStatoTerreno("buono");
+                    zona.setSensoreIluminazione(0);
+                    zona.setSensoreUmidita(0);
+                    zona.setSensoreTemperatura(0);
+                    zona.setSensorePH(0);
+                    zona.setId_piantagione(piantagione.getId());
+                    DAOFactory.getZonaDAO().save(zona);
                 }
             }
             
         }        
     }
 
-    public void creaMatrice(){
+    public void displayMatrice(){
         if (gridPane == null) {
             System.out.println("GridPane non è inizializzato correttamente.");
             return;
         }
+
         // Dimensioni della matrice righe x (righe-1) + ultima riga lunga = colonne
         /* es 11 zone. 3x3 + 2. avrò le seguenti coordinate.
          * (0,0) (0,1) (0,2)
@@ -109,17 +135,44 @@ public class ZonePageV2Controller {
         // Riempire il GridPane con componenti standard
         for (int row = 0; row < righe; row++) {
             for (int col = 0; col < colonne; col++) {
-                // Esempio di aggiunta di un'icona
-                /*ImageView icon = new ImageView(new Image(getClass().getResource("/images/pratoArido.png").toExternalForm()));
-                icon.setFitWidth(50);
-                icon.setFitHeight(50);
-                gridPane.add(icon, col, row);
-*/          
-                // Esempio di aggiunta di un grafico a torta
-                PieChart pieChart = new PieChart();
-                pieChart.getData().add(new Data("Category 1", col+1));
-                pieChart.getData().add(new Data("Category 2", row+1));
-                gridPane.add(pieChart, col, row);
+                // Crea un VBox per contenere le etichette dei sensori
+                VBox sensorBox = new VBox();
+                sensorBox.setSpacing(5); // Spaziatura tra le etichette
+                sensorBox.getStyleClass().add("grid-cell"); // Applica lo stile CSS alla cella
+
+                Zona zona = DAOFactory.getZonaDAO().findByCoordAndPiantagione(col, row,piantagione.getId());
+                // Aggiungi etichette per ogni valore del sensore
+                Label humidityLabel = new Label("Umidità: " + zona.getSensoreUmidita() + "%");
+                Label temperatureLabel = new Label("Temperatura: " + zona.getSensoreTemperatura() + "°C");
+                Label illuminationLabel = new Label("Illuminazione: " + zona.getSensoreIluminazione() + " Lux");
+                Label windLabel = new Label("Vento: " + zona.getSensoreVento() + " km/h");
+                Label phLabel = new Label("pH: " + zona.getSensorePH());
+
+                //progress bar umidità
+                ProgressBar humidityBar = new ProgressBar(zona.getSensoreUmidita() / 100.0); // Supponendo che il valore massimo sia 100%
+                humidityBar.setStyle("-fx-accent: blue;");
+
+                //progress bar temperatura
+                ProgressBar temperatureBar = new ProgressBar(zona.getSensoreTemperatura() / 40.0); // Supponendo che il valore massimo sia 40°C
+                temperatureBar.setStyle("-fx-accent: red;");
+
+                // Crea una ProgressBar per l'illuminazione
+                ProgressBar illuminationBar = new ProgressBar(zona.getSensoreIluminazione() / 1000.0); // Supponendo che il valore massimo sia 1000 Lux
+                illuminationBar.setStyle("-fx-accent: yellow;");
+
+                // Crea una ProgressBar per il vento
+                ProgressBar windBar = new ProgressBar(zona.getSensoreVento() / 100.0); // Supponendo che il valore massimo sia 100 km/h
+                windBar.setStyle("-fx-accent: grey;");
+
+                //progress bar ph
+                ProgressBar phBar = new ProgressBar(zona.getSensorePH() / 14.0); // Supponendo che il valore massimo sia 14
+                phBar.setStyle("-fx-accent: green;");
+
+                // Aggiungi le etichette al VBox
+                sensorBox.getChildren().addAll(humidityLabel, humidityBar, temperatureLabel, temperatureBar, illuminationLabel, illuminationBar, windLabel, windBar, phLabel, phBar);
+
+                // Aggiungi il VBox al GridPane
+                gridPane.add(sensorBox, col, row);
 
 
                 System.out.println("Riga: " + row + " Colonna: " + col);
@@ -129,10 +182,44 @@ public class ZonePageV2Controller {
         //ultima riga con colonne variabili (righe -1 perchè partito da 0)
         if(resto != 0){
             for (int col = 0; col < resto; col++){
-                PieChart pieChart = new PieChart();
-                pieChart.getData().add(new Data("Category 1", col+1));
-                pieChart.getData().add(new Data("Category 2", righe));
-                gridPane.add(pieChart, col, righe);
+                // Crea un VBox per contenere le etichette dei sensori
+                VBox sensorBox = new VBox();
+                sensorBox.setSpacing(5); // Spaziatura tra le etichette
+                sensorBox.getStyleClass().add("grid-cell"); // Applica lo stile CSS alla cella
+
+                Zona zona = DAOFactory.getZonaDAO().findByCoordAndPiantagione(col, righe,piantagione.getId());
+                // Aggiungi etichette per ogni valore del sensore
+                Label humidityLabel = new Label("Umidità: " + zona.getSensoreUmidita() + "%");
+                Label temperatureLabel = new Label("Temperatura: " + zona.getSensoreTemperatura() + "°C");
+                Label illuminationLabel = new Label("Illuminazione: " + zona.getSensoreIluminazione() + " Lux");
+                Label windLabel = new Label("Vento: " + zona.getSensoreVento() + " km/h");
+                Label phLabel = new Label("pH: " + zona.getSensorePH());
+
+                //progress bar umidità
+                ProgressBar humidityBar = new ProgressBar(zona.getSensoreUmidita() / 100.0); // Supponendo che il valore massimo sia 100%
+                humidityBar.setStyle("-fx-accent: blue;");
+
+                //progress bar temperatura
+                ProgressBar temperatureBar = new ProgressBar(zona.getSensoreTemperatura() / 40.0); // Supponendo che il valore massimo sia 40°C
+                temperatureBar.setStyle("-fx-accent: red;");
+
+                // Crea una ProgressBar per l'illuminazione
+                ProgressBar illuminationBar = new ProgressBar(zona.getSensoreIluminazione() / 1000.0); // Supponendo che il valore massimo sia 1000 Lux
+                illuminationBar.setStyle("-fx-accent: yellow;");
+
+                // Crea una ProgressBar per il vento
+                ProgressBar windBar = new ProgressBar(zona.getSensoreVento() / 100.0); // Supponendo che il valore massimo sia 100 km/h
+                windBar.setStyle("-fx-accent: grey;");
+
+                //progress bar ph
+                ProgressBar phBar = new ProgressBar(zona.getSensorePH() / 14.0); // Supponendo che il valore massimo sia 14
+                phBar.setStyle("-fx-accent: green;");
+
+                // Aggiungi le etichette al VBox
+                sensorBox.getChildren().addAll(humidityLabel, humidityBar, temperatureLabel, temperatureBar, illuminationLabel, illuminationBar, windLabel, windBar, phLabel, phBar);
+
+                // Aggiungi il VBox al GridPane
+                gridPane.add(sensorBox, col, righe);
             }
         }
     }

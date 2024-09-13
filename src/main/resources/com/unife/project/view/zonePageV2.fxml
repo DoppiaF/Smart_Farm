@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ZonePageV2Controller">
+<GridPane fx:id="gridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ZonePageV2Controller" stylesheets="@../css/styleZone.css">
     <!-- Definisci le colonne e le righe del GridPane -->
     <columnConstraints>
         <ColumnConstraints fx:id="col1" />

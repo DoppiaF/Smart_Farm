@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `fattoria` /*!40100 DEFAULT CHARACTER SET utf8mb4
 USE `fattoria`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fattoria
+-- Host: localhost    Database: fattoria
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -62,10 +62,10 @@ DROP TABLE IF EXISTS `cisterna`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cisterna` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `capacità` int DEFAULT NULL,
-  `quantità` int DEFAULT NULL,
+  `capacita` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +74,7 @@ CREATE TABLE `cisterna` (
 
 LOCK TABLES `cisterna` WRITE;
 /*!40000 ALTER TABLE `cisterna` DISABLE KEYS */;
+INSERT INTO `cisterna` VALUES (1,100,80),(2,100,40);
 /*!40000 ALTER TABLE `cisterna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +93,7 @@ CREATE TABLE `irrigazione` (
   `stato` varchar(20) DEFAULT 'da programmare',
   `litri_usati` int DEFAULT NULL,
   PRIMARY KEY (`id_irrigazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +102,7 @@ CREATE TABLE `irrigazione` (
 
 LOCK TABLES `irrigazione` WRITE;
 /*!40000 ALTER TABLE `irrigazione` DISABLE KEYS */;
-INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10);
+INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10),(2,'08:00:00',30,1,'ok',8),(3,'07:30:00',60,1,'ok',10);
 /*!40000 ALTER TABLE `irrigazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,12 +114,12 @@ DROP TABLE IF EXISTS `irrigazionecisterna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `irrigazionecisterna` (
-  `id_sistema_irrigazione` int NOT NULL,
+  `id_irrigazione` int NOT NULL,
   `id_cisterna` int NOT NULL,
-  PRIMARY KEY (`id_sistema_irrigazione`,`id_cisterna`),
+  PRIMARY KEY (`id_irrigazione`,`id_cisterna`),
   KEY `id_cisterna_idx` (`id_cisterna`),
   CONSTRAINT `id_cisterna` FOREIGN KEY (`id_cisterna`) REFERENCES `cisterna` (`id`),
-  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_sistema_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
+  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,6 +129,7 @@ CREATE TABLE `irrigazionecisterna` (
 
 LOCK TABLES `irrigazionecisterna` WRITE;
 /*!40000 ALTER TABLE `irrigazionecisterna` DISABLE KEYS */;
+INSERT INTO `irrigazionecisterna` VALUES (1,1),(2,1),(3,2);
 /*!40000 ALTER TABLE `irrigazionecisterna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +156,31 @@ LOCK TABLES `listino` WRITE;
 /*!40000 ALTER TABLE `listino` DISABLE KEYS */;
 INSERT INTO `listino` VALUES ('Carne Bovino',24,'2024-10-10'),('Carne Cavallo',22,'2022-01-01'),('Groviera',45,'2022-01-01'),('Lana Pecora',9,'2024-10-10'),('Latte Mucca',0.9,'2022-01-01'),('Latte Mucca',1,'2024-10-10'),('Latte Pecora',0.5,'2022-01-01'),('Latte Pecora',0.8,'2024-10-10');
 /*!40000 ALTER TABLE `listino` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `magazzino`
+--
+
+DROP TABLE IF EXISTS `magazzino`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `magazzino` (
+  `tipo_mangime` varchar(20) NOT NULL,
+  `quantita` int DEFAULT NULL,
+  `prezzo_kg` float DEFAULT NULL,
+  PRIMARY KEY (`tipo_mangime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `magazzino`
+--
+
+LOCK TABLES `magazzino` WRITE;
+/*!40000 ALTER TABLE `magazzino` DISABLE KEYS */;
+INSERT INTO `magazzino` VALUES ('crusca',500,4.3),('grano',2000,3.1),('granoturco',1000,5.8);
+/*!40000 ALTER TABLE `magazzino` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -230,7 +257,7 @@ CREATE TABLE `piantagione` (
   PRIMARY KEY (`id`),
   KEY `irrigazione_idx` (`id_irrigazione`),
   CONSTRAINT `irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +266,7 @@ CREATE TABLE `piantagione` (
 
 LOCK TABLES `piantagione` WRITE;
 /*!40000 ALTER TABLE `piantagione` DISABLE KEYS */;
-INSERT INTO `piantagione` VALUES (2,'grano',1,'ottimale',9,0,1,NULL),(3,'grano',100,'buono',6,1,0,NULL),(4,'grano saraceno',20,'scarso',1,1,0,NULL),(5,'grano',100,'buono',6,1,0,NULL),(6,'grano',100,'buono',6,1,0,NULL),(7,'cicoria',5,'ottimale',1,0,0,NULL),(8,'melanzane',5,'ottimale',1,0,0,NULL),(9,'finocchi',5,'ottimale',1,0,0,NULL);
+INSERT INTO `piantagione` VALUES (2,'grano',1,'ottimale',9,0,1,1),(3,'grano',100,'buono',6,1,0,1),(4,'grano saraceno',20,'scarso',1,1,0,2),(5,'grano',100,'buono',6,1,0,3),(6,'grano',100,'buono',6,1,0,1),(7,'cicoria',5,'ottimale',1,0,0,2),(8,'melanzane',5,'ottimale',1,0,0,2),(9,'finocchi',5,'ottimale',1,0,0,3),(10,'frumento',90,'ottimale',11,1,1,3);
 /*!40000 ALTER TABLE `piantagione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +333,7 @@ DROP TABLE IF EXISTS `raccolta`;
 CREATE TABLE `raccolta` (
   `id_raccolta` int NOT NULL AUTO_INCREMENT,
   `tipo_pianta` varchar(20) NOT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `data_raccolta` date DEFAULT NULL,
   `stato` varchar(20) DEFAULT NULL,
   `operatore` int NOT NULL,
@@ -437,7 +464,7 @@ CREATE TABLE `zona` (
   `stato_generale_terreno` varchar(10) DEFAULT 'buono',
   `sensore_illuminazione` float DEFAULT NULL,
   `sensore_vento` float DEFAULT NULL,
-  `sensore_umidità` float DEFAULT NULL,
+  `sensore_umidita` float DEFAULT NULL,
   `sensore_temperatura` float DEFAULT NULL,
   `sensore_PH` float DEFAULT NULL,
   `id_piantagione` int NOT NULL,
@@ -465,4 +492,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-12 20:11:52
+-- Dump completed on 2024-09-13 11:26:18

@@ -49,7 +49,7 @@
                                   <TableColumn fx:id="statoColumn" text="Stato" />
                                   <TableColumn fx:id="concimazioneColumn" text="Concimazione" />
                                   <TableColumn fx:id="raccoltaColumn" text="Raccolta" />
-                           <TableColumn fx:id="raccoltaColumn1" text="Irrigazione" />
+                                  <TableColumn fx:id="idIrrColumn" text="Irrigazione" />
                             </columns>
                         <columnResizePolicy>
                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

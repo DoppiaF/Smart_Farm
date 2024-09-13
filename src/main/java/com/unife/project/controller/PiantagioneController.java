@@ -75,6 +75,9 @@ public class PiantagioneController {
     private TableColumn<Piantagione, Boolean> raccoltaColumn;
 
     @FXML
+    private TableColumn<Piantagione, Integer> idIrrColumn;
+
+    @FXML
     private TableColumn<Piantagione, Void> actionColumn;
 
     @FXML
@@ -117,6 +120,7 @@ public class PiantagioneController {
         statoColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
         concimazioneColumn.setCellValueFactory(new PropertyValueFactory<>("concimazione"));
         raccoltaColumn.setCellValueFactory(new PropertyValueFactory<>("raccolta"));
+        idIrrColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
 
         // Rendi le colonne editabili
         
@@ -127,6 +131,7 @@ public class PiantagioneController {
         statoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         concimazioneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         raccoltaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+        idIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
          // Gestisci le modifiche delle celle
          tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));
@@ -135,6 +140,7 @@ public class PiantagioneController {
          statoColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
          concimazioneColumn.setOnEditCommit(event -> event.getRowValue().setConcimazione(event.getNewValue()));
          raccoltaColumn.setOnEditCommit(event -> event.getRowValue().setRaccolta(event.getNewValue()));
+         idIrrColumn.setOnEditCommit(event -> event.getRowValue().setId_irrigazione(event.getNewValue()));
          
         // Aggiungi il pulsante di conferma alla tabella
         addConfirmButtonToTable();

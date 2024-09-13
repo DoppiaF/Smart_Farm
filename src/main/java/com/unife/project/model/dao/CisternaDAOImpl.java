@@ -46,7 +46,7 @@ public class CisternaDAOImpl implements CisternaDAO{
     public void update(Cisterna cisterna) {
         String sql ="UPDATE cisterna" +
                     "SET capacita = ?, quantita = ?" + 
-                    "WHERE id_cisterna = ?";
+                    "WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, cisterna.getCapacita());
@@ -61,7 +61,7 @@ public class CisternaDAOImpl implements CisternaDAO{
 
     @Override
     public void delete(Cisterna cisterna) {
-        String sql = "DELETE FROM cisterna WHERE id_cisterna = ?";
+        String sql = "DELETE FROM cisterna WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, cisterna.getId());
@@ -77,7 +77,7 @@ public class CisternaDAOImpl implements CisternaDAO{
 
     @Override
     public Cisterna findById(int id) {
-        String sql = "SELECT * FROM cisterna WHERE id_cisterna = ?";
+        String sql = "SELECT * FROM cisterna WHERE id = ?";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1,id);

@@ -258,10 +258,10 @@ public class PiantagioneController {
 
     private void loadPiantagioneData() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella
-        piantagioneData.clear();
+        //piantagioneData.clear();
         List<Piantagione> piantagioni = DAOFactory.getPiantagioneDAO().findAll();
 
-        piantagioneData.addAll(piantagioni);
+        piantagioneData.setAll(piantagioni);
     }
 
 
@@ -356,9 +356,12 @@ public class PiantagioneController {
                             }
 
                             // Aggiunge un listener per aggiornare la visibilità del pulsante quando la selezione cambia
+                            //ho notato che questa lambda expression va in loop fino a ottenere un index troppo grande e facendo scattare index out of bounds exception
                             getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                                 int index = getIndex();
-                                if (index >= 0 && index <=getTableView().getItems().size() && newSelection == getTableView().getItems().get(index)) {
+                                if (index >= 0 && 
+                                index < getTableView().getItems().size() &&
+                                newSelection == getTableView().getItems().get(index)) {
                                     setGraphic(btn);
                                 } else {
                                     setGraphic(null);
@@ -395,7 +398,8 @@ public class PiantagioneController {
                                 Piantagione piantagione = getTableView().getItems().get(index);
                                 piantagioneData.remove(piantagione);
                                 // Puoi anche aggiungere la logica per rimuovere la piantagione dal database qui
-                                DAOFactory.getPiantagioneDAO().delete(piantagione);
+                                DAOFactory.getPiantagioneDAO().
+                                delete(piantagione);
                             } else {
                                 System.out.println("Indice fuori dai limiti: " + index);
                             }
@@ -438,6 +442,10 @@ public class PiantagioneController {
 
     //metodo per confermare l'inserimento di una nuova piantagione dentro la tabella.
     private void confermaPiantagione(Piantagione piantagione) {
+        if (DAOFactory.getPiantagioneDAO().findById(piantagione.getId()) == null){
+            // Aggiungi la piantagione al database
+            DAOFactory.getPiantagioneDAO().save(piantagione);
+        }
         // Verifica che tutti i campi della riga siano validi
         if (piantagione.getTipoPianta().isEmpty() 
                 || (piantagione.getArea() == 0) 
@@ -447,13 +455,13 @@ public class PiantagioneController {
             showErrorDialog("Errore", "Tutti i campi devono essere compilati.");
             return;
         }
+        else{
 
         
-        // log per il debug
-        System.out.println("Conferma piantagione. cosa sta inserendo nel db: " + piantagione.toString());
-        
-        // Aggiungi la piantagione al database
-        DAOFactory.getPiantagioneDAO().save(piantagione);
+            // log per il debug
+            System.out.println("La piantagione selezionata verrà aggiornata con questi dati: " + piantagione.toString());
+            DAOFactory.getPiantagioneDAO().update(piantagione);
+        }
 
         // Aggiorna la lista delle piantagioni
         loadPiantagioneData();

@@ -45,8 +45,8 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
 
     @Override
     public void update(Irrigazione irrigazione) {
-        String sql = "UPDATE irrigazione" +
-                    "SET ora_inizio = ?, durata = ?, automatico = ?, stato = ?, litri_usati = ?" +
+        String sql = "UPDATE irrigazione " +
+                    "SET ora_inizio = ?, durata = ?, automatico = ?, stato = ?, litri_usati = ? " +
                     "WHERE id_irrigazione = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)){

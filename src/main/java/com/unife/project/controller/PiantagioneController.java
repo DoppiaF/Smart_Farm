@@ -109,7 +109,7 @@ public class PiantagioneController {
     private BarChart<String, Number> produzioneChart;
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         // Inizializza le colonne della tabella
         //nelle property serve usare i nomi dei metodi getter del MO. es tipoPianta diventa getTipoPianta qui dentro.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -121,14 +121,14 @@ public class PiantagioneController {
         raccoltaColumn.setCellValueFactory(new PropertyValueFactory<>("raccolta"));
 
         //faccio lo stesso per le colonne della tabella irrigazioni
-        autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
+        /*autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
         durataColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
         litriColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
-        stIrrColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
+        stIrrColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));*/
 
         //Imposto la cisterna da utilizzare
-        cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        //cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         // Rendi le colonne editabili
         
@@ -140,13 +140,13 @@ public class PiantagioneController {
         concimazioneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         raccoltaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
 
-        autoColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+        /*autoColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         durataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         litriColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         timeColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalTimeStringConverter()));
         stIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         cisternaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-
+*/
          // Gestisci le modifiche delle celle
          tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));
          areaColumn.setOnEditCommit(event -> event.getRowValue().setArea(event.getNewValue()));
@@ -155,13 +155,13 @@ public class PiantagioneController {
          concimazioneColumn.setOnEditCommit(event -> event.getRowValue().setConcimazione(event.getNewValue()));
          raccoltaColumn.setOnEditCommit(event -> event.getRowValue().setRaccolta(event.getNewValue()));
 
-         autoColumn.setOnEditCommit(event -> event.getRowValue().setAuto(event.getNewValue()));
+      /* autoColumn.setOnEditCommit(event -> event.getRowValue().setAuto(event.getNewValue()));
          durataColumn.setOnEditCommit(event -> event.getRowValue().setDurata(event.getNewValue()));
          litriColumn.setOnEditCommit(event -> event.getRowValue().setLitri_usati(event.getNewValue()));
          timeColumn.setOnEditCommit(event -> event.getRowValue().setOra_inizio(event.getNewValue()));
          stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
          cisternaColumn.setOnEditCommit(event -> event.getRowValue().setId(event.getNewValue()));
-         
+         */
         // Aggiungi il pulsante di conferma alla tabella
         addConfirmButtonToTable();
 
@@ -172,7 +172,7 @@ public class PiantagioneController {
         //addConfirmButtonToIrrigationTable();
 
         // Carica i dati delle irrigazioni dal database
-        loadIrrigazioneData();
+        //loadIrrigazioneData();
 
         piantagioneTable.setItems(piantagioneData);
         irrigazioneTable.setItems(irrigazioneData);
@@ -234,6 +234,24 @@ public class PiantagioneController {
     private void handleGoToSensori(ActionEvent event) {
         Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
         if(piantagioneSelezionata != null){
+            System.out.println("Piantagione selezionata: " + piantagioneSelezionata.toString());
+            //funzione per calcolare righe e colonne da passare al grid pane in initialize
+                int righe = 0;
+                int colonne = 0;
+            
+                int i = 1;
+                int numZone = piantagioneSelezionata.getNumZone();
+                int areaZona = piantagioneSelezionata.getArea()/numZone;
+        
+                do{
+                    if(i*i >= numZone){
+                        righe = i;
+                        colonne = numZone/i;
+                    }
+                    i++;
+                }while(i < 6 && righe == 0);
+            
+                System.out.println("pre --- Righe: " + righe + " Colonne: " + colonne);
             try{
                 //FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneRaccolta.fxml"));
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zonePageV2.fxml"));
@@ -241,9 +259,12 @@ public class PiantagioneController {
 
                 //ZoneRaccoltaController zoneRaccoltaController = loader.getController();
                 ZonePageV2Controller zoneRaccoltaController = loader.getController();
-
+                
+                
                 zoneRaccoltaController.setUser(utente);
+                System.out.println("chiamato setUser");
                 zoneRaccoltaController.setPiantagione(piantagioneSelezionata);
+                System.out.println("chiamato setPiantagione");
 
                 Scene scene = new Scene(zoneRaccoltaRoot);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -12,7 +12,10 @@ public class Irrigazione {
     private boolean auto;
     private String stato;
     private int litri_usati;
+    private Integer idIrrCisterna;
+
     private List<Cisterna> cisterne = new ArrayList<>(); //lista cisterne associate (relazione N:M)
+
 
     //costruttore vuoto per il dao
     public Irrigazione() {
@@ -31,6 +34,27 @@ public class Irrigazione {
         this.auto = auto;
         this.stato = stato;
         this.litri_usati = litri_usati;
+        //per mantenere inalterato il costruttore usato fin'ora dove non servono i dati delle cisterne
+        idIrrCisterna = null;
+    }
+
+    //nuovo costruttore
+    public Irrigazione(
+        int id_irrigazione,
+        LocalTime ora_inizio, 
+        int durata, 
+        boolean auto, 
+        String stato, 
+        int litri_usati,
+        Integer idIrrCisterna
+    ){
+        this.id_irrigazione = id_irrigazione;
+        this.ora_inizio = ora_inizio;
+        this.durata = durata;
+        this.auto = auto;
+        this.stato = stato;
+        this.litri_usati = litri_usati;
+        this.idIrrCisterna = idIrrCisterna;
     }
 
     public int getId_irrigazione() {
@@ -89,6 +113,14 @@ public class Irrigazione {
         this.cisterne = cisterne;
     }
 
+    public Integer getIdIrrCisterna() {
+        return idIrrCisterna;
+    }
+
+    public void setIdIrrCisterna(Integer idIrrCisterna) {
+        this.idIrrCisterna = idIrrCisterna;
+    }
+
     @Override
     public String toString() {
         return "Irrigazione{" +
@@ -100,6 +132,8 @@ public class Irrigazione {
                 ", litri_usati=" + litri_usati +
                 '}';
     }
+
+    
     
 
 }

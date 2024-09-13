@@ -1,5 +1,6 @@
 package com.unife.project.model.dao;
 
+import com.unife.project.model.mo.Cisterna;
 //import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 //import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 import com.unife.project.model.mo.Irrigazione;
@@ -141,5 +142,40 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
 
         
         return irrigazioni;
+    }
+
+    public List<Irrigazione> findAllWCisterna(){
+        String sql = "SELECT i.*, c.* FROM irrigazione i join irrigazionecisterna ic join cisterna c on i.id_irrigazione=ic.id_irrigazione and c.id=ic.id_cisterna";
+        
+        irrigazioni = new ArrayList<Irrigazione>();
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate irrigazioni");
+                else{
+                    while (rs.next()){
+                        Irrigazione irrigazione = new Irrigazione(
+                            rs.getInt("i.id_irrigazione"),
+                            rs.getTime("i.ora_inizio").toLocalTime(),
+                            rs.getInt("i.durata"),
+                            rs.getBoolean("i.automatico"),
+                            rs.getString("i.stato"),
+                            rs.getInt("i.litri_usati"),
+                            rs.getInt("c.id")
+                        );
+
+                        irrigazioni.add(irrigazione);
+                        
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero delle informazioni di tutte le irrigazioni");
+        }
+
+        
+        return irrigazioni;
+
     }
 }

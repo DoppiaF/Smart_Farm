@@ -38,6 +38,10 @@ public class Cisterna {
         this.quantita = quantita;
     }
 
+    public double getPercRiempimento(){
+        return ((double)quantita / capacita);
+    }
+
     public List<Irrigazione> getIrrigazioni() {
         return irrigazioni;
     }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
@@ -107,7 +108,9 @@ public class IrrigazioneController {
     private TableColumn<Cisterna, Integer> cisternaColumn;
 
 
-    private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
+    //private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
+    //private ObservableList<Integer> cisternaData = FXCollections.observableArrayList();
+    private ObservableList<Irrigazione> irrigazioneAndCisternaData = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -131,7 +134,7 @@ public class IrrigazioneController {
             stIrrColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
             
             //Imposto la cisterna da utilizzare
-            cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+            cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("idIrrCisterna"));
             
             //le righe della tabellona vengono rese editabili
             autoColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
@@ -156,8 +159,8 @@ public class IrrigazioneController {
             // Carica i dati delle irrigazioni dal database nella tabellona
             loadIrrigazioneData2();
 
-            
-            irrigazioneTable.setItems(irrigazioneData);
+            irrigazioneTable.setItems(irrigazioneAndCisternaData);
+
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Errore inizializzazione tabella irrigazioni");
@@ -169,10 +172,31 @@ public class IrrigazioneController {
         
     private void loadIrrigazioneData2() {
         // Carica i dati delle piantagioni dal database e impostali nella tabella
-        irrigazioneData.clear();
-        List<Irrigazione> irrigazioni = DAOFactory.getIrrigazioneDAO().findAll();
+        irrigazioneAndCisternaData.clear();
+        List<Irrigazione> irrigazioni = DAOFactory.getIrrigazioneDAO().findAllWCisterna();
+        irrigazioneAndCisternaData.addAll(irrigazioni);
 
-        irrigazioneData.addAll(irrigazioni);
+        //aggiorna l'icona della cisterna in base alla riga selezionata nella tabella delle irrigazioni
+        irrigazioneTable.getSelectionModel().selectedItemProperty().addListener((obs,oldSelection,newSelection) -> {
+            if (newSelection != null){
+                Cisterna cisterna = (DAOFactory.getCisternaDAO().findById(newSelection.getIdIrrCisterna()));
+                livello_cisterna.setProgress(cisterna.getPercRiempimento()
+                );
+                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + cisterna.getPercRiempimento()*100 + " %");
+
+                
+
+            } else if(oldSelection != null){
+                Cisterna cisterna = (DAOFactory.getCisternaDAO().findById(oldSelection.getIdIrrCisterna()));
+                livello_cisterna.setProgress(cisterna.getPercRiempimento()
+                );
+                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + cisterna.getPercRiempimento()*100 + " %");
+
+            }else {
+                livello_cisterna.progressProperty().unbind();
+                livello_cisterna.setProgress(0);
+            }
+        });
     }
     
     private void loadIrrigazioneData() {
@@ -184,6 +208,9 @@ public class IrrigazioneController {
             
             irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
             cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
+
+            
+            //
 
 
             System.out.println("irrigazione, cisterna e la tabella sono stati caricati e settati con successo");
@@ -197,8 +224,8 @@ public class IrrigazioneController {
             //qui resta da caricare fieldMap
             System.out.println("riempimento cisterna = " + riempimento);
 
-            livello_cisterna.setProgress(riempimento);
-            livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + ((int)(riempimento*100)) + " %");
+            //livello_cisterna.setProgress(riempimento);
+            //livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + cisterna.getPercRiempimento()*100 + " %");
             irrigazioneAutomatica.setSelected(irrigazione.isAuto());
             if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
         }else{

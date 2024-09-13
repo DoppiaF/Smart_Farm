@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `fattoria` /*!40100 DEFAULT CHARACTER SET utf8mb4
 USE `fattoria`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: fattoria
+-- Host: localhost    Database: fattoria
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,10 +38,9 @@ CREATE TABLE `animale` (
   `data_vaccino` date DEFAULT NULL,
   PRIMARY KEY (`id_animale`),
   KEY `id_stalla_idx` (`nome_stalla`),
-  KEY `id_magazzino_idx` (`tipo_alimentazione`),
-  CONSTRAINT `id_magazzino` FOREIGN KEY (`tipo_alimentazione`) REFERENCES `magazzino` (`tipo_mangime`),
+  KEY `tipo_mangime_idx` (`tipo_alimentazione`),
   CONSTRAINT `id_stalla` FOREIGN KEY (`nome_stalla`) REFERENCES `stalla` (`etichetta_stalla`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +49,7 @@ CREATE TABLE `animale` (
 
 LOCK TABLES `animale` WRITE;
 /*!40000 ALTER TABLE `animale` DISABLE KEYS */;
-INSERT INTO `animale` VALUES (23,200,'M','Bovino','2021-06-04','grano','stalla_A','2021-07-20',NULL,NULL,NULL),(24,300,'M','Bovino','2010-10-10','crusca','stalla_A','2014-03-15',NULL,NULL,'2011-01-01'),(27,0,'M','Bovino',NULL,'granoturco','stalla_A',NULL,NULL,NULL,NULL),(28,0,'M','Bovino',NULL,'granoturco','stalla_A',NULL,NULL,NULL,NULL);
+INSERT INTO `animale` VALUES (23,200,'M','Bovino','2021-06-04','grano','stalla_A','2021-07-20',NULL,NULL,NULL),(24,300,'M','Bovino','2010-10-10','erba','stalla_A','2014-03-15',NULL,NULL,'2011-01-01'),(27,0,'M','Bovino',NULL,'granoturco','stalla_A',NULL,NULL,NULL,NULL),(28,0,'M','Bovino',NULL,'granoturco','stalla_A',NULL,NULL,NULL,NULL),(30,5,'F','Galline',NULL,'crusca','stalla_G',NULL,NULL,NULL,NULL),(31,120,'M','Cavallo','2015-05-10','carote','stalla_C',NULL,NULL,NULL,NULL),(32,120,'F','Cavallo','2017-06-10','fieno','stalla_C',NULL,NULL,NULL,NULL),(33,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(34,10,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(35,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(36,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(37,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(38,10,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(39,10,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(40,10,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(41,10,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(42,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(43,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(44,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(45,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(46,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(47,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(48,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(49,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(50,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL),(51,0,'M','Ovino',NULL,'granoturco','stalla_O',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `animale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,10 +62,10 @@ DROP TABLE IF EXISTS `cisterna`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cisterna` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `capacità` int DEFAULT NULL,
-  `quantità` int DEFAULT NULL,
+  `capacita` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,6 +74,7 @@ CREATE TABLE `cisterna` (
 
 LOCK TABLES `cisterna` WRITE;
 /*!40000 ALTER TABLE `cisterna` DISABLE KEYS */;
+INSERT INTO `cisterna` VALUES (1,100,80),(2,100,40);
 /*!40000 ALTER TABLE `cisterna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ CREATE TABLE `irrigazione` (
   `stato` varchar(20) DEFAULT 'da programmare',
   `litri_usati` int DEFAULT NULL,
   PRIMARY KEY (`id_irrigazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `irrigazione` (
 
 LOCK TABLES `irrigazione` WRITE;
 /*!40000 ALTER TABLE `irrigazione` DISABLE KEYS */;
-INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10);
+INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10),(2,'08:00:00',30,1,'ok',8),(3,'07:30:00',60,1,'ok',10);
 /*!40000 ALTER TABLE `irrigazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,12 +114,12 @@ DROP TABLE IF EXISTS `irrigazionecisterna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `irrigazionecisterna` (
-  `id_sistema_irrigazione` int NOT NULL,
+  `id_irrigazione` int NOT NULL,
   `id_cisterna` int NOT NULL,
-  PRIMARY KEY (`id_sistema_irrigazione`,`id_cisterna`),
+  PRIMARY KEY (`id_irrigazione`,`id_cisterna`),
   KEY `id_cisterna_idx` (`id_cisterna`),
   CONSTRAINT `id_cisterna` FOREIGN KEY (`id_cisterna`) REFERENCES `cisterna` (`id`),
-  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_sistema_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
+  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,6 +129,7 @@ CREATE TABLE `irrigazionecisterna` (
 
 LOCK TABLES `irrigazionecisterna` WRITE;
 /*!40000 ALTER TABLE `irrigazionecisterna` DISABLE KEYS */;
+INSERT INTO `irrigazionecisterna` VALUES (1,1),(2,1),(3,2);
 /*!40000 ALTER TABLE `irrigazionecisterna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,9 +169,7 @@ CREATE TABLE `magazzino` (
   `tipo_mangime` varchar(20) NOT NULL,
   `quantita` int DEFAULT NULL,
   `prezzo_kg` float DEFAULT NULL,
-  `data` date NOT NULL,
-  `id` int NOT NULL,
-  PRIMARY KEY (`tipo_mangime`,`data`,`id`)
+  PRIMARY KEY (`tipo_mangime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -180,7 +179,7 @@ CREATE TABLE `magazzino` (
 
 LOCK TABLES `magazzino` WRITE;
 /*!40000 ALTER TABLE `magazzino` DISABLE KEYS */;
-INSERT INTO `magazzino` VALUES ('crusca',500,4.3,'2024-01-01',0),('crusca',1000,0,'2024-09-12',0),('grano',2000,3.1,'2024-01-01',0),('grano',1000,0,'2024-09-12',0),('granoturco',1000,5.8,'2024-01-01',0);
+INSERT INTO `magazzino` VALUES ('crusca',500,4.3),('grano',2000,3.1),('granoturco',1000,5.8);
 /*!40000 ALTER TABLE `magazzino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,9 +195,10 @@ CREATE TABLE `magazzino_new` (
   `mangime` varchar(15) NOT NULL,
   `quantita` int NOT NULL DEFAULT '1000',
   `data` date NOT NULL,
+  `prezzo_kg` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `tipo_mangime_idx` (`mangime`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,35 @@ CREATE TABLE `magazzino_new` (
 
 LOCK TABLES `magazzino_new` WRITE;
 /*!40000 ALTER TABLE `magazzino_new` DISABLE KEYS */;
+INSERT INTO `magazzino_new` VALUES (1,'crusca',500,'2024-07-07',1),(2,'granoturco',1000,'2024-07-07',1),(3,'grano',700,'2024-07-07',1),(4,'crusca',1000,'2024-09-07',1),(5,'crusca',1000,'2024-09-12',1),(6,'crusca',1000,'2024-09-12',1),(7,'grano',1000,'2024-09-12',1),(8,'grano',1000,'2024-09-12',1),(9,'granoturco',1000,'2024-09-12',1),(10,'granoturco',1000,'2024-09-12',1),(11,'granoturco',1000,'2024-09-12',1),(12,'granoturco',1000,'2024-09-12',1),(13,'granoturco',1000,'2024-09-12',1),(14,'crusca',1000,'2024-09-12',1),(15,'granoturco',1000,'2024-09-12',1),(16,'crusca',1000,'2024-09-12',1),(17,'crusca',10,'2024-01-01',1),(18,'crusca',20,'2024-02-02',1),(19,'crusca',30,'2024-03-03',1),(20,'crusca',40,'2024-04-04',1),(21,'carote',-1,'2024-09-12',1),(22,'carote',-2,'2024-09-12',1),(23,'erba',-2,'2024-09-12',1),(24,'crusca',-2,'2024-09-12',1),(25,'grano',-2,'2024-09-12',1),(26,'fieno',-2,'2024-09-12',1),(27,'granoturco',-4,'2024-09-12',1),(28,'fieno',1000,'2024-09-12',1);
 /*!40000 ALTER TABLE `magazzino_new` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mangimi`
+--
+
+DROP TABLE IF EXISTS `mangimi`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mangimi` (
+  `tipo_mangime` varchar(20) NOT NULL,
+  `quantita` int DEFAULT NULL,
+  `prezzo_kg` float DEFAULT NULL,
+  `data` date NOT NULL,
+  `id` int NOT NULL,
+  PRIMARY KEY (`tipo_mangime`,`data`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mangimi`
+--
+
+LOCK TABLES `mangimi` WRITE;
+/*!40000 ALTER TABLE `mangimi` DISABLE KEYS */;
+INSERT INTO `mangimi` VALUES ('carote',10,10,'2024-01-01',3),('crusca',500,4.3,'2024-01-01',0),('crusca',1000,0,'2024-09-12',0),('erba',10,10,'2024-01-01',2),('fieno',10,10,'2024-01-01',1),('grano',2000,3.1,'2024-01-01',0),('grano',1000,0,'2024-09-12',0),('granoturco',1000,5.8,'2024-01-01',0);
+/*!40000 ALTER TABLE `mangimi` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -229,7 +257,7 @@ CREATE TABLE `piantagione` (
   PRIMARY KEY (`id`),
   KEY `irrigazione_idx` (`id_irrigazione`),
   CONSTRAINT `irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +266,7 @@ CREATE TABLE `piantagione` (
 
 LOCK TABLES `piantagione` WRITE;
 /*!40000 ALTER TABLE `piantagione` DISABLE KEYS */;
-INSERT INTO `piantagione` VALUES (2,'grano',1,'ottimale',9,0,1,NULL),(3,'grano',100,'buono',6,1,0,NULL),(4,'grano saraceno',20,'scarso',1,1,0,NULL),(5,'grano',100,'buono',6,1,0,NULL),(6,'grano',100,'buono',6,1,0,NULL),(7,'cicoria',5,'ottimale',1,0,0,NULL),(8,'melanzane',5,'ottimale',1,0,0,NULL),(9,'finocchi',5,'ottimale',1,0,0,NULL);
+INSERT INTO `piantagione` VALUES (2,'grano',1,'ottimale',9,0,1,1),(3,'grano',100,'buono',6,1,0,1),(4,'grano saraceno',20,'scarso',1,1,0,2),(5,'grano',100,'buono',6,1,0,3),(6,'grano',100,'buono',6,1,0,1),(7,'cicoria',5,'ottimale',1,0,0,2),(8,'melanzane',5,'ottimale',1,0,0,2),(9,'finocchi',5,'ottimale',1,0,0,3),(10,'frumento',90,'ottimale',11,1,1,3);
 /*!40000 ALTER TABLE `piantagione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +285,7 @@ CREATE TABLE `prodotto` (
   `specie` varchar(45) DEFAULT NULL,
   `stalla` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_prodotto`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +294,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-INSERT INTO `prodotto` VALUES (2,100,'Latte Mucca','2024-10-10','Bovino','Stalla_A'),(3,100,'Latte Pecora','2024-09-10','Ovino','Stalla_B'),(4,20,'Groviera','2023-01-12','Bovino','Stalla_C'),(5,300,'Carne Cavallo','2024-10-10','Cavallo','Stalla_D'),(6,50,'Latte Mucca','2024-05-05','Bovino','Stalla_A'),(7,300,'Carne Mucca','2024-12-09','Bovino','Stalla_A');
+INSERT INTO `prodotto` VALUES (2,100,'Latte Mucca','2024-10-10','Bovino','Stalla_A'),(3,100,'Latte Pecora','2024-09-10','Ovino','Stalla_B'),(4,20,'Groviera','2023-01-12','Bovino','Stalla_C'),(5,300,'Carne Cavallo','2024-10-10','Cavallo','Stalla_D'),(6,50,'Latte Mucca','2024-05-05','Bovino','Stalla_A'),(7,300,'Carne Mucca','2024-12-09','Bovino','Stalla_A'),(8,100,'Carne Cavallo','2024-09-12',NULL,NULL),(9,100,'Carne Cavallo','2024-09-12',NULL,NULL),(10,100,'Carne Mucca','2024-09-12',NULL,NULL),(11,100,'Latte Mucca','2024-09-12',NULL,NULL),(12,100,'Latte Mucca','2024-09-12',NULL,NULL),(13,100,'Latte Pecora','2024-09-12','Ovino','stalla_O'),(14,100,'Lana Pecora','2024-01-01','Ovino','stalla_O');
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,7 +333,7 @@ DROP TABLE IF EXISTS `raccolta`;
 CREATE TABLE `raccolta` (
   `id_raccolta` int NOT NULL AUTO_INCREMENT,
   `tipo_pianta` varchar(20) NOT NULL,
-  `quantità` int DEFAULT NULL,
+  `quantita` int DEFAULT NULL,
   `data_raccolta` date DEFAULT NULL,
   `stato` varchar(20) DEFAULT NULL,
   `operatore` int NOT NULL,
@@ -436,7 +464,7 @@ CREATE TABLE `zona` (
   `stato_generale_terreno` varchar(10) DEFAULT 'buono',
   `sensore_illuminazione` float DEFAULT NULL,
   `sensore_vento` float DEFAULT NULL,
-  `sensore_umidità` float DEFAULT NULL,
+  `sensore_umidita` float DEFAULT NULL,
   `sensore_temperatura` float DEFAULT NULL,
   `sensore_PH` float DEFAULT NULL,
   `id_piantagione` int NOT NULL,
@@ -464,4 +492,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-12 12:53:10
+-- Dump completed on 2024-09-13 11:26:18

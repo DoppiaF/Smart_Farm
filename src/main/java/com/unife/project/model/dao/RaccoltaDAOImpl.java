@@ -3,12 +3,14 @@ package com.unife.project.model.dao;
 import java.util.List;
 
 import com.unife.project.model.mo.Raccolta;
+import com.unife.project.model.mo.RaccoltaPerAnno;
 
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class RaccoltaDAOImpl implements RaccoltaDAO{
     private List<Raccolta> raccolte = null;
@@ -20,7 +22,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
 
     @Override
     public void save(Raccolta raccolta) {
-        String sql = "INSERT INTO raccolta (tipoPianta, quantita, data_raccolta, stato, macchinario, operatore, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO raccolta (tipo_pianta, quantita, data_raccolta, stato, macchinario_usato, operatore, id_piantagione) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, raccolta.getTipoPianta());
@@ -47,8 +49,8 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
 
     @Override
     public void update(Raccolta raccolta) {
-        String sql ="UPDATE raccolta" +
-                    "SET tipoPianta = ?, quantita = ?, data_raccolta = ?, stato = ?, macchinario = ?, operatore = ?, id_piantagione = ?" + 
+        String sql ="UPDATE raccolta " +
+                    "SET tipo_pianta = ?, quantita = ?, data_raccolta = ?, stato = ?, macchinario_usato = ?, operatore = ?, id_piantagione = ? " + 
                     "WHERE id_raccolta = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -99,7 +101,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
                         rs.getDate("data_raccolta").toLocalDate(),
                         rs.getString("stato"),
                         rs.getInt("operatore"),
-                        rs.getString("macchinario"),
+                        rs.getString("macchinario_usato"),
                         rs.getInt("id_piantagione")
                     );
 
@@ -133,7 +135,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
                             rs.getDate("data_raccolta").toLocalDate(),
                             rs.getString("stato"),
                             rs.getInt("operatore"),
-                            rs.getString("macchinario"),
+                            rs.getString("macchinario_usato"),
                             rs.getInt("id_piantagione")
                         );
                         raccolte.add(raccolta);
@@ -149,4 +151,34 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
     }
     
 
+    @Override
+    public List<RaccoltaPerAnno> findByPiantagione20Anni(int id_piantagione) {
+
+       // String sql = "SELECT * FROM raccolta WHERE id_piantagione = 10 AND (YEAR(data_raccolta) > 20)";
+        
+       String sql = "SELECT YEAR(data_raccolta) AS anno, SUM(quantita) AS totale_quantita " +
+                     "FROM raccolta " +
+                     "WHERE id_piantagione = ? AND data_raccolta >= DATE_SUB(CURDATE(), INTERVAL 20 YEAR) " +
+                     "GROUP BY anno " +
+                     "ORDER BY anno";
+
+       List<RaccoltaPerAnno> raccolte = new ArrayList<RaccoltaPerAnno>();
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, id_piantagione);
+            try(ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    RaccoltaPerAnno raccolta = new RaccoltaPerAnno(
+                        rs.getInt("anno"),
+                        rs.getInt("totale_quantita")
+                    );
+                
+                    raccolte.add(raccolta);
+                }
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni delle raccolte di una piantagione " + id_piantagione);
+        }
+        return raccolte;
+    }
 }

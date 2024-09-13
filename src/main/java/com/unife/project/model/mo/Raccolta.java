@@ -11,6 +11,7 @@ public class Raccolta {
     private String macchinario;
     private int operatore; //FK di utente
     private int id_piantagione; //FK di piantagione
+    
 
     public Raccolta(){}
 

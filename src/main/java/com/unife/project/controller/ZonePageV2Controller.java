@@ -1,14 +1,22 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.unife.project.model.dao.DAOFactory;
 import com.unife.project.model.mo.Piantagione;
+import com.unife.project.model.mo.Raccolta;
+import com.unife.project.model.mo.RaccoltaPerAnno;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.model.mo.Zona;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,18 +33,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.Parent;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 
 public class ZonePageV2Controller {
 
     private Utente utente;
     private Piantagione piantagione;
     private VBox selectedBox;
+    
     int nm[] = new int[2];
     int numZone=0;
     int areaZona=0;
@@ -50,11 +63,20 @@ public class ZonePageV2Controller {
     private BorderPane rootPane;
     @FXML
     private BorderPane nestedPane;
+    @FXML
+    private TextArea KgRaccolti;
+    @FXML
+    private Button raccogli;
+     @FXML
+    private LineChart<String, Number> produzioneChart;
+
 
     @FXML
     public void initialize() {
         gridPane.setMaxWidth(800); // Larghezza massima
         gridPane.setMaxHeight(600); // Altezza massima
+
+        
     }
 
     public void setUser(Utente utente){
@@ -68,8 +90,74 @@ public class ZonePageV2Controller {
         calcolaNM();
         creaZone();
         displayMatrice();
-        
+        caricaDatiRaccolta();
     }
+
+    @FXML
+    public void handleRaccolta(ActionEvent event){
+        //aggiungi raccolta
+        try{
+            if(piantagione.isRaccolta()){
+                int kg = Integer.parseInt(KgRaccolti.getText());
+                Raccolta raccolta = new Raccolta();
+                raccolta.setQuantita(kg);
+                raccolta.setDataRaccolta(LocalDate.now());
+                raccolta.setId_piantagione(piantagione.getId());
+                raccolta.setTipoPianta(piantagione.getTipoPianta());
+                raccolta.setStato("completata");
+                DAOFactory.getRaccoltaDAO().save(raccolta);
+            
+                //aggiorna piantagione
+                Piantagione piantagione_update = new Piantagione();
+                piantagione_update.setId(piantagione.getId());
+                piantagione_update.setRaccolta(false);
+                piantagione_update.setConcimazione(true);
+                piantagione_update.setStato("riposo");
+                piantagione_update.setId_irrigazione(piantagione.getId_irrigazione());
+                piantagione_update.setTipoPianta(piantagione.getTipoPianta());
+                piantagione_update.setArea(piantagione.getArea());
+                piantagione_update.setNumZone(piantagione.getNumZone());
+                System.out.println(piantagione_update.toString());
+                DAOFactory.getPiantagioneDAO().update(piantagione_update);
+            }else{
+                showErrorDialog("Errore", "Piantagione non pronta per la raccolta.");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            showErrorDialog("Errore", "Impossibile aggiungere la raccolta.");
+        }
+    }
+
+    private void caricaDatiRaccolta() {
+        System.out.println("Caricamento dati raccolta");
+        if (piantagione != null) {
+            List<RaccoltaPerAnno> raccolte = DAOFactory.getRaccoltaDAO().findByPiantagione20Anni(piantagione.getId());
+
+            // Verifica se la lista è vuota
+            if (raccolte.isEmpty()) {
+                System.out.println("Nessun dato di raccolta trovato per la piantagione.");
+                return;
+            }
+            // Crea una serie di dati per il grafico
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Produzione della piantagione 20 anni");
+
+            // Aggiungi i dati alla serie
+            for (RaccoltaPerAnno raccolta : raccolte) {
+                String anno = String.valueOf(raccolta.getDataRaccolta());
+                int quantita = raccolta.getQuantita();
+                series.getData().add(new XYChart.Data<>(anno, quantita));
+            }
+
+            // Aggiungi la serie al grafico
+            produzioneChart.getData().clear();
+            produzioneChart.getData().add(series);
+        
+            
+        }
+    }
+
+
 
     public void setRigheColonne(int righe, int colonne){
         this.righe = righe;

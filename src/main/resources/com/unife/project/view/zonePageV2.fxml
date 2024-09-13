@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ZonePageV2Controller">
-    <!-- Definisci le colonne e le righe del GridPane -->
-    <columnConstraints>
-        <ColumnConstraints fx:id="col1" />
-        <ColumnConstraints fx:id="col2" />
-        <!-- Aggiungi altre colonne se necessario -->
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints fx:id="row1" />
-        <RowConstraints fx:id="row2" />
-        <!-- Aggiungi altre righe se necessario -->
-    </rowConstraints>
-</GridPane>
+
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.ZonePageV2Controller">
+   <center>
+      <BorderPane fx:id="nestedPane">
+         <center>
+            <GridPane fx:id="gridPane" stylesheets="@../css/styleZone.css">
+                <!-- Definisci le colonne e le righe del GridPane -->
+                <columnConstraints>
+                    <ColumnConstraints fx:id="col1" />
+                    <ColumnConstraints fx:id="col2" />
+                    <!-- Aggiungi altre colonne se necessario -->
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints fx:id="row1" />
+                    <RowConstraints fx:id="row2" />
+                    <!-- Aggiungi altre righe se necessario -->
+                </rowConstraints>
+            </GridPane>
+         </center>
+         <bottom>
+            <!-- <LineChart BorderPane.alignment="CENTER">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart> -->
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>

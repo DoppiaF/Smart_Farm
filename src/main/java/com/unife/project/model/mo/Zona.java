@@ -12,6 +12,9 @@ public class Zona {
     private float sensoreVento;
     private int id_piantagione; //FK di piantagione
 
+    public Zona() {
+    }
+    
     public Zona(int coordX, int coordY, int portataSensore, String statoTerreno, float sensoreIluminazione, float sensoreUmidita, float sensoreTemperatura, float sensorePH, float sensoreVento, int id_piantagione) {
         this.coordX = coordX;
         this.coordY = coordY;

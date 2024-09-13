@@ -110,7 +110,7 @@ public class PiantagioneController {
     private BarChart<String, Number> produzioneChart;
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         // Inizializza le colonne della tabella
         //nelle property serve usare i nomi dei metodi getter del MO. es tipoPianta diventa getTipoPianta qui dentro.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -208,16 +208,22 @@ public class PiantagioneController {
     private void handleGoToSensori(ActionEvent event) {
         Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
         if(piantagioneSelezionata != null){
+            System.out.println("Piantagione selezionata: " + piantagioneSelezionata.toString());
+            
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneRaccolta.fxml"));
+                //FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneRaccolta.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zonePageV2.fxml"));
                 Parent zoneRaccoltaRoot = loader.load();
 
-                ZoneRaccoltaController zoneRaccoltaController = loader.getController();
-
+                //ZoneRaccoltaController zoneRaccoltaController = loader.getController();
+                ZonePageV2Controller zoneRaccoltaController = loader.getController();
+                
+                
                 zoneRaccoltaController.setUser(utente);
                 zoneRaccoltaController.setPiantagione(piantagioneSelezionata);
 
                 Scene scene = new Scene(zoneRaccoltaRoot);
+
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 WindowUtil.setWindow(stage, scene, "Smartfarm - zone");

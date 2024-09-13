@@ -1,0 +1,16 @@
+/* Stile per il GridPane */
+.grid-pane {
+    -fx-background-image: url("../images/campoPiantato.png"); /* Colore di sfondo */
+    -fx-background-repeat: repeat;
+    -fx-padding: 10; /* Padding intorno al GridPane */
+    -fx-hgap: 10; /* Spaziatura orizzontale tra le celle */
+    -fx-vgap: 10; /* Spaziatura verticale tra le celle */
+}
+
+/* Stile per le celle del GridPane */
+.grid-cell {
+    -fx-background-image: url("../images/campoPiantato.png");
+    -fx-border-color: black; /* Colore del bordo */
+    -fx-border-width: 2; /* Larghezza del bordo */
+    -fx-padding: 10; /* Padding interno delle celle */
+}

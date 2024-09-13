@@ -209,23 +209,7 @@ public class PiantagioneController {
         Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
         if(piantagioneSelezionata != null){
             System.out.println("Piantagione selezionata: " + piantagioneSelezionata.toString());
-            //funzione per calcolare righe e colonne da passare al grid pane in initialize
-                int righe = 0;
-                int colonne = 0;
             
-                int i = 1;
-                int numZone = piantagioneSelezionata.getNumZone();
-                int areaZona = piantagioneSelezionata.getArea()/numZone;
-        
-                do{
-                    if(i*i >= numZone){
-                        righe = i;
-                        colonne = numZone/i;
-                    }
-                    i++;
-                }while(i < 6 && righe == 0);
-            
-                System.out.println("pre --- Righe: " + righe + " Colonne: " + colonne);
             try{
                 //FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zoneRaccolta.fxml"));
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/zonePageV2.fxml"));
@@ -236,9 +220,7 @@ public class PiantagioneController {
                 
                 
                 zoneRaccoltaController.setUser(utente);
-                System.out.println("chiamato setUser");
                 zoneRaccoltaController.setPiantagione(piantagioneSelezionata);
-                System.out.println("chiamato setPiantagione");
 
                 Scene scene = new Scene(zoneRaccoltaRoot);
 

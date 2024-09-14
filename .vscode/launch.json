@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SensorSimulator",
+            "request": "launch",
+            "mainClass": "com.unife.project.service.SensorSimulator",
+            "projectName": "smart-farm-management"
+        },
+        {
+            "type": "java",
             "name": "TestDatabaseConnection",
             "request": "launch",
             "mainClass": "com.unife.project.util.TestDatabaseConnection",

@@ -23,7 +23,10 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
+//TableRow importata per cercare di impostare il menu a tendina per l'id irrigazione nelle righe della tabella
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -131,7 +134,33 @@ public class PiantagioneController {
         statoColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         concimazioneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         raccoltaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
-        idIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        idIrrColumn.setCellFactory(column -> new TableCell<Piantagione, Integer>(){
+            private final ComboBox<Integer> valoriId = new ComboBox<>();
+
+            {
+                valoriId.getItems().addAll(DAOFactory.getIrrigazioneDAO().findAllIrrIds());
+                valoriId.setOnAction(event -> {
+                    if (getTableRow() != null ){
+                        Piantagione piantagione = getTableRow().getItem();
+                        if (piantagione != null){
+                            piantagione.setId_irrigazione(valoriId.getValue());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    valoriId.setValue(item);
+                    setGraphic(valoriId);
+                }
+            }
+        });
+        //idIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
          // Gestisci le modifiche delle celle
          tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));

@@ -8,6 +8,7 @@ import com.unife.project.model.mo.Irrigazione;
 
 public interface IrrigazioneDAO extends GenericDAO<Irrigazione>{
     public List<Irrigazione> findAllWCisterna();
+    public List<Integer> findAllIrrIds();
     //metodi specifici per irrigazioneDAO oltre ai CRUD già richiesti
     
     //List<Irrigazione> findByDate(LocalDate date);  //esempi di metodi implementabili. definire quelli davvero utilizzati

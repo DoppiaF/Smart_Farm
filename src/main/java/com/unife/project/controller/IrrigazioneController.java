@@ -153,6 +153,9 @@ public class IrrigazioneController {
             stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
             cisternaColumn.setOnEditCommit(event -> event.getRowValue().setId(event.getNewValue()));
         
+            loadIrrigazioneData();
+
+            
             // Aggiungi il pulsante di conferma alla tabella delle irrigazione
             //addConfirmButtonToIrrigationTable();
 
@@ -166,7 +169,6 @@ public class IrrigazioneController {
             System.out.println("Errore inizializzazione tabella irrigazioni");
         }
 
-        loadIrrigazioneData();
     }
 
         
@@ -182,7 +184,7 @@ public class IrrigazioneController {
                 Cisterna cisterna = (DAOFactory.getCisternaDAO().findById(newSelection.getIdIrrCisterna()));
                 livello_cisterna.setProgress(cisterna.getPercRiempimento()
                 );
-                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + cisterna.getPercRiempimento()*100 + " %");
+                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + (int)(cisterna.getPercRiempimento()*100) + " %");
 
                 
 

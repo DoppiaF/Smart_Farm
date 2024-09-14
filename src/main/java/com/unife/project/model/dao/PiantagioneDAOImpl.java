@@ -70,7 +70,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
 
     @Override
     public void delete(Piantagione piantagione) {
-        String sql = "DELETE FROM piantagione WHERE id_piantagione = ?";
+        String sql = "DELETE FROM piantagione WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, piantagione.getId());
@@ -86,7 +86,7 @@ public class PiantagioneDAOImpl implements PiantagioneDAO{
 
     @Override
     public Piantagione findById(int id) {
-        String sql = "SELECT * FROM piantagione WHERE id_piantagione = ?";
+        String sql = "SELECT * FROM piantagione WHERE id = ?";
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1,id);

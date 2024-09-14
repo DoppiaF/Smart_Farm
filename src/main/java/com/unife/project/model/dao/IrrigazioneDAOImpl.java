@@ -178,4 +178,29 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
         return irrigazioni;
 
     }
+
+    public List<Integer> findAllIrrIds(){
+        String sql = "SELECT id_irrigazione FROM irrigazione";
+        List<Integer>idIrrigazioni = new ArrayList<Integer>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate irrigazioni");
+                else{
+                    while (rs.next()){
+                        Integer idIrrigazione = rs.getInt("id_irrigazione");
+                        idIrrigazioni.add(idIrrigazione);
+                        
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero degli id delle irrigazioni esistenti");
+        }
+
+        
+        return idIrrigazioni;
+    }
 }

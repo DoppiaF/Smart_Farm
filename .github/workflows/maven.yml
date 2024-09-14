@@ -52,15 +52,18 @@ jobs:
 
     #CD: Deploy the application su docker
     - name: Bild docker image
+      if: github.ref == 'refs/heads/main'
       run: docker image build --tag furo98/smart_farm:0.1 .
 
     - name: docker login
+      if: github.ref == 'refs/heads/main'
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
 
     - name: Push docker image
+      if: github.ref == 'refs/heads/main'
       run: docker push furo98/smart_farm
 
     

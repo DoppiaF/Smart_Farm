@@ -119,6 +119,9 @@ public class ZonePageV2Controller {
                 piantagione_update.setNumZone(piantagione.getNumZone());
                 System.out.println(piantagione_update.toString());
                 DAOFactory.getPiantagioneDAO().update(piantagione_update);
+
+                //aggiorna grafico
+                caricaDatiRaccolta();
             }else{
                 showErrorDialog("Errore", "Piantagione non pronta per la raccolta.");
             }

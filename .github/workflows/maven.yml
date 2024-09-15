@@ -29,32 +29,40 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.PASSWORD }}
           MYSQL_DATABASE: fattoria
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=5
 
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 11
       uses: actions/setup-java@v4
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'adopt'
         cache: maven
 
-    - name: wait mysql pronto
-      run: sleep 30s
+    - name: wait mysql to be ready
+      run: sleep 60s
+      
     #CI: Build the application with Maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      working-directory: ./Smart_Farm
 
     - name: Verify with Maven
+      env:
+        DB_URL: jdbc:mysql://localhost:3306/fattoria
+        DB_USERNAME: root
+        DB_PASSWORD: ${{ secrets.PASSWORD }}
       run: mvn -B verify --file pom.xml
+      working-directory: ./Smart_Farm
 
     #CD: Deploy the application su docker
     - name: Bild docker image
@@ -70,7 +78,7 @@ jobs:
 
     - name: Push docker image
       if: github.ref == 'refs/heads/main'
-      run: docker push furo98/smart_farm
+      run: docker push furo98/smart_farm:0.1
 
     
     

@@ -127,6 +127,8 @@ public class PastoreController {
         // Carica i dati delle stalle dal database
         loadStalleData();
         stalleTable.setItems(stalleData);
+
+        // Carica i dati dei costi e dei guadagni
         loadCostiData();
         loadGuadagniData();
 

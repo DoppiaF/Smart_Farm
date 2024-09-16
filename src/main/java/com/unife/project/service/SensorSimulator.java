@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 import com.unife.project.model.mo.Zona;
 import com.unife.project.util.DatabaseConnection;
-
+/* */
 public class SensorSimulator {
 
     private static final Random random = new Random();
@@ -25,7 +25,7 @@ public class SensorSimulator {
     
     public void start() {
         timer = new Timer();    //crea nuovo timer e crea un nuovo task che fa partire la simulazione dei sensori
-        timer.schedule(new SensorTask(), 0, 300000); // Esegui ogni 5 minuti
+        timer.schedule(new SensorTask(), 0, 60000); // Esegui ogni 5 minuti(300000) 1 minuto(60000)
         System.out.println("SensorSimulator avviato.");
     }
 
@@ -49,10 +49,12 @@ public class SensorSimulator {
      private static List<Zona> recuperaTuttiISensori() {
         List<Zona> sensori = new ArrayList<>();
         String selectQuery = "SELECT coord_x, coord_y, id_piantagione FROM zona";
+        Connection conn = null;
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(selectQuery);
-             ResultSet rs = stmt.executeQuery()) {
+        try{
+            conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(selectQuery);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Zona zona = new Zona();
@@ -70,8 +72,10 @@ public class SensorSimulator {
 
     public static void aggiornaSensori() {
         //sensori = recuperaTuttiISensori();
+        Connection conn = null;
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
+        try {
+            conn = DatabaseConnection.getConnection();
             String updateQuery = "UPDATE zona SET sensore_illuminazione = ?, sensore_umidita = ?, sensore_temperatura = ?, sensore_PH = ?, sensore_vento = ? WHERE id_piantagione = ? AND coord_x = ? AND coord_y = ?";
 
             double illuminazione = 0;

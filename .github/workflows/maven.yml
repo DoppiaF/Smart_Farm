@@ -65,11 +65,11 @@ jobs:
       working-directory: .
 
     #CD: Deploy the application su docker
-    - name: Bild docker image
+    - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: docker image build --tag furo98/smart_farm:0.1 .
 
-    - name: docker login
+    - name: Docker login
       if: github.ref == 'refs/heads/main'
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}

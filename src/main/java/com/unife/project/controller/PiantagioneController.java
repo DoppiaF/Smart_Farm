@@ -1,6 +1,9 @@
 package com.unife.project.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,10 +15,13 @@ import com.unife.project.model.mo.Irrigazione;
 import com.unife.project.model.mo.Magazzino;
 import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.ProdottoConPrezzo;
+import com.unife.project.model.mo.Raccolta;
+import com.unife.project.model.mo.RaccoltoPiantaConPrezzo;
 import com.unife.project.model.mo.Utente;
 import com.unife.project.util.WindowUtil;
 
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -175,11 +181,16 @@ public class PiantagioneController {
          raccoltaColumn.setOnEditCommit(event -> event.getRowValue().setRaccolta(event.getNewValue()));
          idIrrColumn.setOnEditCommit(event -> event.getRowValue().setId_irrigazione(event.getNewValue()));
          
+        loadGuadagniData();
+
         // Aggiungi il pulsante di conferma alla tabella
         addConfirmButtonToTable();
 
         // Carica i dati delle piantagioni dal database
         loadPiantagioneData();
+
+        
+        loadCostiData();
         
 
         piantagioneTable.setItems(piantagioneData);
@@ -512,24 +523,48 @@ public class PiantagioneController {
     }
 
     public void loadCostiData() {
-        List<Magazzino> magazzinoData = DAOFactory.getMagazzinoDAO().findAllUltimoAnno();
+        Map<String, Double> speseMesi = new HashMap<>();
+        // Costi fissi benzina e acqua
+        Double costo_benzina = 1.7;
+        Double costo_acqua = 0.00037;
+    
+        LocalDate currentDate = LocalDate.now();
+        LocalDate startDate = currentDate.minusYears(1).withDayOfMonth(1);
+    
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+    
+        for (LocalDate date = startDate; !date.isAfter(currentDate); date = date.plusMonths(1)) {
+            Double spesa_mensile = 0.0;
+    
+            for (Piantagione p : piantagioneData) {
+                List<Raccolta> listaRaccolte = DAOFactory.getRaccoltaDAO().findByIdPiantagioneAndMese(p.getId(), date);
+                Double spese_macchina = 0.0;
+                Double spese_operatore = 0.0;
+                Double spese_irrigazione = 0.0;
+                Double spesa_raccolta = 0.0; 
 
-        if (magazzinoData != null && !magazzinoData.isEmpty()) {
-            // Raggruppa i dati per mese e calcola il costo totale per ogni mese
-            Map<String, Double> costiPerMese = magazzinoData.stream()
-                    .collect(Collectors.groupingBy(
-                            magazzino -> magazzino.getData().format(DateTimeFormatter.ofPattern("yyyy-MM")),
-                            TreeMap::new, // Utilizza TreeMap per ordinare le chiavi
-                            Collectors.summingDouble(magazzino -> magazzino.getQuantita() * magazzino.getPrezzo_kg())
-                    ));
-
-            // Popola il LineChart con i dati calcolati
-            populateCostiChart(costiPerMese);
-            System.out.println("Dati del magazzino caricati con successo.");
-        } else {
-            System.out.println("Nessun dato disponibile nel magazzino.");
+                if (listaRaccolte != null && !listaRaccolte.isEmpty()) {
+                    spese_macchina = costo_benzina * p.getArea();
+                    spese_operatore = 1.10 * p.getArea();
+                    spese_irrigazione = 0.0;
+    
+                    Irrigazione irrigazione = DAOFactory.getIrrigazioneDAO().findById(p.getId());
+                    if (irrigazione != null) {
+                        spese_irrigazione = costo_acqua * irrigazione.getLitri_usati();
+                    }
+    
+                    spesa_raccolta = spese_macchina + spese_operatore + spese_irrigazione;
+                    spesa_mensile += spesa_raccolta;
+                }
+            }
+            speseMesi.put(date.format(formatter), spesa_mensile);
         }
+
+        Map<String, Double> speseMesiOrd = new TreeMap<>(speseMesi);
+    
+        populateCostiChart(speseMesiOrd);
     }
+    
     
     private void populateCostiChart(Map<String, Double> costiPerMese) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -550,22 +585,23 @@ public class PiantagioneController {
     }
 
     public void loadGuadagniData() {
-        List<ProdottoConPrezzo> prodottiData = DAOFactory.getProdottoDAO().findProdottoUltimoAnnoConPrezzo();
+        List<RaccoltoPiantaConPrezzo> raccoltoData = DAOFactory.getRaccoltaDAO().findRaccoltaUltimoAnnoConPrezzo();
+        //List<ProdottoConPrezzo> prodottiData = DAOFactory.getProdottoDAO().findProdottoUltimoAnnoConPrezzo();
 
-        if (prodottiData != null && !prodottiData.isEmpty()) {
+        if (raccoltoData != null && !raccoltoData.isEmpty()) {
             // Raggruppa i dati per mese e calcola il guadagno totale per ogni mese
-            Map<String, Double> guadagniPerMese = prodottiData.stream()
+            Map<String, Double> guadagniPerMese = raccoltoData.stream()
                     .collect(Collectors.groupingBy(
-                            prodotto -> prodotto.getDataProduzione().format(DateTimeFormatter.ofPattern("yyyy-MM")),
+                            raccolta -> raccolta.getDataRaccolto().format(DateTimeFormatter.ofPattern("yyyy-MM")),
                             TreeMap::new, // Utilizza TreeMap per ordinare le chiavi
-                            Collectors.summingDouble(prodotto -> prodotto.getQuantita() * prodotto.getPrezzo())
+                            Collectors.summingDouble(raccolta -> raccolta.getQuantita() * raccolta.getPrezzo())
                     ));
 
             // Popola il LineChart con i dati calcolati
             populateGuadagniChart(guadagniPerMese);
-            System.out.println("Dati dei prodotti caricati con successo.");
+            System.out.println("Dati del raccolto caricati con successo.");
         } else {
-            System.out.println("Nessun dato disponibile nei prodotti.");
+            System.out.println("Nessun dato disponibile per il raccolto.");
         }
     }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -63,23 +62,20 @@
                </GridPane>
                <HBox prefHeight="100.0" prefWidth="200.0">
                   <children>
-                         <BarChart fx:id="costiChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #d9d9d9;" title="Costi e Guadagni">
-                             <xAxis>
-                                 <CategoryAxis label="Mese" />
-                             </xAxis>
-                             <yAxis>
-                                 <NumberAxis label="Valore" />
-                             </yAxis>
-                        <HBox.margin>
-                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                        </HBox.margin>
-                         </BarChart>
-                     <LineChart fx:id="guadagniChart" title="Guadagni Totali">
+                     <LineChart fx:id="costiPiantagioneChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="350.0" style="-fx-background-color: #d9d9d9;">
                        <xAxis>
-                         <CategoryAxis label="Mese" side="BOTTOM" />
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxis" />
                        </xAxis>
                        <yAxis>
-                         <NumberAxis label="Guadagni" side="LEFT" />
+                         <NumberAxis fx:id="yAxis" label="Costo (€)" side="LEFT" />
+                       </yAxis>
+                     </LineChart>
+                     <LineChart fx:id="guadagniPiantagioneChart" style="-fx-background-color: #d9d9d9;">
+                       <xAxis>
+                         <CategoryAxis label="Mese" side="BOTTOM" fx:id="xAxisGuadagni" />
+                       </xAxis>
+                       <yAxis>
+                         <NumberAxis fx:id="yAxisGuadagni" label="Guadagni" side="LEFT" />
                        </yAxis>
                      </LineChart>
                      <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #1D1B52;">

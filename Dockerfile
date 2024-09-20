@@ -4,8 +4,13 @@ FROM maven:3.8-openjdk-11-slim AS build
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+
+# Copia il file pom.xml e scarica le dipendenze
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copia il codice sorgente
+COPY src ./src
 
 RUN mvn clean package
 

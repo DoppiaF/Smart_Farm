@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pastoreRoot" prefHeight="600.0" prefWidth="817.0" stylesheets="@chartStyles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
+<BorderPane fx:id="pastoreRoot" prefHeight="600.0" prefWidth="817.0" stylesheets="@../css/chartStyles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PastoreController">
     <left>
         <fx:include source="verticalMenuBar.fxml" />
     </left>

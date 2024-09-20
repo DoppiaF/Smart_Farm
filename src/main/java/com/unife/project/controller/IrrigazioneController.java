@@ -184,7 +184,7 @@ public class IrrigazioneController {
                 Cisterna cisterna = (DAOFactory.getCisternaDAO().findById(newSelection.getIdIrrCisterna()));
                 livello_cisterna.setProgress(cisterna.getPercRiempimento()
                 );
-                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + (int)(cisterna.getPercRiempimento()*100) + " %");
+                livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + (int)(cisterna.getPercRiempimento()*100) + " % +\nCapacità: "+ cisterna.getCapacita()+"l \nQuantità attuale: " + cisterna.getQuantita() + "l");
 
                 
 

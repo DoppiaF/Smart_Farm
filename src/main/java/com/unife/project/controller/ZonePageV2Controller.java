@@ -98,7 +98,7 @@ public class ZonePageV2Controller {
         //aggiungi raccolta
         try{
             if(piantagione.isRaccolta()){
-                int kg = Integer.parseInt(KgRaccolti.getText());
+                int kg = Integer.parseInt(KgRaccolti.getText().replaceAll(" ",""));
                 Raccolta raccolta = new Raccolta();
                 raccolta.setQuantita(kg);
                 raccolta.setDataRaccolta(LocalDate.now());

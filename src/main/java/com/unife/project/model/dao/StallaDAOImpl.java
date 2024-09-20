@@ -21,10 +21,10 @@ public class StallaDAOImpl implements StallaDAO{
         this.connection = connection;
     }
 
-
     @Override
     public void save(Stalla stalla) {
-        String sql = "INSERT INTO stalla (etichetta_stalla, capienza, razza, ora_pranzo, ora_cena) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO stalla (etichetta_stalla, capienza, razza, ora_pranzo, ora_cena) " +
+                     "VALUES (?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, stalla.getEtichettaStalla());

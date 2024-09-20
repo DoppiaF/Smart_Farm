@@ -2,8 +2,10 @@ package com.unife.project.model.dao;
 
 import java.util.List;
 
+import com.unife.project.model.mo.ProdottoConPrezzo;
 import com.unife.project.model.mo.Raccolta;
 import com.unife.project.model.mo.RaccoltaPerAnno;
+import com.unife.project.model.mo.RaccoltoPiantaConPrezzo;
 
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -181,4 +183,123 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
         }
         return raccolte;
     }
+
+     @Override
+    public List<RaccoltoPiantaConPrezzo> findRaccoltaUltimoAnnoConPrezzo(){
+
+        String query = "SELECT data_raccolta, quantita, tipo_pianta " +
+               "FROM raccolta " +
+               "WHERE data_raccolta >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        
+        List<RaccoltoPiantaConPrezzo> raccoltaConPrezzo = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(query)){
+            try (ResultSet rs = ps.executeQuery()){
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non sono state trovati raccolte per l'ultimo anno");
+                } else {
+                    while (rs.next()) {
+                        LocalDate dataRaccolta = rs.getDate("data_raccolta").toLocalDate();
+                        Double quantita = rs.getDouble("quantita");
+                        String tipoPianta = rs.getString("tipo_pianta");
+                        Double prezzo ;
+
+                        switch(tipoPianta.toLowerCase()){
+                            case("grano"):
+                                prezzo = 3.0;
+                            case("frumento"):
+                                prezzo = 3.0; 
+                            case("mais"):
+                                prezzo = 2.5; 
+                            case("granoturco"):
+                                prezzo = 2.5; 
+                            case("cicoria"):
+                                prezzo = 4.0; 
+                            case("melanzana"):
+                                prezzo = 4.0; 
+                            case("grano saraceno"):
+                                prezzo = 3.5; 
+                            default:
+                                prezzo = 4.0;
+                            break;
+                        }
+
+                        RaccoltoPiantaConPrezzo raccolta = new RaccoltoPiantaConPrezzo(dataRaccolta, quantita, prezzo);
+                        raccoltaConPrezzo.add(raccolta);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni dei prezzi di vendita del raccolto");
+        }
+    return raccoltaConPrezzo;
+    }
+
+    @Override
+    public List<Raccolta> findByIdPiantagioneUltimoAnno(int id_piantagione){
+        String sql = "SELECT * FROM raccolta WHERE id_piantagione = ? AND data_raccolta >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non sono state trovati raccolte per l'ultimo anno");
+                } else {
+                    while (rs.next()) {
+
+                        Raccolta raccolta = new Raccolta(rs.getInt("id_raccolta"),
+                        rs.getString("tipo_pianta"),
+                        rs.getInt("quantita"),
+                        rs.getDate("data_raccolta").toLocalDate(),
+                        rs.getString("stato"),
+                        rs.getInt("operatore"),
+                        rs.getString("macchinario_usato"),
+                        rs.getInt("id_piantagione")
+                        );
+                        raccolte.add(raccolta);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nel recupero delle informazioni dei prezzi di vendita del raccolto");
+        }
+        return raccolte;
+    }
+
+    @Override
+    public List<Raccolta> findByIdPiantagioneAndMese(int id_piantagione, LocalDate meseAnno) {
+        String sql = "SELECT * FROM raccolta WHERE id_piantagione = ? AND data_raccolta BETWEEN ? AND DATE_ADD(?, INTERVAL 1 MONTH)";
+        List<Raccolta> raccolte = new ArrayList<>();
+    
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id_piantagione);
+            ps.setDate(2, java.sql.Date.valueOf(meseAnno));
+            ps.setDate(3, java.sql.Date.valueOf(meseAnno));
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.isBeforeFirst()) {
+                    System.out.println("Non sono state trovate raccolte per la piantagione e il mese indicati");
+                } else {
+                    while (rs.next()) {
+                        Raccolta raccolta = new Raccolta(
+                            rs.getInt("id_raccolta"),
+                            rs.getString("tipo_pianta"),
+                            rs.getInt("quantita"),
+                            rs.getDate("data_raccolta").toLocalDate(),
+                            rs.getString("stato"),
+                            rs.getInt("operatore"),
+                            rs.getString("macchinario_usato"),
+                            rs.getInt("id_piantagione")
+                        );
+                        raccolte.add(raccolta);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore nella ricerca della raccolta della piantagione " + id_piantagione + " nel mese " + meseAnno);
+        }
+        return raccolte;
+    }
+    
 }

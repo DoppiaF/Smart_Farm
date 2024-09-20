@@ -36,8 +36,8 @@ public class AnimaleDAOImplTest {
         animale.setPeso(100);
         animale.setSesso('M');
         animale.setRazza("Bovino");
-        animale.setTipoAlimentazione("Erba");
-        animale.setNomeStalla("Stalla1");
+        animale.setTipoAlimentazione("grano");
+        animale.setNomeStalla("stalla_A");
         animale.setData_nascita(LocalDate.of(2020, 1, 1));
         animale.setData_ingresso(LocalDate.of(2021, 1, 1));
         animale.setData_uscita(LocalDate.of(2022, 1, 1));

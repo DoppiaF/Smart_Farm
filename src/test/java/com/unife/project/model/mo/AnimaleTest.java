@@ -1,3 +1,4 @@
+package com.unife.project.model.mo;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,7 @@ import java.util.List;
 
 import com.unife.project.model.mo.Animale;
 
-public class moAnimaleTest {
+public class AnimaleTest {
 
     @Test
     public void testGettersAndSetters() {

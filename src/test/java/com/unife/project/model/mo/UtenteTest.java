@@ -1,3 +1,4 @@
+package com.unife.project.model.mo;
 
 
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 import com.unife.project.model.mo.Utente;
 
 //questa classe contiene 2 test: 1 per il costruttore e l'altro per i getter e setter
-public class moUtenteTest {
+public class UtenteTest {
     @Test
     public void testUserCreation() {
 

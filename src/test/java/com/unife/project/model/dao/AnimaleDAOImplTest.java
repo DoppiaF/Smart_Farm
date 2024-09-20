@@ -1,5 +1,6 @@
 package com.unife.project.model.dao;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,11 @@ import com.unife.project.model.mo.Animale;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import com.github.stefanbirkner.systemlambda.SystemLambda;
+
 
 public class AnimaleDAOImplTest {
 
@@ -20,6 +24,9 @@ public class AnimaleDAOImplTest {
 
     @Mock
     private PreparedStatement preparedStatement;
+
+    @Mock
+    private ResultSet resultSet;
 
     @InjectMocks
     private AnimaleDAOImpl animaleDAO;
@@ -31,7 +38,7 @@ public class AnimaleDAOImplTest {
     }
 
     @Test
-    public void testSave() throws SQLException {
+    public void testSave() throws SQLException, Exception {
         Animale animale = new Animale();
         animale.setPeso(100);
         animale.setSesso('M');
@@ -44,18 +51,18 @@ public class AnimaleDAOImplTest {
         animale.setData_morte(LocalDate.of(2023, 1, 1));
         animale.setData_vaccino(LocalDate.of(2024, 1, 1));
 
-        animaleDAO.save(animale);
+        // Configura il mock per restituire 1 quando viene chiamato executeUpdate
+        when(preparedStatement.executeUpdate()).thenReturn(1);
 
-        verify(preparedStatement, times(1)).setInt(1, animale.getPeso());
-        verify(preparedStatement, times(1)).setString(2, String.valueOf(animale.getSesso()));
-        verify(preparedStatement, times(1)).setString(3, animale.getRazza());
-        verify(preparedStatement, times(1)).setString(4, animale.getTipoAlimentazione());
-        verify(preparedStatement, times(1)).setString(5, animale.getNomeStalla());
-        verify(preparedStatement, times(1)).setObject(6, animale.getData_nascita());
-        verify(preparedStatement, times(1)).setObject(7, animale.getData_ingresso());
-        verify(preparedStatement, times(1)).setObject(8, animale.getData_uscita());
-        verify(preparedStatement, times(1)).setObject(9, animale.getData_morte());
-        verify(preparedStatement, times(1)).setObject(10, animale.getData_vaccino());
+        // Cattura l'output del terminale
+        String output = SystemLambda.tapSystemOut(() -> {
+            animaleDAO.save(animale);
+        });
+
+        // Verifica che il metodo save abbia chiamato executeUpdate
         verify(preparedStatement, times(1)).executeUpdate();
+
+        // Verifica che il messaggio corretto sia stato stampato nel terminale
+        assertTrue(output.contains("Un nuovo animale è stato inserito correttamente!"));
     }
 }

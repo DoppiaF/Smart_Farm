@@ -4,33 +4,24 @@ services:
     #image: 'app:latest'
     ports:
       - "8080:8080"
-    build:
-      context: .
+    build: .
     #container_name: ingsaproj
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:mysql://127.0.0.1:3306/fattoria
+      DB_URL: jdbc:mysql://127.0.0.1:3307/fattoria
       ##DB_URL: jdbc:mysql://localhost:3306/fattoria
       DB_USERNAME: root
       DB_PASSWORD: Pannocchie98!?
-    command: ["java", "-jar", "smart-farm-management-1.0-SNAPSHOT.jar"]
-    networks:
-      - mynetwork
+      
   db:
     image: mysql:8.1.0
-    container_name: mysql_fattoria
     #restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Pannocchie98!?
       MYSQL_DATABASE: fattoria
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - .\mysql:/var/lib/mysql
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

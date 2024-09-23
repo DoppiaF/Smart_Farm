@@ -25,6 +25,9 @@ hs_err_pid*
 # Maven target directory
 **/target
 
+#cartella con file dei dati del db
+**/mysql
+
 # Gradle build directory
 build/
 

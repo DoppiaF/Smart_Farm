@@ -9,10 +9,18 @@ services:
     depends_on:
       - db
     environment:
-      DB_URL: jdbc:mysql://127.0.0.1:3307/fattoria
+      DISPLAY: host.docker.internal:0
+      MYSQL_HOST: db
+      MYSQL_PORT: 3307
+      MYSQL_DATABASE: fattoria
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Pannocchie98!?
+      #DB_URL: jdbc:mysql://127.0.0.1:3307/fattoria
       ##DB_URL: jdbc:mysql://localhost:3306/fattoria
-      DB_USERNAME: root
-      DB_PASSWORD: Pannocchie98!?
+      #DB_USERNAME: root
+      #DB_PASSWORD: Pannocchie98!?
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
       
   db:
     image: mysql:8.1.0
@@ -20,6 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Pannocchie98!?
       MYSQL_DATABASE: fattoria
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Pannocchie98!?
     ports:
       - "3307:3307"
     volumes:

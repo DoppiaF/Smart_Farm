@@ -8,10 +8,11 @@ public class DatabaseConnection {
 
     //modifiche per selezionare le variabili d'ambiente docker hub se presenti
     static Connection connection = null;
-    static String databaseName = System.getenv("DB_NAME") != null ? System.getenv("DB_NAME") : "fattoria";
-    private static final String URL = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:3306/" + databaseName;
-    private static final String USER = System.getenv("DB_USERNAME") != null ? System.getenv("DB_USERNAME") : "root";
-    private static final String PASSWORD = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : "Pannocchie98!?";
+    static String databaseName = System.getenv("MYSQL_DATABASE") != null ? System.getenv("MYSQL_DATABASE") : "fattoria";
+    //private static final String URL = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:" + System.getenv("MYSQL_PORT") + "/" + databaseName;
+    private static final String URL = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : "jdbc:mysql://localhost:" + (System.getenv("MYSQL_PORT") != null ? System.getenv("MYSQL_PORT") : "3307") + "/" + databaseName;
+    private static final String USER = System.getenv("MYSQL_USER") != null ? System.getenv("MYSQL_USER") : "root";
+    private static final String PASSWORD = System.getenv("MYSQL_PASSWORD") != null ? System.getenv("MYSQL_PASSWORD") : "Pannocchie98!?";
 
 
     static {

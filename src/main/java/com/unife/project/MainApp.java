@@ -3,6 +3,7 @@ package com.unife.project;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
 import com.unife.project.service.SensorSimulator;
 import com.unife.project.util.DatabaseConnection;
 import com.unife.project.util.WindowUtil;
@@ -17,6 +18,10 @@ import javafx.scene.chart.PieChart.Data;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 //import java.sql.Connection;
 
 public class MainApp extends Application {
@@ -26,6 +31,12 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            //per tenere un log del funzionamento di mysql
+            /*Logger logger = Logger.getLogger("com.mysql.cj");
+            logger.setLevel(Level.FINE);
+            ConsoleHandler handler = new ConsoleHandler();
+            handler.setLevel(Level.FINE);
+            logger.addHandler(handler);*/
 
             // Inizializza e attiva il SensorSimulator
             sensorSimulator = new SensorSimulator();

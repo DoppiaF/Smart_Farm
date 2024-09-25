@@ -25,7 +25,7 @@ public class SensorSimulator {
     
     public void start() {
         timer = new Timer();    //crea nuovo timer e crea un nuovo task che fa partire la simulazione dei sensori
-        timer.schedule(new SensorTask(), 0, 60000); // Esegui ogni 5 minuti(300000) 1 minuto(60000)
+        timer.schedule(new SensorTask(), 0, 300000); // Esegui ogni 5 minuti(300000) 1 minuto(60000)
         System.out.println("SensorSimulator avviato.");
     }
 

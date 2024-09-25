@@ -1,7 +1,7 @@
 services:
   app:
     #dockerfile: Dockerfile
-    #image: 'app:latest'
+    image: 'app:latest'
     ports:
       - "8080:8080"
     build: .
@@ -11,7 +11,7 @@ services:
     environment:
       DISPLAY: host.docker.internal:0
       MYSQL_HOST: db
-      MYSQL_PORT: 3307
+      MYSQL_PORT: 3306
       MYSQL_DATABASE: fattoria
       MYSQL_USER: root
       MYSQL_PASSWORD: Pannocchie98!?
@@ -21,17 +21,26 @@ services:
       #DB_PASSWORD: Pannocchie98!?
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+    networks:
+      - app-network
       
   db:
     image: mysql:8.1.0
+    restart: on-failure
     #restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Pannocchie98!?
       MYSQL_DATABASE: fattoria
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Pannocchie98!?
+      #MYSQL_USER: root
+      #MYSQL_PASSWORD: Pannocchie98!?
     ports:
-      - "3307:3307"
+      - "3306:3306"
     volumes:
       - .\mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

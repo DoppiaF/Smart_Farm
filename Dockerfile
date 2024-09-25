@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y \
     libxtst6 \
     libxi6 \
     libfreetype6 \
+    default-mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
 COPY target/smart-farm-management-1.0-SNAPSHOT.jar /app.jar

@@ -2,9 +2,11 @@ services:
   app:
     #dockerfile: Dockerfile
     image: 'app:latest'
-    ports:
-      - "8080:8080"
-    build: .
+    #ports:
+    #  - "8080:8080"
+    build: 
+      context: .
+      dockerfile: Dockerfile.app
     #container_name: ingsaproj
     depends_on:
       - db
@@ -19,14 +21,18 @@ services:
       ##DB_URL: jdbc:mysql://localhost:3306/fattoria
       #DB_USERNAME: root
       #DB_PASSWORD: Pannocchie98!?
+    command: sh -c "sleep 20s; echo avvio ; java --module-path ./libs/ --add-modules javafx.controls,javafx.fxml -jar /app.jar  "
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     networks:
       - app-network
       
   db:
-    image: mysql:8.1.0
-    restart: on-failure
+    build: 
+      context: .
+      dockerfile: Dockerfile.db
+    #image: mysql:8.1.0
+    #restart: on-failure
     #restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Pannocchie98!?
@@ -36,8 +42,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - .\mysql:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - .\\mysql:/var/lib/mysql
     networks:
       - app-network
 

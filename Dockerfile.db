@@ -1,0 +1,4 @@
+FROM mysql:8.1.0
+ENV MYSQL_ROOT_PASSWORD=Pannocchie98!?
+ENV MYSQL_DATABASE=fattoria
+COPY initdb/Dump19.1_datiZone_fixed.sql /docker-entrypoint-initdb.d/

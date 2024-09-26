@@ -41,4 +41,4 @@ COPY target/smart-farm-management-1.0-SNAPSHOT.jar /app.jar
 COPY --from=build /app/target/dependency/* ./libs/
 
 # Run the jar file
-ENTRYPOINT ["java", "--module-path", "./libs/", "--add-modules", "javafx.controls,javafx.fxml", "-Dprism.order=sw", "-Djava.awt.headless=true", "-jar", "/app.jar"]
+#ENTRYPOINT ["java", "--module-path", "./libs/", "--add-modules", "javafx.controls,javafx.fxml", "-Dprism.order=sw", "-Djava.awt.headless=true", "-jar", "/app.jar"]

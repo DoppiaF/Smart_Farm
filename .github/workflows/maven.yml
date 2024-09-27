@@ -49,7 +49,7 @@ jobs:
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: |
-            cd ../..
+            cd ..
             ls
             docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
             docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 

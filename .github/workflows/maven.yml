@@ -43,14 +43,14 @@ jobs:
     name: Continuous Deployment
     runs-on: ubuntu-latest
     needs: ci
-    
+
+    steps:
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: |
             docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
             docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
 
-    steps:
     - name: Checkout code
       uses: actions/checkout@v4
 

@@ -40,7 +40,7 @@ jobs:
       run: mvn verify
 
     #CD: Deploy the application on docker
-    
+
     - name: Docker login
       if: github.ref == 'refs/heads/main'
       env:
@@ -54,7 +54,6 @@ jobs:
             docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
             docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
 
-    steps:
     - name: Checkout code
       uses: actions/checkout@v4
 

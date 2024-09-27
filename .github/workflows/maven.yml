@@ -54,6 +54,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+      
+    - name: Docker login
+      if: github.ref == 'refs/heads/main'
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME_ALE }}
+        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD_ALE }}
+      run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+
+
     - name: Push docker image
       if: github.ref == 'refs/heads/main'
       run: |

@@ -49,8 +49,6 @@ jobs:
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: |
-            cd Smart_Farm
-            ls
             docker image build --tag blue563/smartfarm2:app .
             docker image build --tag blue563/smartfarm2:db .
 

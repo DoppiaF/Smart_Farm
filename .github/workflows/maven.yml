@@ -51,8 +51,8 @@ jobs:
       run: |
             cd Smart_Farm
             ls
-            docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
-            docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
+            docker image build --tag blue563/smartfarm2:app .
+            docker image build --tag blue563/smartfarm2:db .
 
     - name: Checkout code
       uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
     - name: Push docker image
       if: github.ref == 'refs/heads/main'
       run: |
-            docker image push docker.io/blue563/smartfarm2:app
-            docker image push docker.io/blue563/smartfarm2:db
+            docker push blue563/smartfarm2:app
+            docker push blue563/smartfarm2:db
     
     

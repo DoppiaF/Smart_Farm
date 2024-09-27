@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - name: List files 1
-      run: ls -la
+      run: ls
 
     
     - name: Go to root dir
@@ -55,7 +55,7 @@ jobs:
             cd ../..
 
     - name: List files 2
-      run: ls -la
+      run: ls
 
 
 

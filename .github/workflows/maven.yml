@@ -39,22 +39,8 @@ jobs:
     - name: Verify with Maven
       run: mvn verify
 
-    - name: Build docker image
-      run: |
-            docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
-            docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
-
-  cd:
-    name: Continuous Deployment
-    runs-on: ubuntu-latest
-    needs: ci
-
-    steps:
-
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-      
+    #CD: Deploy the application on docker
+    
     - name: Docker login
       if: github.ref == 'refs/heads/main'
       env:
@@ -62,6 +48,15 @@ jobs:
         DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD_ALE }}
       run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
 
+    - name: Build docker image
+      if: github.ref == 'refs/heads/main'
+      run: |
+            docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
+            docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Push docker image
       if: github.ref == 'refs/heads/main'

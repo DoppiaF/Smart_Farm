@@ -64,10 +64,12 @@ jobs:
       run: mvn -B verify --file pom.xml
       working-directory: .
 
-    #CD: Deploy the application su docker
+    #CD: Deploy the application on docker
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
-      run: docker image build --tag furo98/smart_farm:0.1 .
+      run: |
+            docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
+            docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
 
     - name: Docker login
       if: github.ref == 'refs/heads/main'
@@ -78,7 +80,8 @@ jobs:
 
     - name: Push docker image
       if: github.ref == 'refs/heads/main'
-      run: docker push furo98/smart_farm:0.1
-
+      run: |
+            docker image push docker.io/blue563/smartfarm2:app
+            docker image push docker.io/blue563/smartfarm2:db
     
     

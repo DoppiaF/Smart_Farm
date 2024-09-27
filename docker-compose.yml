@@ -1,7 +1,7 @@
 services:
   app:
     #dockerfile: Dockerfile
-    image: 'app:latest'
+    image: 'blue563/smart_farm_2_dock_file/your-image:app'
     #ports:
     #  - "8080:8080"
     build: 
@@ -16,11 +16,6 @@ services:
       MYSQL_PORT: 3306
       MYSQL_DATABASE: fattoria
       MYSQL_USER: root
-      MYSQL_PASSWORD: Pannocchie98!?
-      #DB_URL: jdbc:mysql://127.0.0.1:3307/fattoria
-      ##DB_URL: jdbc:mysql://localhost:3306/fattoria
-      #DB_USERNAME: root
-      #DB_PASSWORD: Pannocchie98!?
     command: sh -c "sleep 20s; echo avvio ; java --module-path ./libs/ --add-modules javafx.controls,javafx.fxml -jar /app.jar  "
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
@@ -28,17 +23,13 @@ services:
       - app-network
       
   db:
+    image: 'blue563/smart_farm_2_dock_file/your-image:db'
     build: 
       context: .
       dockerfile: Dockerfile.db
-    #image: mysql:8.1.0
-    #restart: on-failure
-    #restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: Pannocchie98!?
+      MYSQL_ROOT_PASSWORD: $${{ secrets.PASSWORD }}
       MYSQL_DATABASE: fattoria
-      #MYSQL_USER: root
-      #MYSQL_PASSWORD: Pannocchie98!?
     ports:
       - "3306:3306"
     volumes:

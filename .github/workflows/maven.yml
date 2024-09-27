@@ -41,7 +41,6 @@ jobs:
 
     - name: Build docker image
       run: |
-            cd ../..
             docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
             docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
 

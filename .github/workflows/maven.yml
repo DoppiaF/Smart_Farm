@@ -44,24 +44,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: ci
 
-    steps:
-    - name: List files 1
-      run: ls
-
-    
-    - name: Go to root dir
-      if: github.ref == 'refs/heads/main'
-      run: |
-            cd ../..
-
-    - name: List files 2
-      run: ls
-
-
-
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: |
+            cd ../..
+            ls
             docker build --pull --rm -f "Dockerfile.app" -t smartfarm2:app "."
             docker build --pull --rm -f "Dockerfile.db" -t smartfarm2:db "." 
 

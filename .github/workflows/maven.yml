@@ -45,6 +45,13 @@ jobs:
     needs: ci
 
     steps:
+    
+    - name: Go to root dir
+      if: github.ref == 'refs/heads/main'
+      run: |
+            cd ../..
+
+
     - name: Build docker image
       if: github.ref == 'refs/heads/main'
       run: |

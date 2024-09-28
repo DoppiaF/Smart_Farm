@@ -29,7 +29,7 @@ public class DatabaseConnection {
 
     
     private static final String USER = System.getenv("MYSQL_USER") != null ? System.getenv("MYSQL_USER") : "root";
-    private static final String PASSWORD = System.getenv("MYSQL_PASSWORD") != null ? System.getenv("MYSQL_PASSWORD") : "Pannocchie98!?";
+    private static final String PASSWORD = System.getenv("MYSQL_ROOT_PASSWORD") != null ? System.getenv("MYSQL_ROOT_PASSWORD") : "Pannocchie98!?";
 
     static {
         try {

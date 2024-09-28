@@ -16,6 +16,8 @@ services:
       MYSQL_PORT: 3306
       MYSQL_DATABASE: fattoria
       MYSQL_USER: root
+      MYSQL_PASSWORD: Pannocchie98!?
+      MYSQL_ROOT_PASSWORD: Pannocchie98!?
     command: sh -c "sleep 20s; echo avvio ; java --module-path ./libs/ --add-modules javafx.controls,javafx.fxml -jar /app.jar  "
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
@@ -28,7 +30,8 @@ services:
       context: .
       dockerfile: Dockerfile.db
     environment:
-      MYSQL_ROOT_PASSWORD: $${{ secrets.PASSWORD }}
+      #MYSQL_ROOT_PASSWORD: $${{ secrets.PASSWORD }}
+      MYSQL_ROOT_PASSWORD: Pannocchie98!?
       MYSQL_DATABASE: fattoria
     ports:
       - "3306:3306"

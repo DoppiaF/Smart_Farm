@@ -278,7 +278,7 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
             
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.isBeforeFirst()) {
-                    System.out.println("Non sono state trovate raccolte per la piantagione e il mese indicati");
+                    System.out.println("Non sono state trovate raccolte per la piantagione " + id_piantagione + " nel mese " + meseAnno.getMonthValue() + " del " + meseAnno.getYear());
                 } else {
                     while (rs.next()) {
                         Raccolta raccolta = new Raccolta(

@@ -93,7 +93,7 @@ CREATE TABLE `irrigazione` (
   `stato` varchar(20) DEFAULT 'da programmare',
   `litri_usati` int DEFAULT NULL,
   PRIMARY KEY (`id_irrigazione`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `irrigazione` (
 
 LOCK TABLES `irrigazione` WRITE;
 /*!40000 ALTER TABLE `irrigazione` DISABLE KEYS */;
-INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10),(2,'06:00:00',60,0,'ok',2),(3,'07:00:00',10,1,'ok',3),(4,'07:00:00',60,1,'ok',15);
+INSERT INTO `irrigazione` VALUES (1,'06:00:00',60,1,'ok',10),(2,'06:00:00',60,0,'ok',2),(4,'07:00:00',60,1,'ok',15),(5,'00:00:00',0,0,NULL,0);
 /*!40000 ALTER TABLE `irrigazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,8 +118,8 @@ CREATE TABLE `irrigazionecisterna` (
   `id_cisterna` int NOT NULL,
   PRIMARY KEY (`id_irrigazione`,`id_cisterna`),
   KEY `id_cisterna_idx` (`id_cisterna`),
-  CONSTRAINT `id_cisterna` FOREIGN KEY (`id_cisterna`) REFERENCES `cisterna` (`id`),
-  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
+  CONSTRAINT `id_cisterna` FOREIGN KEY (`id_cisterna`) REFERENCES `cisterna` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_sistema_irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,7 +129,7 @@ CREATE TABLE `irrigazionecisterna` (
 
 LOCK TABLES `irrigazionecisterna` WRITE;
 /*!40000 ALTER TABLE `irrigazionecisterna` DISABLE KEYS */;
-INSERT INTO `irrigazionecisterna` VALUES (1,1),(2,1),(3,1),(4,2);
+INSERT INTO `irrigazionecisterna` VALUES (1,1),(2,1),(4,1),(5,1);
 /*!40000 ALTER TABLE `irrigazionecisterna` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +256,7 @@ CREATE TABLE `piantagione` (
   `id_irrigazione` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `irrigazione_idx` (`id_irrigazione`),
-  CONSTRAINT `irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`)
+  CONSTRAINT `irrigazione` FOREIGN KEY (`id_irrigazione`) REFERENCES `irrigazione` (`id_irrigazione`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -266,7 +266,7 @@ CREATE TABLE `piantagione` (
 
 LOCK TABLES `piantagione` WRITE;
 /*!40000 ALTER TABLE `piantagione` DISABLE KEYS */;
-INSERT INTO `piantagione` VALUES (2,'grano',1,'riposo',9,1,0,1),(3,'grano',100,'buono',6,1,0,NULL),(4,'grano saraceno',20,'scarso',1,1,0,NULL),(5,'grano',100,'buono',6,1,0,NULL),(7,'cicoria',5,'ottimale',1,0,0,NULL),(9,'finocchi',5,'ottimale',1,0,0,NULL),(10,'frumento',90,'riposo',11,1,0,1),(11,'mais',20,'ottimale',5,1,0,2);
+INSERT INTO `piantagione` VALUES (2,'grano',1,'riposo',9,1,0,1),(4,'grano saraceno',20,'scarso',1,1,0,NULL),(7,'cicoria',5,'ottimale',1,0,0,NULL),(9,'finocchi',5,'ottimale',1,0,0,NULL),(10,'frumento',90,'riposo',11,1,0,1),(11,'mais',20,'ottimale',5,1,0,2);
 /*!40000 ALTER TABLE `piantagione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +351,7 @@ CREATE TABLE `raccolta` (
 
 LOCK TABLES `raccolta` WRITE;
 /*!40000 ALTER TABLE `raccolta` DISABLE KEYS */;
-INSERT INTO `raccolta` VALUES (2,'frumento',1000,'2024-09-13','completata',0,NULL,10),(3,'frumento',1000,'2024-09-13','completata',0,NULL,10),(4,'frumento',1000,'2024-09-13','completata',0,NULL,10),(5,'frumento',1000,'2024-09-13','completata',0,NULL,10),(6,'frumento',1000,'2024-09-13','completata',0,NULL,10),(7,'frumento',1000,'2024-09-13','completata',0,NULL,10),(8,'frumento',2000,'2024-09-13','completata',0,NULL,10),(9,'frumento',5000,'2024-08-01','completata',0,NULL,10),(10,'frumento',6000,'2024-08-10','completata',0,NULL,10),(11,'grano',10000,'2024-09-14','completata',0,NULL,2),(12,'grano',10000,'2024-09-14','completata',0,NULL,2),(13,'grano',10,'2024-09-14','completata',0,NULL,2),(14,'grano',10,'2024-09-14','completata',0,NULL,2),(15,'grano',4000,'2024-09-17','completata',0,NULL,5),(16,'grano',2000,'2024-09-17','completata',0,NULL,5),(17,'mais',3500,'2024-08-14','completata',1,NULL,11);
+INSERT INTO `raccolta` VALUES (2,'frumento',1000,'2024-09-13','completata',0,NULL,10),(3,'frumento',1000,'2024-09-13','completata',0,NULL,10),(4,'frumento',1000,'2024-09-13','completata',0,NULL,10),(5,'frumento',1000,'2024-09-13','completata',0,NULL,10),(6,'frumento',1000,'2024-09-13','completata',0,NULL,10),(7,'frumento',1000,'2024-09-13','completata',0,NULL,10),(8,'frumento',2000,'2024-09-13','completata',0,NULL,10),(9,'frumento',5000,'2024-08-01','completata',0,NULL,10),(10,'frumento',6000,'2024-08-10','completata',0,NULL,10),(11,'grano',10000,'2024-09-14','completata',0,NULL,2),(12,'grano',10000,'2024-09-14','completata',0,NULL,2),(13,'grano',10,'2024-09-14','completata',0,NULL,2),(14,'grano',10,'2024-09-14','completata',0,NULL,2),(17,'mais',3500,'2024-08-14','completata',1,NULL,11);
 /*!40000 ALTER TABLE `raccolta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -479,7 +479,7 @@ CREATE TABLE `zona` (
 
 LOCK TABLES `zona` WRITE;
 /*!40000 ALTER TABLE `zona` DISABLE KEYS */;
-INSERT INTO `zona` VALUES (0,0,0,'buono',486.217,30.6088,71.8512,36.0912,1.14676,2),(0,0,0,'buono',927.061,14.8878,22.8881,10.4035,2.84312,3),(0,0,0,'buono',520.279,67.8961,3.88843,17.8864,3.93576,4),(0,0,0,'buono',299.761,9.94651,49.5007,8.39385,5.34133,5),(0,0,0,'buono',55.7936,85.3895,38.4219,26.6477,8.9193,9),(0,0,0,'buono',872.385,8.7816,62.7238,17.3939,12.7521,10),(0,1,0,'buono',784.971,7.95936,45.7647,3.76396,10.4978,2),(0,1,0,'buono',335.74,49.8336,16.9819,35.958,2.14273,3),(0,1,0,'buono',244.787,84.8103,65.9063,36.6128,4.27802,5),(0,1,0,'buono',354.838,64.7518,72.7464,3.25298,11.074,10),(0,2,0,'buono',580.554,63.3466,53.777,27.4042,11.9785,2),(0,2,0,'buono',548.855,77.9125,21.9192,32.6779,13.8632,10),(1,0,0,'buono',981.188,11.6433,8.9575,1.306,1.32577,2),(1,0,0,'buono',573.576,68.5306,27.9818,39.8302,11.8384,3),(1,0,0,'buono',996.627,78.0231,0.688606,22.512,12.4356,5),(1,0,0,'buono',688.134,93.8655,11.2386,31.127,5.44079,10),(1,1,0,'buono',902.007,52.9282,68.7698,4.0029,13.5594,2),(1,1,0,'buono',272.214,80.2661,75.0509,37.8596,4.19717,3),(1,1,0,'buono',751.671,84.0103,23.5017,20.9965,6.76113,5),(1,1,0,'buono',358.051,38.7664,1.31125,26.5128,13.3265,10),(1,2,0,'buono',129.489,77.2258,94.3219,34.6068,5.43649,2),(1,2,0,'buono',3.02518,89.419,61.9889,15.2978,6.98252,10),(2,0,0,'buono',776.96,69.6737,32.8754,11.3743,12.9369,2),(2,0,0,'buono',4.94943,43.9463,89.3146,7.13366,10.6678,3),(2,0,0,'buono',37.4086,86.5424,90.4471,11.7948,10.4099,5),(2,0,0,'buono',607.477,37.0566,4.60002,26.6247,6.20967,10),(2,1,0,'buono',92.3086,51.2408,13.123,1.42593,1.49427,2),(2,1,0,'buono',532.294,37.9227,33.1564,38.1311,11.4215,3),(2,1,0,'buono',984.583,91.4472,66.8324,5.05824,1.3121,5),(2,1,0,'buono',992.27,77.973,61.1053,11.99,10.072,10),(2,2,0,'buono',504.665,78.6187,91.762,30.8141,10.5632,2),(2,2,0,'buono',670.878,39.4233,20.2809,11.7894,10.1622,10),(3,0,0,'buono',935.158,56.1013,82.6404,33.8057,12.0756,10),(3,1,0,'buono',713.265,71.272,90.652,31.2556,6.66783,10);
+INSERT INTO `zona` VALUES (0,0,0,'buono',557.294,84.0927,93.2153,16.7266,6.236,2),(0,0,0,'buono',875.402,22.3386,3.67673,19.2738,12.0189,4),(0,0,0,'buono',372.433,64.9218,20.5451,7.84427,11.4377,9),(0,0,0,'buono',68.1991,12.3274,16.6875,13.9959,12.9126,10),(0,1,0,'buono',211.983,47.9061,83.2287,18.1947,7.05903,2),(0,1,0,'buono',707.914,82.1765,84.2604,5.07132,9.38897,10),(0,2,0,'buono',946.543,88.3273,99.1843,8.1025,0.564639,2),(0,2,0,'buono',308.851,15.8217,51.5705,38.4695,10.9101,10),(1,0,0,'buono',488.363,77.6172,44.4631,21.4329,6.00798,2),(1,0,0,'buono',663.285,89.1632,82.4935,5.32531,10.4902,10),(1,1,0,'buono',382.883,56.5668,38.8589,12.4837,11.9921,2),(1,1,0,'buono',876.8,25.8686,95.2167,35.676,10.8987,10),(1,2,0,'buono',822.883,70.5953,81.293,17.9629,3.31936,2),(1,2,0,'buono',0.852834,68.2124,51.1609,19.2748,9.01274,10),(2,0,0,'buono',356.812,43.4079,2.78214,28.375,7.12495,2),(2,0,0,'buono',136.512,34.3229,97.8337,23.8638,6.13794,10),(2,1,0,'buono',485.623,52.6998,5.2015,30.139,2.59172,2),(2,1,0,'buono',952.547,99.9425,23.5395,38.509,11.3165,10),(2,2,0,'buono',843.333,1.18168,41.358,10.0275,5.39181,2),(2,2,0,'buono',546.745,63.2949,0.984139,6.04641,0.0521317,10),(3,0,0,'buono',818.082,15.2261,32.5531,1.89712,8.88024,10),(3,1,0,'buono',919.993,36.0553,96.1968,2.46622,10.6582,10);
 /*!40000 ALTER TABLE `zona` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -492,4 +492,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-28 11:11:16
+-- Dump completed on 2024-09-29 19:08:31

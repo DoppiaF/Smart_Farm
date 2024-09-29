@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class IrrigazioneDAOImpl implements IrrigazioneDAO {
     private List<Irrigazione> irrigazioni = null;  //lista da riempire coi dati raccolti dal database, passare poi a return
@@ -26,14 +27,17 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
 
     @Override
     public void save(Irrigazione irrigazione) {
-        String sql = "INSERT INTO irrigazione (ora_inizio, durata, automatico, stato, litri_usati) VALUES (?,?,?,?,?)";    
+        String sql = "INSERT INTO irrigazione (id_irrigazione, ora_inizio, durata, automatico, stato, litri_usati) VALUES (?,?,?,?,?,?)";    
 
         try{PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setTime(1, Time.valueOf(irrigazione.getOra_inizio()));
-            ps.setInt(2, irrigazione.getDurata());
-            ps.setBoolean(3, irrigazione.isAuto());
-            ps.setString(4, irrigazione.getStato());
-            ps.setInt(5, irrigazione.getLitri_usati());
+            ps.setInt(1, irrigazione.getId_irrigazione());
+            LocalTime oraInizio = irrigazione.getOra_inizio();
+            if(oraInizio != null) ps.setTime(2, Time.valueOf(oraInizio));
+            else ps.setTime(2, Time.valueOf("00:00:00"));
+            ps.setInt(3, irrigazione.getDurata());
+            ps.setBoolean(4, irrigazione.isAuto());
+            ps.setString(5, irrigazione.getStato());
+            ps.setInt(6, irrigazione.getLitri_usati());
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Una nuova irrigazione è stata inserita correttamente!");
@@ -193,4 +197,28 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
         }   
         return idIrrigazioni;
     }
+
+    @Override
+    public Integer findMaxId(){
+        String sql = "SELECT MAX(id_irrigazione) AS max_id FROM irrigazione";
+        Integer maxIdIrr = 0;
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if (rs.next()) {
+                    maxIdIrr = rs.getInt("max_id");
+                } else {
+                    System.out.println("Non sono state trovate irrigazioni con id");
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero degli id delle irrigazioni esistenti");
+        }
+
+        
+        return maxIdIrr;
+    }
+    
 }

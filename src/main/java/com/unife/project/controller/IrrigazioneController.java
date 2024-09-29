@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.unife.project.model.dao.DAOFactory;
+import com.unife.project.model.mo.Animale;
 import com.unife.project.model.mo.Cisterna;
 import com.unife.project.model.mo.Irrigazione;
 import com.unife.project.model.mo.IrrigazioneCisterna;
@@ -23,8 +24,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -151,7 +154,33 @@ public class IrrigazioneController {
             timeColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new LocalTimeStringConverter()));
             stIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-            cisternaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            //codice da sistemare per permettere la modifica corretta della colonna cisternaColumn
+            cisternaColumn.setCellFactory(column -> new TableCell<Cisterna, Integer>(){
+                private final ComboBox<Integer> valoriId = new ComboBox<>();
+
+                {
+                    valoriId.getItems().addAll(DAOFactory.getCisternaDAO().findAllIds());
+                    valoriId.setOnAction(event -> {
+                        if (getTableRow() != null ){
+                            Cisterna cisterna = getTableRow().getItem();
+                            if (cisterna != null){
+                                cisterna.setId(valoriId.getValue());
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        valoriId.setValue(item);
+                        setGraphic(valoriId);
+                    }
+                }
+        });
 
             //gestisco le modifiche delle celle
             autoColumn2.setOnEditCommit(event -> event.getRowValue().setAuto(event.getNewValue()));
@@ -175,6 +204,56 @@ public class IrrigazioneController {
             System.out.println("Errore inizializzazione tabella irrigazioni");
         }
 
+    }
+
+    @FXML
+    private void handleAddIrrigazione() {
+        Irrigazione nuovaIrrigazione = new Irrigazione();
+
+        Integer idIrrigazione = DAOFactory.getIrrigazioneDAO().findMaxId() +1;
+        Integer idCisternaDft = 1;
+        
+        nuovaIrrigazione.setId_irrigazione(idIrrigazione);
+        nuovaIrrigazione.setAuto(false);
+        nuovaIrrigazione.setDurata(0);
+        nuovaIrrigazione.setLitri_usati(0);
+        nuovaIrrigazione.setOra_inizio(null);
+        nuovaIrrigazione.setStato(null);
+
+        IrrigazioneCisterna irrCis = new IrrigazioneCisterna(idIrrigazione, idCisternaDft);
+
+        nuovaIrrigazione.setIdIrrCisterna(idCisternaDft);
+
+        DAOFactory.getIrrigazioneDAO().save(nuovaIrrigazione);
+        DAOFactory.getIrrigazioneCisternaDAO().save(irrCis);
+        loadIrrigazioneData2();
+    }
+
+    @FXML
+    private void handleDeleteIrrigazione() {
+        Irrigazione irrigazioneSelezionata = irrigazioneTable.getSelectionModel().getSelectedItem();
+        if(irrigazioneSelezionata != null){
+            irrigazioniData.remove(irrigazioneSelezionata);
+            //elimina l'animale dal database
+            DAOFactory.getIrrigazioneDAO().delete(irrigazioneSelezionata);
+            
+            loadIrrigazioneData2();
+        } else {
+            showErrorDialog("Errore", "Seleziona dalla lista un' irrigazione che vuoi eliminare.");
+        }
+    }
+
+    @FXML
+    private void handleModifyIrrigazione() {
+        Irrigazione irrigazioneSelezionata = irrigazioneTable.getSelectionModel().getSelectedItem();
+        if(irrigazioneSelezionata != null){
+            System.out.println("Modifica irrigazione: " + irrigazioneSelezionata.toString());
+            //modifica l'animale nel database
+            DAOFactory.getIrrigazioneDAO().update(irrigazioneSelezionata);
+            loadIrrigazioneData2();
+        } else {
+            showErrorDialog("Errore", "Seleziona dalla lista un'irrigazione da modificare.");
+        }
     }
 
         

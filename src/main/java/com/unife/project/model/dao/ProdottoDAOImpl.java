@@ -1,6 +1,7 @@
 package com.unife.project.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1,prodotto.getQuantita());
-            ps.setObject(2, prodotto.getDataProduzione());
+            ps.setDate(2, Date.valueOf(prodotto.getDataProduzione()));
             ps.setString(3, prodotto.getTipoProdotto());
             ps.setString(4, prodotto.getSpecie());
             ps.setString(5, prodotto.getStalla());
@@ -54,7 +55,7 @@ public class ProdottoDAOImpl implements ProdottoDAO{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1,prodotto.getQuantita());
-            ps.setObject(2, prodotto.getDataProduzione());
+            ps.setDate(2, Date.valueOf(prodotto.getDataProduzione()));
             ps.setString(3, prodotto.getTipoProdotto());
             ps.setString(4, prodotto.getSpecie());
             ps.setString(5, prodotto.getStalla());
@@ -85,26 +86,26 @@ public class ProdottoDAOImpl implements ProdottoDAO{
     @Override
     public Prodotto findById(int id) {
         String sql = "SELECT * FROM prodotto WHERE id_prodotto = ?";
-
-        try(PreparedStatement ps = connection.prepareStatement(sql)){
-            ps.setInt(1,id);
-            
-            try (ResultSet rs = ps.executeQuery()){
+    
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+    
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Prodotto prodotto = new Prodotto();
-                    prodotto.setId_prodotto(rs.getInt(id));
+                    prodotto.setId_prodotto(rs.getInt("id_prodotto"));
                     prodotto.setQuantita(rs.getInt("quantita"));
                     prodotto.setDataProduzione(rs.getDate("data_produzione").toLocalDate());
                     prodotto.setTipoProdotto(rs.getString("tipo_prodotto"));
                     prodotto.setSpecie(rs.getString("specie"));
                     prodotto.setStalla(rs.getString("stalla"));
-
+    
                     return prodotto;
                 } else {
                     System.out.println("prodotto non trovato");
                 }
-            } 
-        }catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nella ricerca di un prodotto " + id);
         }

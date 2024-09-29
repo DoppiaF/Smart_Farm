@@ -9,6 +9,9 @@ public class Cisterna {
     private int quantita;
     private List<Irrigazione> irrigazioni = new ArrayList<>(); // Lista di irrigazioni associate
 
+    public Cisterna() {
+    }
+    
     public Cisterna(int capacita, int quantita) {
         this.capacita = capacita;   // id non richiesto perchè lo assegna il db con autoincremento
         this.quantita = quantita;

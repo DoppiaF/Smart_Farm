@@ -132,9 +132,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
                             rs.getString("stato"),
                             rs.getInt("litri_usati")
                         );
-
-                        irrigazioni.add(irrigazione);
-                        
+                        irrigazioni.add(irrigazione);  
                     }
                 }
             }
@@ -142,9 +140,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
         catch (SQLException e){
                 e.printStackTrace();
                 System.out.println("Errore nel recupero delle informazioni di tutte le irrigazioni");
-        }
-
-        
+        }      
         return irrigazioni;
     }
 
@@ -177,10 +173,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
                 e.printStackTrace();
                 System.out.println("Errore nel recupero delle informazioni di tutte le irrigazioni");
         }
-
-        
         return irrigazioni;
-
     }
 
     public List<Integer> findAllIrrIds(){
@@ -193,8 +186,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
                 else{
                     while (rs.next()){
                         Integer idIrrigazione = rs.getInt("id_irrigazione");
-                        idIrrigazioni.add(idIrrigazione);
-                        
+                        idIrrigazioni.add(idIrrigazione);  
                     }
                 }
             }
@@ -202,9 +194,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
         catch (SQLException e){
                 e.printStackTrace();
                 System.out.println("Errore nel recupero degli id delle irrigazioni esistenti");
-        }
-
-        
+        }   
         return idIrrigazioni;
     }
 

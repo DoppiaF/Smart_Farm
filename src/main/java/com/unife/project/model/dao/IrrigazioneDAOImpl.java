@@ -145,7 +145,7 @@ public class IrrigazioneDAOImpl implements IrrigazioneDAO {
     }
 
     public List<Irrigazione> findAllWCisterna(){
-        String sql = "SELECT i.*, c.* FROM irrigazione i join irrigazionecisterna ic join cisterna c on i.id_irrigazione=ic.id_irrigazione and c.id=ic.id_cisterna";
+        String sql = "SELECT i.*, c.* FROM irrigazione i join irrigazionecisterna ic join cisterna c on i.id_irrigazione=ic.id_irrigazione and c.id=ic.id_cisterna ORDER BY i.id_irrigazione";
         
         irrigazioni = new ArrayList<Irrigazione>();
         try(PreparedStatement ps = connection.prepareStatement(sql)){

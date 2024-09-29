@@ -214,35 +214,29 @@ public class PiantagioneController {
     @FXML
     private void handleGoToIrrigazione(ActionEvent event) {
         Piantagione piantagioneSelezionata = piantagioneTable.getSelectionModel().getSelectedItem();
-        if(piantagioneSelezionata != null){
-            try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/irrigazionePage.fxml"));
-                Parent zoneIrrigazioneRoot = loader.load();
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/irrigazionePage.fxml"));
+            Parent zoneIrrigazioneRoot = loader.load();
 
-                IrrigazioneController zoneIrrigazioneController = loader.getController();
+            IrrigazioneController zoneIrrigazioneController = loader.getController();
 
-                zoneIrrigazioneController.setUser(utente);
+            zoneIrrigazioneController.setUser(utente);
+            //se l'utente aveva già selezionato una piantagione dalla tabella piantagioni, nella tabella irrigazioni verrà mostrata come già selezionata la relativa irrigazione
+            if(piantagioneSelezionata != null){
                 zoneIrrigazioneController.setPiantagione(piantagioneSelezionata);
-
-                
-                Scene scene = new Scene(zoneIrrigazioneRoot);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                WindowUtil.setWindow(stage, scene, "Smartfarm - Irrigazione");
-
-                stage.show();
-
-            }catch (IOException e){
-                e.printStackTrace();
             }
-        }
-        else{
-                // Mostra un popup con un messaggio per l'utente
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Informazione");
-            alert.setHeaderText(null);
-            alert.setContentText("Selezionare una piantagione per poterne visualizzare il sistema di irrigazione o i valori dei sensori.");
-            alert.showAndWait();
+            zoneIrrigazioneController.loadIrrigazioneData2();
+
+            
+            Scene scene = new Scene(zoneIrrigazioneRoot);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            WindowUtil.setWindow(stage, scene, "Smartfarm - Irrigazione");
+
+            stage.show();
+
+        }catch (IOException e){
+            e.printStackTrace();
         }
     
     }

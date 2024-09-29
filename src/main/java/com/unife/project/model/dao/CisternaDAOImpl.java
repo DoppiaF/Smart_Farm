@@ -10,9 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class CisternaDAOImpl implements CisternaDAO{
     private List<Cisterna> cisterne = new ArrayList<>();
     //private int idCounter = 1;  //non serve, l'id è generato dal database
+    private static final Logger LOGGER = Logger.getLogger(CisternaDAOImpl.class.getName());
 
     //database connection details
     private Connection connection;
@@ -33,13 +37,10 @@ public class CisternaDAOImpl implements CisternaDAO{
             if (rowsInserted > 0) {
                 System.out.println("Una nuova cisterna è stata inserita correttamente!");
             }
-
         } catch (SQLException e){
             e.printStackTrace();
             System.out.println("Errore nell'inserimento di una cisterna");
         }
-
-
     }
 
     @Override
@@ -52,7 +53,12 @@ public class CisternaDAOImpl implements CisternaDAO{
             ps.setInt(1, cisterna.getCapacita());
             ps.setInt(2, cisterna.getQuantita());
             ps.setInt(3, cisterna.getId());
-            ps.executeUpdate();
+            int rowsInserted = ps.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Una nuova cisterna è stata inserita correttamente!");
+            } else{
+                System.out.println("cisterna non inserita");
+            }
         }catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Errore nell'aggiornamento di una cisterna " + cisterna.getId());
@@ -99,30 +105,26 @@ public class CisternaDAOImpl implements CisternaDAO{
         return null;
     }
 
-    @Override
     public List<Cisterna> findAll() {
         String sql = "SELECT * FROM cisterna";
-        cisterne = new ArrayList<Cisterna>();
+        List<Cisterna> cisterne = new ArrayList<>();
 
-        try(PreparedStatement ps = connection.prepareStatement(sql)){
-            try (ResultSet rs = ps.executeQuery()){
-                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate cisterne");
-                else{
-                    while (rs.next()){
-                        Cisterna cisterna = new Cisterna(rs.getInt("capacita"),
-                        rs.getInt("quantita"));
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                        cisterne.add(cisterna);
-                        
-                    }
-                }
+            while (rs.next()) {
+                Cisterna cisterna = new Cisterna();
+                cisterna.setId(rs.getInt("id"));
+                cisterna.setCapacita(rs.getInt("capacita"));
+                cisterna.setQuantita(rs.getInt("quantita"));
+                cisterne.add(cisterna);
             }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Errore nel recupero delle informazioni di tutte le cisterne", e);
         }
-        catch (SQLException e){
-                e.printStackTrace();
-                System.out.println("Errore nel recupero delle informazioni di tutte le cisterne");
-        }
-        return cisterne;    
+
+        return cisterne;
     }
     
 }

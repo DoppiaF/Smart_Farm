@@ -19,8 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.unife.project.model.mo.Magazzino;
-import com.unife.project.model.mo.Piantagione;
 import com.unife.project.model.mo.Prodotto;
 
 public class ProdottoDAOImplTest {

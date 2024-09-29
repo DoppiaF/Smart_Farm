@@ -124,5 +124,31 @@ public class CisternaDAOImpl implements CisternaDAO{
         }
         return cisterne;    
     }
+
+    
+    @Override
+    public List<Integer> findAllIds() {
+        String sql = "SELECT id FROM cisterna";
+        List<Integer> idCisterne = new ArrayList<Integer>();
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            try (ResultSet rs = ps.executeQuery()){
+                if(!rs.isBeforeFirst()) System.out.println("Non sono state trovate cisterne");
+                else{
+                    while (rs.next()){
+                        Integer idCisterna = rs.getInt("id");
+
+                        idCisterne.add(idCisterna);
+                        
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+                e.printStackTrace();
+                System.out.println("Errore nel recupero degli id di tutte le cisterne");
+        }
+        return idCisterne;    
+    }
     
 }

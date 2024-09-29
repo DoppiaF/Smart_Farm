@@ -22,9 +22,8 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
 
     @Override
     public void save(IrrigazioneCisterna irrigazioneCisterna) {
-        /*String sql = "INSERT INTO irrigazioneCisterna (id_irrigazione, id_cisterna) VALUES (?,?)";
-        try(Connection conn = DatabaseConnection.getConnection(); 
-            PreparedStatement ps = conn.prepareStatement(sql)){
+        String sql = "INSERT INTO irrigazioneCisterna (id_irrigazione, id_cisterna) VALUES (?,?)";
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
 
             ps.setInt(1, irrigazioneCisterna.getId_irrigazione());
             ps.setInt(2, irrigazioneCisterna.getId_cisterna());
@@ -37,8 +36,6 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
             e.printStackTrace();
             System.out.println("Elemento IrrigazioneCisterna non inserito");
         }
-        */
-        System.out.println("chiamato metodo irrigazioneCisternaDAOImpl.save(). Decommentare codice per implementarlo.");
     }
 
     @Override

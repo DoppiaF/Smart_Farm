@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -140,5 +142,46 @@ public class IrrigazioneDAOImplTest {
         assertTrue(output.contains("L'irrigazione è stata eliminata correttamente"));
     }
 
-    
+    @Test
+    public void testFindById() throws SQLException {
+        int id = 1;
+        Irrigazione expectedIrrigazione = new Irrigazione(
+            id,
+            LocalTime.of(10, 0),
+            30,
+            true,
+            "attivo",
+            100
+        );
+
+        // Configura il mock per restituire un ResultSet con i dati attesi
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id_irrigazione")).thenReturn(expectedIrrigazione.getId_irrigazione());
+        when(resultSet.getTime("ora_inizio")).thenReturn(Time.valueOf(expectedIrrigazione.getOra_inizio()));
+        when(resultSet.getInt("durata")).thenReturn(expectedIrrigazione.getDurata());
+        when(resultSet.getBoolean("automatico")).thenReturn(expectedIrrigazione.isAuto());
+        when(resultSet.getString("stato")).thenReturn(expectedIrrigazione.getStato());
+        when(resultSet.getInt("litri_usati")).thenReturn(expectedIrrigazione.getLitri_usati());
+
+        Irrigazione actualIrrigazione = irrigazioneDAO.findById(id);
+
+        // Verifica che il metodo prepareStatement sia stato chiamato con la query corretta
+        verify(connection, times(1)).prepareStatement("SELECT * FROM irrigazione WHERE id_irrigazione = ?");
+
+        // Verifica che il parametro sia stato impostato correttamente
+        verify(preparedStatement, times(1)).setInt(1, id);
+
+        // Verifica che il metodo executeQuery sia stato chiamato
+        verify(preparedStatement, times(1)).executeQuery();
+
+        // Verifica che i campi dell'oggetto restituito siano quelli attesi
+        assertNotNull(actualIrrigazione);
+        assertEquals(expectedIrrigazione.getId_irrigazione(), actualIrrigazione.getId_irrigazione());
+        assertEquals(expectedIrrigazione.getOra_inizio(), actualIrrigazione.getOra_inizio());
+        assertEquals(expectedIrrigazione.getDurata(), actualIrrigazione.getDurata());
+        assertEquals(expectedIrrigazione.isAuto(), actualIrrigazione.isAuto());
+        assertEquals(expectedIrrigazione.getStato(), actualIrrigazione.getStato());
+        assertEquals(expectedIrrigazione.getLitri_usati(), actualIrrigazione.getLitri_usati());
+    }
 }

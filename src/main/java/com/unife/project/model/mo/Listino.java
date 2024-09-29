@@ -5,6 +5,9 @@ public class Listino {
     private String tipo_prodotto;
     private Float prezzo;
 
+    public Listino() {
+    }
+    
     public Listino(String tipo_prodotto, Float prezzo) {
         this.tipo_prodotto = tipo_prodotto;
         this.prezzo = prezzo;

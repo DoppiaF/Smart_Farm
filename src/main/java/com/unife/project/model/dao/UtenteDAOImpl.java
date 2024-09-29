@@ -93,12 +93,12 @@ public class UtenteDAOImpl implements UtenteDAO{
     @Override
     public Utente findById(int id) {
         String sql = "SELECT * FROM utente WHERE id = ?";
+
         try ( PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (!rs.isBeforeFirst()) { System.out.println("Utente non trovato"); } 
-            else {
-                while(rs.next()){
+
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()){
                     Utente utente = new Utente();
                     utente.setId(rs.getInt("id"));
                     utente.setUserName(rs.getString("username"));
@@ -114,6 +114,8 @@ public class UtenteDAOImpl implements UtenteDAO{
                     utente.setRuolo_pastore(rs.getBoolean("ruolo_pastore"));
                     utente.setRuolo_admin(rs.getBoolean("ruolo_admin"));
                     return utente;
+                } else {
+                    System.out.println("Utente non trovato");
                 }
             }
         }catch(SQLException e){

@@ -112,7 +112,7 @@ public class IrrigazioneController {
     private TableColumn<Irrigazione, String> stIrrColumn;
     
     @FXML
-    private TableColumn<Cisterna, Integer> cisternaColumn;
+    private TableColumn<Irrigazione, Integer> cisternaColumn;
 
 
     //private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
@@ -147,6 +147,9 @@ public class IrrigazioneController {
             cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("idIrrCisterna"));
             
             //le righe della tabellona vengono rese editabili
+            irrigazioneTable.setEditable(true);
+            //tranne quella dell'id dell'irrigazione
+            irrigazioneIdColumn.setEditable(false);
             irrigazioneIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
             autoColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
             durataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -155,16 +158,16 @@ public class IrrigazioneController {
             stIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
             //codice da sistemare per permettere la modifica corretta della colonna cisternaColumn
-            cisternaColumn.setCellFactory(column -> new TableCell<Cisterna, Integer>(){
+            cisternaColumn.setCellFactory(column -> new TableCell<Irrigazione, Integer>(){
                 private final ComboBox<Integer> valoriId = new ComboBox<>();
 
                 {
                     valoriId.getItems().addAll(DAOFactory.getCisternaDAO().findAllIds());
                     valoriId.setOnAction(event -> {
                         if (getTableRow() != null ){
-                            Cisterna cisterna = getTableRow().getItem();
-                            if (cisterna != null){
-                                cisterna.setId(valoriId.getValue());
+                            Irrigazione irrigazione = getTableRow().getItem();
+                            if (irrigazione != null){
+                                irrigazione.setIdIrrCisterna(valoriId.getValue());
                             }
                         }
                     });
@@ -178,6 +181,9 @@ public class IrrigazioneController {
                     } else {
                         valoriId.setValue(item);
                         setGraphic(valoriId);
+                        valoriId.setOnMouseClicked(event -> {
+                            getTableView().getSelectionModel().select(getIndex());
+                        });
                     }
                 }
         });
@@ -188,7 +194,7 @@ public class IrrigazioneController {
             litriColumn.setOnEditCommit(event -> event.getRowValue().setLitri_usati(event.getNewValue()));
             timeColumn2.setOnEditCommit(event -> event.getRowValue().setOra_inizio(event.getNewValue()));
             stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
-            cisternaColumn.setOnEditCommit(event -> event.getRowValue().setId(event.getNewValue()));
+            cisternaColumn.setOnEditCommit(event -> event.getRowValue().setIdIrrCisterna(event.getNewValue()));
         
             //loadIrrigazioneData();
 
@@ -248,8 +254,12 @@ public class IrrigazioneController {
         Irrigazione irrigazioneSelezionata = irrigazioneTable.getSelectionModel().getSelectedItem();
         if(irrigazioneSelezionata != null){
             System.out.println("Modifica irrigazione: " + irrigazioneSelezionata.toString());
+            
+            IrrigazioneCisterna irrCis = new IrrigazioneCisterna(irrigazioneSelezionata.getId_irrigazione(), irrigazioneSelezionata.getIdIrrCisterna());
             //modifica l'animale nel database
             DAOFactory.getIrrigazioneDAO().update(irrigazioneSelezionata);
+
+            DAOFactory.getIrrigazioneCisternaDAO().update(irrCis);
             loadIrrigazioneData2();
         } else {
             showErrorDialog("Errore", "Seleziona dalla lista un'irrigazione da modificare.");

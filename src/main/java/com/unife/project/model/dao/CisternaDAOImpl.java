@@ -45,8 +45,8 @@ public class CisternaDAOImpl implements CisternaDAO{
 
     @Override
     public void update(Cisterna cisterna) {
-        String sql ="UPDATE cisterna" +
-                    "SET capacita = ?, quantita = ?" + 
+        String sql ="UPDATE cisterna " +
+                    "SET capacita = ?, quantita = ? " + 
                     "WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

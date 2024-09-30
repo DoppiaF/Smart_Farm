@@ -181,4 +181,118 @@ public class UtenteDAOImplTest {
         assertEquals(utente.getRuolo_pastore(), result.getRuolo_pastore());
         assertEquals(utente.getRuolo_admin(), result.getRuolo_admin());
     }
+    
+    @Test
+    public void testFindByUsernameAndPassword()  throws SQLException, Exception{
+        Timestamp createTime = new Timestamp(System.currentTimeMillis());
+        LocalDate dataNascita = LocalDate.of(1990, 1, 1);
+
+        String username = "Enea";
+        String password = "pw3";
+        String email = "enea@gmail.com";
+        int utenteId = 1;
+        Utente utente = new Utente();
+        utente.setId(utenteId);
+        utente.setUserName(username);
+        utente.setPassword(password);
+        utente.setEmail(email);
+        utente.setCreateTime(createTime);
+        utente.setDataNascita(dataNascita);
+        utente.setRuolo_raccolta(true);
+        utente.setRuolo_irrigazione(false);
+        utente.setRuolo_pastore(true);
+        utente.setRuolo_admin(false);
+
+        // Configura il mock per restituire i risultati del ResultSet
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(utente.getId());
+        when(resultSet.getString("username")).thenReturn(utente.getUserName());
+        when(resultSet.getString("password")).thenReturn(utente.getPassword());
+        when(resultSet.getString("email")).thenReturn(utente.getEmail());
+        when(resultSet.getTimestamp("create_time")).thenReturn(utente.getCreateTime());
+        when(resultSet.getDate("data_nascita")).thenReturn(java.sql.Date.valueOf(utente.getDataNascita()));
+        when(resultSet.getBoolean("ruolo_raccolta")).thenReturn(utente.getRuolo_raccolta());
+        when(resultSet.getBoolean("ruolo_irrigazione")).thenReturn(utente.getRuolo_irrigazione());
+        when(resultSet.getBoolean("ruolo_pastore")).thenReturn(utente.getRuolo_pastore());
+        when(resultSet.getBoolean("ruolo_admin")).thenReturn(utente.getRuolo_admin());
+
+        // Configura il mock per restituire il ResultSet quando viene chiamato executeQuery
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Esegui il metodo findById
+        Utente result = utenteDAO.findByUsernameAndPassword(username,password);
+
+        // Verifica che il metodo findById abbia chiamato executeQuery
+        verify(preparedStatement, times(1)).executeQuery();
+
+        // Verifica che l'utente restituito sia quello atteso
+        assertNotNull(result);
+        assertEquals(utente.getId(), result.getId());
+        assertEquals(utente.getUserName(), result.getUserName());
+        assertEquals(utente.getPassword(), result.getPassword());
+        assertEquals(utente.getEmail(), result.getEmail());
+        assertEquals(utente.getCreateTime(), result.getCreateTime());
+        assertEquals(utente.getDataNascita(), result.getDataNascita());
+        assertEquals(utente.getRuolo_raccolta(), result.getRuolo_raccolta());
+        assertEquals(utente.getRuolo_irrigazione(), result.getRuolo_irrigazione());
+        assertEquals(utente.getRuolo_pastore(), result.getRuolo_pastore());
+        assertEquals(utente.getRuolo_admin(), result.getRuolo_admin());
+
+    }
+
+    @Test
+    public void testFindByEmail()  throws SQLException, Exception{
+        Timestamp createTime = new Timestamp(System.currentTimeMillis());
+        LocalDate dataNascita = LocalDate.of(1990, 1, 1);
+
+        String email = "enea@gmail.com";
+        int utenteId = 1;
+        Utente utente = new Utente();
+        utente.setId(utenteId);
+        utente.setUserName("Enea");
+        utente.setPassword("pw3");
+        utente.setEmail(email);
+        utente.setCreateTime(createTime);
+        utente.setDataNascita(dataNascita);
+        utente.setRuolo_raccolta(true);
+        utente.setRuolo_irrigazione(false);
+        utente.setRuolo_pastore(true);
+        utente.setRuolo_admin(false);
+
+        // Configura il mock per restituire i risultati del ResultSet
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("id")).thenReturn(utente.getId());
+        when(resultSet.getString("username")).thenReturn(utente.getUserName());
+        when(resultSet.getString("password")).thenReturn(utente.getPassword());
+        when(resultSet.getString("email")).thenReturn(utente.getEmail());
+        when(resultSet.getTimestamp("create_time")).thenReturn(utente.getCreateTime());
+        when(resultSet.getDate("data_nascita")).thenReturn(java.sql.Date.valueOf(utente.getDataNascita()));
+        when(resultSet.getBoolean("ruolo_raccolta")).thenReturn(utente.getRuolo_raccolta());
+        when(resultSet.getBoolean("ruolo_irrigazione")).thenReturn(utente.getRuolo_irrigazione());
+        when(resultSet.getBoolean("ruolo_pastore")).thenReturn(utente.getRuolo_pastore());
+        when(resultSet.getBoolean("ruolo_admin")).thenReturn(utente.getRuolo_admin());
+
+        // Configura il mock per restituire il ResultSet quando viene chiamato executeQuery
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Esegui il metodo findById
+        Utente result = utenteDAO.findByEmail(email);
+
+        // Verifica che il metodo findById abbia chiamato executeQuery
+        verify(preparedStatement, times(1)).executeQuery();
+
+        // Verifica che l'utente restituito sia quello atteso
+        assertNotNull(result);
+        assertEquals(utente.getId(), result.getId());
+        assertEquals(utente.getUserName(), result.getUserName());
+        assertEquals(utente.getPassword(), result.getPassword());
+        assertEquals(utente.getEmail(), result.getEmail());
+        assertEquals(utente.getCreateTime(), result.getCreateTime());
+        assertEquals(utente.getDataNascita(), result.getDataNascita());
+        assertEquals(utente.getRuolo_raccolta(), result.getRuolo_raccolta());
+        assertEquals(utente.getRuolo_irrigazione(), result.getRuolo_irrigazione());
+        assertEquals(utente.getRuolo_pastore(), result.getRuolo_pastore());
+        assertEquals(utente.getRuolo_admin(), result.getRuolo_admin());
+
+    }
 }

@@ -98,11 +98,9 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_irrigazione);
             try(ResultSet rs = ps.executeQuery()){
-                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione); }
-                else{
-                    while(rs.next()){
-                        irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
-                    }
+                if(rs.next()) {
+                    irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));                } else{
+                    System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione);
                 }
             }
         } catch (SQLException e) {

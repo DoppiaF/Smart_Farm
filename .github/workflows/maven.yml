@@ -30,37 +30,14 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '11'
-        distribution: 'adopt'
+        distribution: 'temurin'
         cache: maven
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Install Docker Compose
-      run: |
-        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        docker-compose --version
-
-    - name: Start services with Docker Compose
-      run: docker-compose up -d
-
-    - name: Wait for MySQL to be ready
-      run: |
-        while ! docker-compose exec db mysqladmin --user=root --password=${{ secrets.PASSWORD }} --host "127.0.0.1" ping --silent &> /dev/null ; do
-          echo "Waiting for database connection..."
-          sleep 5
-        done
-
     - name: Verify with Maven
-      env:
-        DB_URL: jdbc:mysql://db:3306/fattoria
-        DB_USERNAME: root
-        DB_PASSWORD: ${{ secrets.PASSWORD }}
-      run: mvn -B verify --file pom.xml
-
-    - name: Stop services with Docker Compose
-      run: docker-compose down
+      run: mvn verify
 
     #CD: Deploy the application on docker
 

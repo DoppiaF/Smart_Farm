@@ -1,4 +1,4 @@
 FROM mysql:8.1.0
 ENV MYSQL_ROOT_PASSWORD=Pannocchie98!?
 ENV MYSQL_DATABASE=fattoria
-COPY initdb/Dump19.3_raccolteONDELCASC.sql /docker-entrypoint-initdb.d/
+COPY initdb/Dump4Docker.sql /docker-entrypoint-initdb.d/

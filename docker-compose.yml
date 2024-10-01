@@ -30,8 +30,8 @@ services:
       context: .
       dockerfile: Dockerfile.db
     environment:
-      #MYSQL_ROOT_PASSWORD: $${{ secrets.PASSWORD }}
-      MYSQL_ROOT_PASSWORD: Pannocchie98!?
+      MYSQL_ROOT_PASSWORD: $${{ secrets.PASSWORD }}
+      #MYSQL_ROOT_PASSWORD: Pannocchie98!?
       MYSQL_DATABASE: fattoria
     ports:
       - "3306:3306"

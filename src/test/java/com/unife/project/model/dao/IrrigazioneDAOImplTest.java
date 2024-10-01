@@ -64,14 +64,15 @@ public class IrrigazioneDAOImplTest {
         });
 
         // Verifica che il metodo prepareStatement sia stato chiamato con la query corretta
-        verify(connection, times(1)).prepareStatement("INSERT INTO irrigazione (ora_inizio, durata, automatico, stato, litri_usati) VALUES (?,?,?,?,?)");
+        verify(connection, times(1)).prepareStatement("INSERT INTO irrigazione (id_irrigazione, ora_inizio, durata, automatico, stato, litri_usati) VALUES (?,?,?,?,?,?)");
 
         // Verifica che i parametri siano stati impostati correttamente
-        verify(preparedStatement, times(1)).setTime(1, Time.valueOf(irrigazione.getOra_inizio()));
-        verify(preparedStatement, times(1)).setInt(2, irrigazione.getDurata());
-        verify(preparedStatement, times(1)).setBoolean(3, irrigazione.isAuto());
-        verify(preparedStatement, times(1)).setString(4, irrigazione.getStato());
-        verify(preparedStatement, times(1)).setInt(5, irrigazione.getLitri_usati());
+        verify(preparedStatement, times(1)).setInt(1, irrigazione.getId_irrigazione());
+        verify(preparedStatement, times(1)).setTime(2, Time.valueOf(irrigazione.getOra_inizio()));
+        verify(preparedStatement, times(1)).setInt(3, irrigazione.getDurata());
+        verify(preparedStatement, times(1)).setBoolean(4, irrigazione.isAuto());
+        verify(preparedStatement, times(1)).setString(5, irrigazione.getStato());
+        verify(preparedStatement, times(1)).setInt(6, irrigazione.getLitri_usati());
         
         // Verifica che il metodo executeUpdate sia stato chiamato
         verify(preparedStatement, times(1)).executeUpdate();

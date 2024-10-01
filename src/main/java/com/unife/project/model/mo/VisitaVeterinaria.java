@@ -11,6 +11,8 @@ public class VisitaVeterinaria {
     private String cognome_veterinario;
     private String stato_animale;
     private boolean programmata;
+
+    public VisitaVeterinaria(){};
     
 
     public VisitaVeterinaria(LocalDate data, String diagnosi, int identificativoAnimale, String nomeVeterinario, String cognomeVeterinario, String curaPrescritta, String stato_animale, boolean programmata) {

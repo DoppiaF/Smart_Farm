@@ -22,7 +22,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
 
     @Override
     public void save(IrrigazioneCisterna irrigazioneCisterna) {
-        String sql = "INSERT INTO irrigazioneCisterna (id_irrigazione, id_cisterna) VALUES (?,?)";
+        String sql = "INSERT INTO irrigazionecisterna (id_irrigazione, id_cisterna) VALUES (?,?)";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
 
             ps.setInt(1, irrigazioneCisterna.getId_irrigazione());
@@ -30,18 +30,28 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
 
             int rowsInserted = ps.executeUpdate();
             if(rowsInserted>0){
-                System.out.println("elemento di IrrigazioneCisterna aggiunto correttamente");
+                System.out.println("elemento di irrigazionecisterna aggiunto correttamente");
             }
         }catch(SQLException e){
             e.printStackTrace();
-            System.out.println("Elemento IrrigazioneCisterna non inserito");
+            System.out.println("Elemento irrigazionecisterna non inserito");
         }
     }
 
     @Override
     public void update(IrrigazioneCisterna irrigazioneCisterna) {
-        // come metodo save, non serve implementare il metodo update per IrrigazioneCisterna
-        System.out.println("IrrigazioneCisternaDAOImpl.update() chiamato. To be implemented");
+        String sql = "UPDATE irrigazionecisterna SET id_cisterna = ? WHERE id_irrigazione = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, irrigazioneCisterna.getId_cisterna());
+            statement.setInt(2, irrigazioneCisterna.getId_irrigazione());
+            int rowsUpdated = statement.executeUpdate();
+            if(rowsUpdated>0){
+                System.out.println("elemento di irrigazionecisterna aggiornato correttamente");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Elemento irrigazionecisterna non aggiornato");
+        }
     }
 
     @Override
@@ -61,12 +71,12 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
     @Override
     public List<IrrigazioneCisterna> findAll() {
 
-        String sql = "SELECT * FROM irrigazioneCisterna";
+        String sql = "SELECT * FROM irrigazionecisterna";
         irrigazioniCisterne = new ArrayList<>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             try(ResultSet rs = ps.executeQuery()){
-                if(!rs.isBeforeFirst()) {System.out.println("IrrigazioneCisterna non presenti in database");}
+                if(!rs.isBeforeFirst()) {System.out.println("record di irrigazionecisterna non presenti nel database");}
                 else while(rs.next()){
                     IrrigazioneCisterna irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
                     irrigazioniCisterne.add(irrigazioneCisterna);
@@ -74,7 +84,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
             }
         }catch(SQLException e){
             e.printStackTrace();
-            System.out.println("Errore nel recupero di tutti i campi irrigazioneCisterna");
+            System.out.println("Errore nel recupero di tutti i campi irrigazionecisterna");
         }
         return irrigazioniCisterne;
     }
@@ -82,17 +92,15 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
     @Override
     public IrrigazioneCisterna findById_irrigazione(int id_irrigazione){
 
-        String sql = "SELECT * FROM irrigazioneCisterna WHERE id_irrigazione = ?";
+        String sql = "SELECT * FROM irrigazionecisterna WHERE id_irrigazione = ?";
         IrrigazioneCisterna irrigazioneCisterna = null;
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setInt(1, id_irrigazione);
             try(ResultSet rs = ps.executeQuery()){
-                if(!rs.isBeforeFirst()){ System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione); }
-                else{
-                    while(rs.next()){
-                        irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));
-                    }
+                if(rs.next()) {
+                    irrigazioneCisterna = new IrrigazioneCisterna(rs.getInt("id_irrigazione"), rs.getInt("id_cisterna"));                } else{
+                    System.out.println("Non ci sono cisterne per il sistema di irrigazione con id " + id_irrigazione);
                 }
             }
         } catch (SQLException e) {
@@ -106,7 +114,7 @@ public class IrrigazioneCisternaDAOImpl implements IrrigazioneCisternaDAO{
     @Override
     public List<IrrigazioneCisterna> findById_cisterna(int id_cisterna){
 
-        String sql = "SELECT * FROM irrigazioneCisterna WHERE id_cisterna = ?";
+        String sql = "SELECT * FROM irrigazionecisterna WHERE id_cisterna = ?";
         irrigazioniCisterne = new ArrayList<>();
 
         try(PreparedStatement ps = connection.prepareStatement(sql)){

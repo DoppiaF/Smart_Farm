@@ -24,7 +24,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
@@ -34,6 +38,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -112,7 +117,7 @@ public class IrrigazioneController {
     private TableColumn<Irrigazione, String> stIrrColumn;
     
     @FXML
-    private TableColumn<Cisterna, Integer> cisternaColumn;
+    private TableColumn<Irrigazione, Integer> cisternaColumn;
 
 
     //private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
@@ -147,25 +152,196 @@ public class IrrigazioneController {
             cisternaColumn.setCellValueFactory(new PropertyValueFactory<>("idIrrCisterna"));
             
             //le righe della tabellona vengono rese editabili
+            irrigazioneTable.setEditable(true);
+            //tranne quella dell'id dell'irrigazione
+            irrigazioneIdColumn.setEditable(false);
             irrigazioneIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-            autoColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
-            durataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-            litriColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-            timeColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new LocalTimeStringConverter()));
+            //autoColumn2.setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+
+            autoColumn2.setCellFactory(column -> new TableCell<Irrigazione,Boolean>(){
+                private final ComboBox<Boolean> valoriAuto = new ComboBox<>();
+
+                {
+                    valoriAuto.getItems().addAll(true, false);
+                    valoriAuto.setOnAction(event -> {
+                        if (getTableRow() != null){
+                            Irrigazione irrigazione = getTableRow().getItem();
+                            if(irrigazione != null){
+                                irrigazione.setAuto(valoriAuto.getValue());
+                            }
+                        }
+                    });
+                    
+                    valoriAuto.setOnMouseClicked(event -> {
+                        getTableView().getSelectionModel().select(getIndex());
+                    });
+
+                    valoriAuto.setOnKeyPressed(event -> {
+                        switch (event.getCode()) {
+                            case ENTER:
+                                event.consume();
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }
+                
+                
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        valoriAuto.setValue(item);
+                        setGraphic(valoriAuto);
+                    }
+                }
+            });
+
+            //durataColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            durataColumn.setCellFactory(column -> new TableCell<Irrigazione, Integer>() {
+                private final Spinner<Integer> spinner = new Spinner<>(0, 120, 30);
+    
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        spinner.getValueFactory().setValue(item);
+                        setGraphic(spinner);
+    
+                        // Add event handler to select the row when the Spinner is clicked
+                        spinner.setOnMouseClicked(event -> {
+                            getTableView().getSelectionModel().select(getIndex());
+                        });
+
+                        
+                        spinner.setOnKeyPressed(event -> {
+                            switch (event.getCode()) {
+                                case ENTER:
+                                    event.consume();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+    
+                        // Add event handler to update the value when the Spinner value changes
+                        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+                            Irrigazione irrigazione = getTableView().getItems().get(getIndex());
+                            irrigazione.setDurata(newValue);
+                        });
+                    }
+                }
+            });
+            litriColumn.setCellFactory(column -> new TableCell<Irrigazione, Integer>() {
+                private final Spinner<Integer> spinner = new Spinner<>(0, 20, 5);
+    
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        spinner.getValueFactory().setValue(item);
+                        setGraphic(spinner);
+    
+                        // Add event handler to select the row when the Spinner is clicked
+                        spinner.setOnMouseClicked(event -> {
+                            getTableView().getSelectionModel().select(getIndex());
+                        });
+
+                        
+                        spinner.setOnKeyPressed(event -> {
+                            switch (event.getCode()) {
+                                case ENTER:
+                                    event.consume();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+    
+                        // Add event handler to update the value when the Spinner value changes
+                        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+                            Irrigazione irrigazione = getTableView().getItems().get(getIndex());
+                            irrigazione.setLitri_usati(newValue);
+                        });
+                    }
+                }
+            });
+
+            timeColumn2.setCellFactory(column -> new TableCell<Irrigazione, LocalTime>() {
+                private final Spinner<Integer> hourSpinner = new Spinner<>(0, 23, 0);
+                private final Spinner<Integer> minuteSpinner = new Spinner<>(0, 59, 0);
+                private final HBox hbox = new HBox(hourSpinner, new Label(":"), minuteSpinner);
+    
+                {
+                    hourSpinner.setEditable(true);
+                    minuteSpinner.setEditable(true);
+    
+                    // Add event handler to update the value when the Spinner value changes
+                    hourSpinner.valueProperty().addListener((obs, oldValue, newValue) -> updateModel());
+                    minuteSpinner.valueProperty().addListener((obs, oldValue, newValue) -> updateModel());
+                }
+    
+                private void updateModel() {
+                    if (getTableRow() != null) {
+                        Irrigazione irrigazione = getTableRow().getItem();
+                        if (irrigazione != null) {
+                            LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue());
+                            irrigazione.setOra_inizio(time);
+                        }
+                    }
+                }
+    
+                @Override
+                protected void updateItem(LocalTime item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        if (item != null) {
+                            hourSpinner.getValueFactory().setValue(item.getHour());
+                            minuteSpinner.getValueFactory().setValue(item.getMinute());
+                        }
+                        setGraphic(hbox);
+                    }
+                }
+            });
+
             stIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
             //codice da sistemare per permettere la modifica corretta della colonna cisternaColumn
-            cisternaColumn.setCellFactory(column -> new TableCell<Cisterna, Integer>(){
+            cisternaColumn.setCellFactory(column -> new TableCell<Irrigazione, Integer>(){
                 private final ComboBox<Integer> valoriId = new ComboBox<>();
 
                 {
                     valoriId.getItems().addAll(DAOFactory.getCisternaDAO().findAllIds());
                     valoriId.setOnAction(event -> {
                         if (getTableRow() != null ){
-                            Cisterna cisterna = getTableRow().getItem();
-                            if (cisterna != null){
-                                cisterna.setId(valoriId.getValue());
+                            Irrigazione irrigazione = getTableRow().getItem();
+                            if (irrigazione != null){
+                                irrigazione.setIdIrrCisterna(valoriId.getValue());
                             }
+                        }
+                    });
+
+
+                    valoriId.setOnMouseClicked(event -> {
+                        getTableView().getSelectionModel().select(getIndex());
+                    });
+                    
+                    valoriId.setOnKeyPressed(event -> {
+                        switch (event.getCode()) {
+                            case ENTER:
+                                event.consume();
+                                break;
+                            default:
+                                break;
                         }
                     });
                 }
@@ -180,7 +356,7 @@ public class IrrigazioneController {
                         setGraphic(valoriId);
                     }
                 }
-        });
+            });
 
             //gestisco le modifiche delle celle
             autoColumn2.setOnEditCommit(event -> event.getRowValue().setAuto(event.getNewValue()));
@@ -188,7 +364,7 @@ public class IrrigazioneController {
             litriColumn.setOnEditCommit(event -> event.getRowValue().setLitri_usati(event.getNewValue()));
             timeColumn2.setOnEditCommit(event -> event.getRowValue().setOra_inizio(event.getNewValue()));
             stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
-            cisternaColumn.setOnEditCommit(event -> event.getRowValue().setId(event.getNewValue()));
+            cisternaColumn.setOnEditCommit(event -> event.getRowValue().setIdIrrCisterna(event.getNewValue()));
         
             //loadIrrigazioneData();
 
@@ -248,11 +424,44 @@ public class IrrigazioneController {
         Irrigazione irrigazioneSelezionata = irrigazioneTable.getSelectionModel().getSelectedItem();
         if(irrigazioneSelezionata != null){
             System.out.println("Modifica irrigazione: " + irrigazioneSelezionata.toString());
+            
+            IrrigazioneCisterna irrCis = new IrrigazioneCisterna(irrigazioneSelezionata.getId_irrigazione(), irrigazioneSelezionata.getIdIrrCisterna());
             //modifica l'animale nel database
             DAOFactory.getIrrigazioneDAO().update(irrigazioneSelezionata);
+
+            DAOFactory.getIrrigazioneCisternaDAO().update(irrCis);
             loadIrrigazioneData2();
         } else {
             showErrorDialog("Errore", "Seleziona dalla lista un'irrigazione da modificare.");
+        }
+    }
+
+    @FXML
+    private void handleStartIrrigazione(){
+        Irrigazione irrigazioneSelezionata = irrigazioneTable.getSelectionModel().getSelectedItem();
+        if(irrigazioneSelezionata != null){
+                        
+            if(irrigazioneSelezionata.isAuto() == false){
+                Cisterna cisterna_usata = DAOFactory.getCisternaDAO().findById(irrigazioneSelezionata.getIdIrrCisterna());
+                if(irrigazioneSelezionata.getLitri_usati() <= cisterna_usata.getQuantita()){
+                    System.out.println("Avvio irrigazione: " + irrigazioneSelezionata.toString() + " con cisterna: " + cisterna_usata.toString());
+                    //modifica l'animale nel database
+        
+                    cisterna_usata.setQuantita(cisterna_usata.getQuantita() - irrigazioneSelezionata.getLitri_usati());
+                    DAOFactory.getCisternaDAO().update(cisterna_usata);
+
+                }else{
+                    showErrorDialog("Avviso", "Nella cisterna utilizzata non c'è acqua sufficiente, la cisterna verrà ricaricata, poi sarà possibile riavviare l'irrigazione");
+                    cisterna_usata.setQuantita(cisterna_usata.getCapacita());
+                    DAOFactory.getCisternaDAO().update(cisterna_usata);
+                }
+            }else{
+                showErrorDialog("Avviso", "L'irrigazione selezionata è automatica, reimpostala o selezionane una manuale");
+            }
+
+            loadIrrigazioneData2();
+        } else {
+            showErrorDialog("Errore", "Seleziona dalla lista un'irrigazione da avviare.");
         }
     }
 

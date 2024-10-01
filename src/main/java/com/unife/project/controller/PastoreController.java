@@ -61,7 +61,7 @@ public class PastoreController {
     @FXML
     private BorderPane pastoreNested;
 
-    //stabella stalle colonne
+    //colonne tabella stalle
     @FXML
     private TableView<Stalla> stalleTable;
 

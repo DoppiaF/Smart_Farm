@@ -28,7 +28,6 @@ public class AdminController {
 
     private Utente utente = null;
 
-    //rendere la lista di oggetti Utente osservabile
     private ObservableList<Utente> userData = FXCollections.observableArrayList();
 
     @FXML

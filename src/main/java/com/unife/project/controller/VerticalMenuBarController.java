@@ -156,20 +156,6 @@ public class VerticalMenuBarController {
         }
     }
 
-    /*private void navigateTo(ActionEvent event, String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
     //metodo da chiamare da altri controller per passare l'utente alla home
     public void setUserStatus(Utente utente){
         if (utente != null) {

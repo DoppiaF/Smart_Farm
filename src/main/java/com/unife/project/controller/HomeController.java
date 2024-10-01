@@ -18,10 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 public class HomeController {
-    
-    /************************************************
-     * buttons and items fxml
-     ************************************************/
 
     /*@FXML
     private MenuItem loginMenuItem;*/
@@ -42,13 +38,6 @@ public class HomeController {
     private Button areaPastoreButton;
 
 
-
-
-
-
-    /************************************************
-     * initialize
-     ************************************************/
     // Variabile per lo stato di login e ruolo dell'utente
     private boolean isLoggedIn = false;
     private boolean isAdmin = false;
@@ -76,37 +65,6 @@ public class HomeController {
             areaPastoreButton.setDisable(!(isLoggedIn && isPastore));
         }
     }
-
-
-
-
-
-
-    /************************************************
-     * handlers
-     ************************************************/
-
-
-    /*@FXML
-    private void handleLoginMenuItemAction(ActionEvent event) {
-        //logica per gestire il pulsante 
-        System.out.println("Login Button Pressed");
-        try {
-            // Carica il file FXML della schermata admin
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/login.fxml"));
-            Parent loginRoot = loader.load();
-
-            // Ottieni lo stage corrente
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Imposta la nuova scena
-            Scene scene = new Scene(loginRoot);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @FXML
     private void handleAreaPiantagioneButtonAction(ActionEvent event) {
@@ -197,16 +155,6 @@ public class HomeController {
         }
     }
 
-
-
-
-
-
-
-
-    /************************************************
-     * public methods
-     ************************************************/
     // Metodo per aggiornare lo stato di login e ruolo
     public void setUserStatus() {
         
@@ -233,19 +181,6 @@ public class HomeController {
         updateMenuBar();
         
     }
-
-
-
-
-
-
-
-
-
-
-    /************************************************
-     * private methods
-     ************************************************/
 
     //metodo per aggiornare la label di benvenuto
     private void updateWelcomeLabel(){

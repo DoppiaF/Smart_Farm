@@ -42,6 +42,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
+
 //TableRow importata per cercare di impostare il menu a tendina per l'id irrigazione nelle righe della tabella
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
@@ -170,7 +171,6 @@ public class PiantagioneController {
                 }
             }
         });
-        //idIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
          // Gestisci le modifiche delle celle
          tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));

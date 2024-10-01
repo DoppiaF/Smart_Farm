@@ -20,7 +20,6 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddStalla" text="Aggiungi" />
-                      <Button mnemonicParsing="false" onAction="#eliminaMangime" text="Automatizza Mangime" />
                       <Button mnemonicParsing="false" onAction="#eliminaMangimeManual" text="Consuma Mangime Per Oggi" />
                   </HBox>
                   <TableView fx:id="stalleTable">

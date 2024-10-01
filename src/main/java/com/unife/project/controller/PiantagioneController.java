@@ -124,7 +124,21 @@ public class PiantagioneController {
     private NumberAxis yAxisGuadagni;
 
     @FXML
+    private Button goToIrrigazioneButton;
+    @FXML
+    private Button goToSensoriButton;
+
+
+    @FXML
     public void initialize() {
+
+        if(utente != null){
+            if(utente.getRuolo_irrigazione())
+                goToIrrigazioneButton.setDisable(false);
+            if(utente.getRuolo_raccolta())
+                goToSensoriButton.setDisable(false);
+        }
+
         // Inizializza le colonne della tabella
         //nelle property serve usare i nomi dei metodi getter del MO. es tipoPianta diventa getTipoPianta qui dentro.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -308,6 +322,13 @@ public class PiantagioneController {
         this.utente = utente;
         updateMenuBar();
         updateVerticalMenuBar();
+
+        if(utente != null){
+            if(utente.getRuolo_irrigazione())
+                goToIrrigazioneButton.setDisable(false);
+            if(utente.getRuolo_raccolta())
+                goToSensoriButton.setDisable(false);
+        }
     }
     
     private void updateMenuBar(){

@@ -24,8 +24,8 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddPiantagione" text="Aggiungi piantagione" />
-                      <Button mnemonicParsing="false" onAction="#handleGoToIrrigazione" text="Mostra irrigazioni" />
-                      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleGoToSensori" text="Mostra sensori per la piantagione selezionata" />
+                      <Button fx:id="goToIrrigazioneButton" disable="true" mnemonicParsing="false" onAction="#handleGoToIrrigazione" text="Mostra irrigazioni" />
+                      <Button fx:id="goToSensoriButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleGoToSensori" text="Mostra sensori per la piantagione selezionata" />
                   </HBox>
                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="380.0">
                  <columnConstraints>

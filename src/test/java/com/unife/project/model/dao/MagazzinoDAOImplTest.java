@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -159,4 +161,51 @@ public class MagazzinoDAOImplTest {
         assertEquals(tipoMangime, magazzino.getTipoMangime());
     }
 
+    @Test
+    public void testFindAll() throws SQLException, Exception{
+        List<Magazzino> magazzini = new ArrayList<>();
+        
+        Magazzino magazzino1 = new Magazzino();
+        magazzino1.setId(1);
+        magazzino1.setTipoMangime("Mais");
+        magazzino1.setQuantita(100);
+        magazzino1.setPrezzo_kg(1.0f);
+        magazzino1.setData(LocalDate.of(2023, 10, 1));
+        Magazzino magazzino2 = new Magazzino();
+        magazzino2.setId(2);
+        magazzino2.setTipoMangime("Orzo");
+        magazzino2.setQuantita(200);
+        magazzino2.setPrezzo_kg(1.5f);
+        magazzino2.setData(LocalDate.of(2023, 10, 2));
+
+        magazzini.add(magazzino1);
+        magazzini.add(magazzino2);
+
+        when(resultSet.isBeforeFirst()).thenReturn(true,true,false);
+        when(resultSet.next()).thenReturn( true, true, false);
+        when(resultSet.getInt("id")).thenReturn(magazzino1.getId(), magazzino2.getId());
+        when(resultSet.getString("mangime")).thenReturn(magazzino1.getTipoMangime(), magazzino2.getTipoMangime());
+        when(resultSet.getInt("quantita")).thenReturn(magazzino1.getQuantita(), magazzino2.getQuantita());
+        when(resultSet.getFloat("prezzo_kg")).thenReturn(magazzino1.getPrezzo_kg(), magazzino2.getPrezzo_kg());
+        when(resultSet.getDate("data")).thenReturn(java.sql.Date.valueOf(magazzino1.getData()), java.sql.Date.valueOf(magazzino2.getData()));
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Magazzino> result = magazzinoDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+        assertEquals(magazzino1.getId(), result.get(0).getId());
+        assertEquals(magazzino2.getId(), result.get(1).getId());
+        assertEquals(magazzino1.getTipoMangime(), result.get(0).getTipoMangime());
+        assertEquals(magazzino2.getTipoMangime(), result.get(1).getTipoMangime());
+        assertEquals(magazzino1.getQuantita(), result.get(0).getQuantita());
+        assertEquals(magazzino2.getQuantita(), result.get(1).getQuantita());
+        assertEquals(magazzino1.getPrezzo_kg(), result.get(0).getPrezzo_kg());
+        assertEquals(magazzino2.getPrezzo_kg(), result.get(1).getPrezzo_kg());
+        assertEquals(magazzino1.getData(), result.get(0).getData());
+        assertEquals(magazzino2.getData(), result.get(1).getData());
+
+    }
 }

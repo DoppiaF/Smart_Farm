@@ -293,6 +293,79 @@ public class UtenteDAOImplTest {
         assertEquals(utente.getRuolo_irrigazione(), result.getRuolo_irrigazione());
         assertEquals(utente.getRuolo_pastore(), result.getRuolo_pastore());
         assertEquals(utente.getRuolo_admin(), result.getRuolo_admin());
+    }
 
+    @Test
+    public void testFindAll() throws SQLException, Exception{
+        List<Utente> utenti = new ArrayList<>();
+        Timestamp createTime = new Timestamp(System.currentTimeMillis());
+        LocalDate dataNascita = LocalDate.of(1990, 1, 1);
+        Utente utente1 = new Utente();
+        utente1.setId(1);
+        utente1.setUserName("Elisa");
+        utente1.setPassword("pw1");
+        utente1.setEmail("elisa@eli.com");
+        utente1.setCreateTime(createTime);
+        utente1.setDataNascita(dataNascita);
+        utente1.setRuolo_raccolta(true);
+        utente1.setRuolo_irrigazione(false);
+        utente1.setRuolo_pastore(true);
+        utente1.setRuolo_admin(false);
+        Utente utente2 = new Utente();
+        utente2.setId(2);
+        utente2.setUserName("Asia");
+        utente2.setPassword("pw2");
+        utente2.setEmail("asia@as.com");
+        utente2.setCreateTime(createTime);
+        utente2.setDataNascita(dataNascita);
+        utente2.setRuolo_raccolta(false);
+        utente2.setRuolo_irrigazione(true);
+        utente2.setRuolo_pastore(false);
+        utente2.setRuolo_admin(true);
+       
+        utenti.add(utente1);
+        utenti.add(utente2);
+
+        when(resultSet.isBeforeFirst()).thenReturn(true, true, false);
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.getInt("id")).thenReturn(utente1.getId(), utente2.getId());
+        when(resultSet.getString("username")).thenReturn(utente1.getUserName(), utente2.getUserName());
+        when(resultSet.getString("password")).thenReturn(utente1.getPassword(), utente2.getPassword());
+        when(resultSet.getString("email")).thenReturn(utente1.getEmail(), utente2.getEmail());
+        when(resultSet.getTimestamp("create_time")).thenReturn(utente1.getCreateTime(), utente2.getCreateTime());
+        when(resultSet.getDate("data_nascita")).thenReturn(java.sql.Date.valueOf(utente1.getDataNascita()), java.sql.Date.valueOf(utente2.getDataNascita()));
+        when(resultSet.getBoolean("ruolo_raccolta")).thenReturn(utente1.getRuolo_raccolta(), utente2.getRuolo_raccolta());
+        when(resultSet.getBoolean("ruolo_irrigazione")).thenReturn(utente1.getRuolo_irrigazione(), utente2.getRuolo_irrigazione());
+        when(resultSet.getBoolean("ruolo_pastore")).thenReturn(utente1.getRuolo_pastore(), utente2.getRuolo_pastore());
+        when(resultSet.getBoolean("ruolo_admin")).thenReturn(utente1.getRuolo_admin(), utente2.getRuolo_admin());
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Utente> result = utenteDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+        assertEquals(utente1.getId(), result.get(0).getId());
+        assertEquals(utente2.getId(), result.get(1).getId());
+        assertEquals(utente1.getUserName(), result.get(0).getUserName());
+        assertEquals(utente2.getUserName(), result.get(1).getUserName());
+        assertEquals(utente1.getPassword(), result.get(0).getPassword());
+        assertEquals(utente2.getPassword(), result.get(1).getPassword());
+        assertEquals(utente1.getEmail(), result.get(0).getEmail());
+        assertEquals(utente2.getEmail(), result.get(1).getEmail());
+        assertEquals(utente1.getCreateTime(), result.get(0).getCreateTime());
+        assertEquals(utente2.getCreateTime(), result.get(1).getCreateTime());
+        assertEquals(utente1.getDataNascita(), result.get(0).getDataNascita());
+        assertEquals(utente2.getDataNascita(), result.get(1).getDataNascita());
+        assertEquals(utente1.getRuolo_raccolta(), result.get(0).getRuolo_raccolta());
+        assertEquals(utente2.getRuolo_raccolta(), result.get(1).getRuolo_raccolta());
+        assertEquals(utente1.getRuolo_irrigazione(), result.get(0).getRuolo_irrigazione());
+        assertEquals(utente2.getRuolo_irrigazione(), result.get(1).getRuolo_irrigazione());
+        assertEquals(utente1.getRuolo_pastore(), result.get(0).getRuolo_pastore());
+        assertEquals(utente2.getRuolo_pastore(), result.get(1).getRuolo_pastore());
+        assertEquals(utente1.getRuolo_admin(), result.get(0).getRuolo_admin());
+        assertEquals(utente2.getRuolo_admin(), result.get(1).getRuolo_admin());
+            
     }
 }

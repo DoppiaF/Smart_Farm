@@ -1,5 +1,7 @@
 package com.unife.project.model.dao;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -150,6 +152,54 @@ public class StallaDAOImplTest {
         assertEquals(expectedStalla.getRazza(), actualStalla.getRazza());
         assertEquals(expectedStalla.getOraPranzo(), actualStalla.getOraPranzo());
         assertEquals(expectedStalla.getOraCena(), actualStalla.getOraCena());
+
+    }
+
+    @Test
+    public void testFindAll() throws SQLException {
+        List<Stalla> stalle = new ArrayList<>();
+        Stalla stalla1 = new Stalla();
+        stalla1.setEtichettaStalla("bovini-1");
+        stalla1.setCapienza(60);
+        stalla1.setRazza("bovino-Frisona");
+        stalla1.setOraPranzo(LocalTime.of(12,0));
+        stalla1.setOraCena(LocalTime.of(21,20));
+        Stalla stalla2 = new Stalla();
+        stalla2.setEtichettaStalla("bovini-2");
+        stalla2.setCapienza(60);
+        stalla2.setRazza("bovino-Ayrshire");
+        stalla2.setOraPranzo(LocalTime.of(12,0));
+        stalla2.setOraCena(LocalTime.of(21,20));
+        stalle.add(stalla1);
+        stalle.add(stalla2);
+
+        when(resultSet.isBeforeFirst()).thenReturn(true, true, false);
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.getString("etichetta_stalla")).thenReturn(stalla1.getEtichettaStalla(), stalla2.getEtichettaStalla());
+        when(resultSet.getInt("capienza")).thenReturn(stalla1.getCapienza(), stalla2.getCapienza());
+        when(resultSet.getString("razza")).thenReturn(stalla1.getRazza(), stalla2.getRazza());
+        when(resultSet.getTime("ora_pranzo")).thenReturn(java.sql.Time.valueOf(stalla1.getOraPranzo()), java.sql.Time.valueOf(stalla2.getOraPranzo()));
+        when(resultSet.getTime("ora_cena")).thenReturn(java.sql.Time.valueOf(stalla1.getOraCena()), java.sql.Time.valueOf(stalla2.getOraCena()));
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Stalla> result = stallaDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+
+        assertEquals(stalla1.getEtichettaStalla(), result.get(0).getEtichettaStalla());
+        assertEquals(stalla2.getEtichettaStalla(), result.get(1).getEtichettaStalla());
+        assertEquals(stalla1.getCapienza(), result.get(0).getCapienza());
+        assertEquals(stalla2.getCapienza(), result.get(1).getCapienza());
+        assertEquals(stalla1.getRazza(), result.get(0).getRazza());
+        assertEquals(stalla2.getRazza(), result.get(1).getRazza());
+
+        assertEquals(stalla1.getOraPranzo(), result.get(0).getOraPranzo());
+        assertEquals(stalla2.getOraPranzo(), result.get(1).getOraPranzo());
+        assertEquals(stalla1.getOraCena(), result.get(0).getOraCena());
+        assertEquals(stalla2.getOraCena(), result.get(1).getOraCena());
 
     }
 }

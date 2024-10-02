@@ -120,7 +120,7 @@ public class IrrigazioneCisternaDAOImplTest{
         assertEquals(expectedIrrigazioneCisterna.getId_cisterna(), actualIrrigazioneCisterna.getId_cisterna());
     }    
 
-   /* @Test
+    @Test
     public void testFindAll() throws SQLException {
         // Configuro il mock per il PreparedStatement e il Connection
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
@@ -134,6 +134,7 @@ public class IrrigazioneCisternaDAOImplTest{
         irrigazioniCisterne.add(irrigazione2);
 
         // Configura il mock per restituire i risultati del ResultSet
+        when(resultSet.isBeforeFirst()).thenReturn(true,true,false);;
         when(resultSet.next()).thenReturn(true, true, false);
         when(resultSet.getInt("id_irrigazione")).thenReturn(irrigazione1.getId_irrigazione(), irrigazione2.getId_irrigazione());
         when(resultSet.getInt("id_cisterna")).thenReturn(irrigazione1.getId_cisterna(), irrigazione2.getId_cisterna());
@@ -142,5 +143,11 @@ public class IrrigazioneCisternaDAOImplTest{
         List<IrrigazioneCisterna> result = irrigazioneCisternaDAO.findAll();
         assertNotNull(result);
         assertEquals(2, result.size());
-    }*/
+
+        assertEquals(irrigazione2.getId_cisterna(), result.get(1).getId_cisterna());
+        assertEquals(irrigazione1.getId_cisterna(), result.get(0).getId_cisterna());
+        assertEquals(irrigazione2.getId_irrigazione(), result.get(1).getId_irrigazione());
+        assertEquals(irrigazione1.getId_irrigazione(), result.get(0).getId_irrigazione());
+        
+    }
 }

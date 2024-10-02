@@ -174,4 +174,77 @@ public class ZonaDAOImplTest {
 
     }
 
+    @Test
+    public void testFindAll() throws SQLException,Exception{
+        List<Zona> zone = new ArrayList<>();
+
+        Zona zona1 = new Zona();
+        zona1.setCoordX(0);
+        zona1.setCoordY(0);
+        zona1.setId_piantagione(1);
+        zona1.setPortataSensore(5);
+        zona1.setSensoreIluminazione(100);
+        zona1.setSensorePH(7);
+        zona1.setSensoreTemperatura(25);
+        zona1.setSensoreUmidita(45);
+        zona1.setSensoreVento(7);
+        zona1.setStatoTerreno("ok");
+
+        Zona zona2 = new Zona();
+        zona2.setCoordX(1);
+        zona2.setCoordY(1);
+        zona2.setId_piantagione(2);
+        zona2.setPortataSensore(6);
+        zona2.setSensoreIluminazione(101);
+        zona2.setSensorePH(8);
+        zona2.setSensoreTemperatura(26);
+        zona2.setSensoreUmidita(46);
+        zona2.setSensoreVento(8);
+        zona2.setStatoTerreno("ok");
+
+        zone.add(zona1);
+        zone.add(zona2);
+
+        when(resultSet.isBeforeFirst()).thenReturn(true, true, false);
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.getInt("coord_x")).thenReturn(zona1.getCoordX(), zona2.getCoordX());
+        when(resultSet.getInt("coord_y")).thenReturn(zona1.getCoordY(), zona2.getCoordY());
+        when(resultSet.getInt("id_piantagione")).thenReturn(zona1.getId_piantagione(), zona2.getId_piantagione());
+        when(resultSet.getInt("portata_sensore")).thenReturn(zona1.getPortataSensore(), zona2.getPortataSensore());
+        when(resultSet.getFloat("sensore_illuminazione")).thenReturn(zona1.getSensoreIluminazione(), zona2.getSensoreIluminazione());
+        when(resultSet.getFloat("sensore_PH")).thenReturn(zona1.getSensorePH(), zona2.getSensorePH());
+        when(resultSet.getFloat("sensore_temperatura")).thenReturn(zona1.getSensoreTemperatura(), zona2.getSensoreTemperatura());
+        when(resultSet.getFloat("sensore_umidita")).thenReturn(zona1.getSensoreUmidita(), zona2.getSensoreUmidita()); 
+        when(resultSet.getFloat("sensore_vento")).thenReturn(zona1.getSensoreVento(), zona2.getSensoreVento());
+        when(resultSet.getString("stato_generale_terreno")).thenReturn(zona1.getStatoTerreno(), zona2.getStatoTerreno());
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Zona> result = zonaDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+        assertEquals(zona1.getCoordX(), result.get(0).getCoordX());
+        assertEquals(zona2.getCoordX(), result.get(1).getCoordX());
+        assertEquals(zona1.getCoordY(), result.get(0).getCoordY());
+        assertEquals(zona2.getCoordY(), result.get(1).getCoordY());
+        assertEquals(zona1.getId_piantagione(), result.get(0).getId_piantagione());
+        assertEquals(zona2.getId_piantagione(), result.get(1).getId_piantagione());
+        assertEquals(zona1.getPortataSensore(), result.get(0).getPortataSensore());
+        assertEquals(zona2.getPortataSensore(), result.get(1).getPortataSensore());
+        assertEquals(zona1.getSensoreIluminazione(), result.get(0).getSensoreIluminazione());
+        assertEquals(zona2.getSensoreIluminazione(), result.get(1).getSensoreIluminazione());
+        assertEquals(zona1.getSensorePH(), result.get(0).getSensorePH());
+        assertEquals(zona2.getSensorePH(), result.get(1).getSensorePH());
+        assertEquals(zona1.getSensoreTemperatura(), result.get(0).getSensoreTemperatura());
+        assertEquals(zona2.getSensoreTemperatura(), result.get(1).getSensoreTemperatura());
+        assertEquals(zona1.getSensoreUmidita(), result.get(0).getSensoreUmidita());
+        assertEquals(zona2.getSensoreUmidita(), result.get(1).getSensoreUmidita());
+        assertEquals(zona1.getSensoreVento(), result.get(0).getSensoreVento());
+        assertEquals(zona2.getSensoreVento(), result.get(1).getSensoreVento());
+        assertEquals(zona1.getStatoTerreno(), result.get(0).getStatoTerreno());
+        assertEquals(zona2.getStatoTerreno(), result.get(1).getStatoTerreno());
+        
+    }
 }

@@ -45,8 +45,6 @@ public class RaccoltaDAOImpl implements RaccoltaDAO{
             e.printStackTrace();
             System.out.println("Errore nella registrazione di una raccolta");
         }
-
-
     }
 
     @Override

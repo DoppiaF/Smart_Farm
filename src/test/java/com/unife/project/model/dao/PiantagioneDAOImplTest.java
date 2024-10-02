@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -185,4 +187,66 @@ public class PiantagioneDAOImplTest {
         assertFalse(piantagione.isRaccolta());
     }
 
+    @Test
+    public void testFindAll() throws SQLException, Exception{
+        List<Piantagione> piantagioni = new ArrayList<>();
+        
+        Piantagione piantagione1 = new Piantagione();
+        piantagione1.setId(1);
+        piantagione1.setTipoPianta("Mais");
+        piantagione1.setArea(100);
+        piantagione1.setStato("Buono");
+        piantagione1.setNumZone(5);
+        piantagione1.setConcimazione(true);
+        piantagione1.setId_irrigazione(2);
+        piantagione1.setRaccolta(false);
+        Piantagione piantagione2 = new Piantagione();
+        piantagione2.setId(2);
+        piantagione2.setTipoPianta("Pomodoro");
+        piantagione2.setArea(200);
+        piantagione2.setStato("Buono");
+        piantagione2.setNumZone(10);
+        piantagione2.setConcimazione(false);
+        piantagione2.setId_irrigazione(3);
+        piantagione2.setRaccolta(true);
+
+        piantagioni.add(piantagione1);
+        piantagioni.add(piantagione2);
+
+        when(resultSet.isBeforeFirst()).thenReturn(true,true,false);
+        when(resultSet.next()).thenReturn( true, true, false);
+        when(resultSet.getInt("id")).thenReturn(piantagione1.getId(), piantagione2.getId());
+        when(resultSet.getString("tipo_pianta")).thenReturn(piantagione1.getTipoPianta(), piantagione2.getTipoPianta());
+        when(resultSet.getInt("area")).thenReturn(piantagione1.getArea(), piantagione2.getArea());
+        when(resultSet.getString("stato")).thenReturn(piantagione1.getStato(), piantagione2.getStato());
+        when(resultSet.getInt("num_zone")).thenReturn(piantagione1.getNumZone(), piantagione2.getNumZone());
+        when(resultSet.getBoolean("concimazione")).thenReturn(piantagione1.isConcimazione(), piantagione2.isConcimazione());
+        when(resultSet.getInt("id_irrigazione")).thenReturn(piantagione1.getId_irrigazione(), piantagione2.getId_irrigazione());
+        when(resultSet.getBoolean("raccolta")).thenReturn(piantagione1.isRaccolta(), piantagione2.isRaccolta());
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Piantagione> result = piantagioneDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+        assertEquals(piantagione1.getId(), result.get(0).getId());
+        assertEquals(piantagione2.getId(), result.get(1).getId());
+        assertEquals(piantagione1.getTipoPianta(), result.get(0).getTipoPianta());
+        assertEquals(piantagione2.getTipoPianta(), result.get(1).getTipoPianta());
+        assertEquals(piantagione1.getArea(), result.get(0).getArea());
+        assertEquals(piantagione2.getArea(), result.get(1).getArea());
+        assertEquals(piantagione1.getStato(), result.get(0).getStato());
+        assertEquals(piantagione2.getStato(), result.get(1).getStato());
+        assertEquals(piantagione1.getNumZone(), result.get(0).getNumZone());
+        assertEquals(piantagione2.getNumZone(), result.get(1).getNumZone());
+        assertEquals(piantagione1.isConcimazione(), result.get(0).isConcimazione());
+        assertEquals(piantagione2.isConcimazione(), result.get(1).isConcimazione());
+        assertEquals(piantagione1.getId_irrigazione(), result.get(0).getId_irrigazione());
+        assertEquals(piantagione2.getId_irrigazione(), result.get(1).getId_irrigazione());
+        assertEquals(piantagione1.isRaccolta(), result.get(0).isRaccolta());
+        assertEquals(piantagione2.isRaccolta(), result.get(1).isRaccolta());
+        
+    }
 }

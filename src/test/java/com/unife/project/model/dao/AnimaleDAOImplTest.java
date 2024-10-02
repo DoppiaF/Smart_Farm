@@ -10,6 +10,7 @@ import org.mockito.*;
 import com.unife.project.model.mo.Animale;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +39,7 @@ public class AnimaleDAOImplTest {
     public void setUp() throws SQLException {
         MockitoAnnotations.openMocks(this);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        
     }
 
     @Test
@@ -170,5 +172,90 @@ public class AnimaleDAOImplTest {
         assertEquals(animale.getData_uscita(), result.getData_uscita());
         assertEquals(animale.getData_morte(), result.getData_morte());
         assertEquals(animale.getData_vaccino(), result.getData_vaccino());
+    }
+
+
+    @Test
+    public void testFindAll() throws SQLException {
+        List<Animale> animali = new ArrayList<>();
+        Animale animale1 = new Animale();
+        animale1.setId_animale(1);
+        animale1.setPeso(500);
+        animale1.setSesso('M');
+        animale1.setRazza("Razza1");
+        animale1.setTipoAlimentazione("Erba");
+        animale1.setNomeStalla("Stalla1");
+        animale1.setData_nascita(LocalDate.of(2020, 1, 1));
+        animale1.setData_ingresso(LocalDate.of(2020, 2, 1));
+        animale1.setData_uscita(LocalDate.of(2020, 3, 1));
+        animale1.setData_morte(LocalDate.of(2020, 4, 1));
+        animale1.setData_vaccino(LocalDate.of(2020, 5, 1));
+
+        Animale animale2 = new Animale();
+        animale2.setId_animale(2);
+        animale2.setPeso(600);
+        animale2.setSesso('F');
+        animale2.setRazza("Razza2");
+        animale2.setTipoAlimentazione("Fieno");
+        animale2.setNomeStalla("Stalla2");
+        animale2.setData_nascita(LocalDate.of(2021, 1, 1));
+        animale2.setData_ingresso(LocalDate.of(2021, 2, 1));
+        animale2.setData_uscita(LocalDate.of(2021, 3, 1));
+        animale2.setData_morte(LocalDate.of(2021, 4, 1));
+        animale2.setData_vaccino(LocalDate.of(2021, 5, 1));
+
+        animali.add(animale1);
+        animali.add(animale2);
+
+        // Configura il mock per restituire i risultati del ResultSet
+        
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.isBeforeFirst()).thenReturn(true, true, false);
+        when(resultSet.getInt("id_animale")).thenReturn(animale1.getId_animale(), animale2.getId_animale());
+        when(resultSet.getInt("peso")).thenReturn(animale1.getPeso(), animale2.getPeso());
+        when(resultSet.getString("sesso")).thenReturn(String.valueOf(animale1.getSesso()), String.valueOf(animale2.getSesso()));
+        when(resultSet.getString("razza")).thenReturn(animale1.getRazza(), animale2.getRazza());
+        when(resultSet.getString("tipo_alimentazione")).thenReturn(animale1.getTipoAlimentazione(), animale2.getTipoAlimentazione());
+        when(resultSet.getString("nome_stalla")).thenReturn(animale1.getNomeStalla(), animale2.getNomeStalla());
+        when(resultSet.getDate("data_nascita")).thenReturn(Date.valueOf(animale1.getData_nascita()), Date.valueOf(animale2.getData_nascita()));
+        when(resultSet.getDate("data_ingresso")).thenReturn(Date.valueOf(animale1.getData_ingresso()), Date.valueOf(animale2.getData_ingresso()));
+        when(resultSet.getDate("data_uscita")).thenReturn(Date.valueOf(animale1.getData_uscita()), Date.valueOf(animale2.getData_uscita()));
+        when(resultSet.getDate("data_morte")).thenReturn(Date.valueOf(animale1.getData_morte()), Date.valueOf(animale2.getData_morte()));
+        when(resultSet.getDate("data_vaccino")).thenReturn(Date.valueOf(animale1.getData_vaccino()), Date.valueOf(animale2.getData_vaccino()));  
+    
+        // Configura il mock per restituire il ResultSet quando viene chiamato executeQuery
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<Animale> result = animaleDAO.findAll();
+
+        verify(preparedStatement, times(1)).executeQuery();
+
+        assertEquals(2, result.size());
+        
+        assertEquals(animale1.getId_animale(), result.get(0).getId_animale());
+        assertEquals(animale1.getPeso(), result.get(0).getPeso());
+        assertEquals(animale1.getSesso(), result.get(0).getSesso());
+        assertEquals(animale1.getRazza(), result.get(0).getRazza());
+        assertEquals(animale1.getTipoAlimentazione(), result.get(0).getTipoAlimentazione());
+        assertEquals(animale1.getNomeStalla(), result.get(0).getNomeStalla());
+        assertEquals(animale1.getData_nascita(), result.get(0).getData_nascita());
+        assertEquals(animale1.getData_ingresso(), result.get(0).getData_ingresso());
+        assertEquals(animale1.getData_uscita(), result.get(0).getData_uscita());
+        assertEquals(animale1.getData_morte(), result.get(0).getData_morte());
+        assertEquals(animale1.getData_vaccino(), result.get(0).getData_vaccino());
+
+
+        assertEquals(animale2.getId_animale(), result.get(1).getId_animale());
+        assertEquals(animale2.getPeso(), result.get(1).getPeso());
+        assertEquals(animale2.getSesso(), result.get(1).getSesso());
+        assertEquals(animale2.getRazza(), result.get(1).getRazza());
+        assertEquals(animale2.getTipoAlimentazione(), result.get(1).getTipoAlimentazione());
+        assertEquals(animale2.getNomeStalla(), result.get(1).getNomeStalla());
+        assertEquals(animale2.getData_nascita(), result.get(1).getData_nascita());
+        assertEquals(animale2.getData_ingresso(), result.get(1).getData_ingresso());
+        assertEquals(animale2.getData_uscita(), result.get(1).getData_uscita());
+        assertEquals(animale2.getData_morte(), result.get(1).getData_morte());
+        assertEquals(animale2.getData_vaccino(), result.get(1).getData_vaccino());
+
     }
 }

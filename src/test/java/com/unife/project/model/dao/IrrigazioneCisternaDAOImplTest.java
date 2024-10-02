@@ -119,4 +119,28 @@ public class IrrigazioneCisternaDAOImplTest{
         assertEquals(expectedIrrigazioneCisterna.getId_irrigazione(), actualIrrigazioneCisterna.getId_irrigazione());
         assertEquals(expectedIrrigazioneCisterna.getId_cisterna(), actualIrrigazioneCisterna.getId_cisterna());
     }    
+
+   /* @Test
+    public void testFindAll() throws SQLException {
+        // Configuro il mock per il PreparedStatement e il Connection
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        List<IrrigazioneCisterna> irrigazioniCisterne = new ArrayList<>();
+        IrrigazioneCisterna irrigazione1 = new IrrigazioneCisterna(1, 101);
+        IrrigazioneCisterna irrigazione2 = new IrrigazioneCisterna(2, 102);
+
+        irrigazioniCisterne.add(irrigazione1);
+        irrigazioniCisterne.add(irrigazione2);
+
+        // Configura il mock per restituire i risultati del ResultSet
+        when(resultSet.next()).thenReturn(true, true, false);
+        when(resultSet.getInt("id_irrigazione")).thenReturn(irrigazione1.getId_irrigazione(), irrigazione2.getId_irrigazione());
+        when(resultSet.getInt("id_cisterna")).thenReturn(irrigazione1.getId_cisterna(), irrigazione2.getId_cisterna());
+
+        // Chiama il metodo findAll
+        List<IrrigazioneCisterna> result = irrigazioneCisternaDAO.findAll();
+        assertNotNull(result);
+        assertEquals(2, result.size());
+    }*/
 }

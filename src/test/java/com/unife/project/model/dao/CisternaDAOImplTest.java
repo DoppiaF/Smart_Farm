@@ -121,7 +121,8 @@ public class CisternaDAOImplTest {
         cisterne.add(cisterna2);
 
         // Configura il mock per restituire i risultati del ResultSet
-        when(resultSet.next()).thenReturn(true, true, false);
+
+        when(resultSet.next()).thenReturn( true, true, false);
         when(resultSet.getInt("capacita")).thenReturn(cisterna1.getCapacita(), cisterna2.getCapacita());
         when(resultSet.getInt("quantita")).thenReturn(cisterna1.getQuantita(), cisterna2.getQuantita());
 

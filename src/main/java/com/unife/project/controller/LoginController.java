@@ -58,33 +58,9 @@ public class LoginController {
             navigateToHome(event, user);
         } else {
             // Login fallito
-            showErrorDialog("Login Fallito", "Username o password errati." +username + " "+ password);
+            showErrorDialog("Login Fallito", "Username o password errati."/* +username + " "+ password*/);
         }
     }
-
-    /*
-    private void navigateToHome(ActionEvent event, User user) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/unife/project/view/home.fxml"));
-            Parent homeRoot = loader.load();
-
-            // Ottieni il controller della schermata home
-            HomeController homeController = loader.getController();
-            homeController.setUserStatus(true, user.isAdmin(), user.isPiantagione(), user.isPastore());
-
-            // Ottieni lo stage corrente
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Imposta la nuova scena
-            Scene scene = new Scene(homeRoot);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            showErrorDialog("Errore", "Impossibile caricare la schermata home.");
-        }
-    }
-        */
 
     private void navigateToHome(ActionEvent event, Utente user) {
         try{
@@ -123,17 +99,4 @@ public class LoginController {
         alert.showAndWait();
     }
 
-
-    private void navigateTo(ActionEvent event, String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

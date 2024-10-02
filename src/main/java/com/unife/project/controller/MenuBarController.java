@@ -19,10 +19,6 @@ import javafx.scene.Node;
 
 public class MenuBarController {
 
-    /************************************************
-     * buttons and items fxml
-     ************************************************/
-
     @FXML
     private HBox root;
     
@@ -41,11 +37,6 @@ public class MenuBarController {
     @FXML
     private ImageView logoutIcon;
     
-
-    /************************************************
-     * initialize
-     ************************************************/
-
     private boolean isLoggedIn = false;
     private String username = "";
 
@@ -54,13 +45,6 @@ public class MenuBarController {
 
     @FXML
     public void initialize(){
-        /*if(!isLoggedIn){
-            root.getChildren().remove(logoutButton);
-            root.getChildren().remove(areaPersonaleButton);
-        }
-        else{
-            root.getChildren().remove(loginButton);
-        }*/
         updateButtons();
     }
 
@@ -149,17 +133,6 @@ public class MenuBarController {
         //updateButtonsVisibility();
         initialize();
     }
-
-
-    /*
-    private void updateButtonsVisibility(){
-        logoutButton.setVisible(isLoggedIn);
-        areaPersonaleButton.setVisible(isLoggedIn);
-        if (isLoggedIn){
-            areaPersonaleButton.setText(username);
-            loginButton.setVisible(false);
-        }
-    }*/
 
     private void updateButtons(){
         root.getChildren().removeAll(loginButton, logoutButton, areaPersonaleButton);

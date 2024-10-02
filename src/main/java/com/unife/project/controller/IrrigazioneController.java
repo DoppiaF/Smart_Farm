@@ -60,35 +60,12 @@ public class IrrigazioneController {
     
     @FXML
     private BorderPane irrigazioneNested;
-    //per tabella piccola con 1 sola irrigazione, relativa alla piantagione scelta nella pagina delle piantagioni
-    //@FXML
-    //private TableView<Irrigazione> irrigationsTable;
-    /*
-    @FXML
-    private TableColumn<Irrigazione, Integer> idColumn;
-    @FXML
-    private TableColumn<Irrigazione, LocalTime> timeColumn;
-    @FXML
-    private TableColumn<Irrigazione, Integer> durationColumn;
-    @FXML
-    private TableColumn<Irrigazione, Boolean> autoColumn;
-    @FXML
-    private TableColumn<Irrigazione, String> stateColumn;
-    @FXML
-    private TableColumn<Irrigazione, Integer> reqLitresColumn;
-    */
-    //la mappa del campo sembra non essere più necessaria
-    //@FXML
-    //private GridPane fieldMap;
     
     @FXML
     private ProgressBar livello_cisterna;
 
     @FXML
     private Text livello_cisterna_text;
-    
-    //@FXML
-    //private RadioButton irrigazioneAutomatica;
 
     @FXML
     private Button avviaIrrigazione;
@@ -119,9 +96,6 @@ public class IrrigazioneController {
     @FXML
     private TableColumn<Irrigazione, Integer> cisternaColumn;
 
-
-    //private ObservableList<Irrigazione> irrigazioneData = FXCollections.observableArrayList();
-    //private ObservableList<Integer> cisternaData = FXCollections.observableArrayList();
     private ObservableList<Irrigazione> irrigazioneAndCisternaData = FXCollections.observableArrayList();
 
     @FXML
@@ -129,16 +103,6 @@ public class IrrigazioneController {
         System.out.println("Caricamento pagina");
 
         try{
-            //inizializzazione colonne tabella piccola
-            /*
-            idColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
-            timeColumn.setCellValueFactory(new PropertyValueFactory<>("ora_inizio"));
-            durationColumn.setCellValueFactory(new PropertyValueFactory<>("durata"));
-            autoColumn.setCellValueFactory(new PropertyValueFactory<>("auto"));
-            stateColumn.setCellValueFactory(new PropertyValueFactory<>("stato"));
-            reqLitresColumn.setCellValueFactory(new PropertyValueFactory<>("litri_usati"));
-            */
-
 
             //inizializzazione colonne tabellona
             irrigazioneIdColumn.setCellValueFactory(new PropertyValueFactory<>("id_irrigazione"));
@@ -365,15 +329,6 @@ public class IrrigazioneController {
             timeColumn2.setOnEditCommit(event -> event.getRowValue().setOra_inizio(event.getNewValue()));
             stIrrColumn.setOnEditCommit(event -> event.getRowValue().setStato(event.getNewValue()));
             cisternaColumn.setOnEditCommit(event -> event.getRowValue().setIdIrrCisterna(event.getNewValue()));
-        
-            //loadIrrigazioneData();
-
-            
-            // Aggiungi il pulsante di conferma alla tabella delle irrigazione
-            //addConfirmButtonToIrrigationTable();
-
-            // Carica i dati delle irrigazioni dal database nella tabellona
-            //loadIrrigazioneData2();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -503,44 +458,6 @@ public class IrrigazioneController {
                 livello_cisterna.setProgress(0.00);
             }
         });
-
-    }
-    
-    private void loadIrrigazioneData() {
-        if(piantagione != null){
-            irrigazione = DAOFactory.getIrrigazioneDAO().findById(piantagione.getId_irrigazione());
-
-            irrigazioniData.setAll(irrigazione);
-            //irrigationsTable.setItems(irrigazioniData);
-            
-            irrigazioneCisterna = DAOFactory.getIrrigazioneCisternaDAO().findById_irrigazione(irrigazione.getId_irrigazione());
-            cisterna = DAOFactory.getCisternaDAO().findById(irrigazioneCisterna.getId_cisterna());
-
-            
-            //
-
-
-            System.out.println("irrigazione, cisterna e la tabella sono stati caricati e settati con successo");
-            System.out.println("irrigazione: " + irrigazione.toString() + 
-            " irrigazione-cisterna: " + irrigazioneCisterna.toString() +
-            " cisterna: " + cisterna.toString() +
-            " irrigazioniData: " + irrigazioniData.toString() );
-
-            Double riempimento = (double)cisterna.getQuantita()/(double)cisterna.getCapacita();
-
-            //qui resta da caricare fieldMap
-            System.out.println("riempimento cisterna = " + riempimento);
-
-            //livello_cisterna.setProgress(riempimento);
-            //livello_cisterna_text.setText("Cisterna n° " + cisterna.getId() + "\nLivello: " + cisterna.getPercRiempimento()*100 + " %");
-            //irrigazioneAutomatica.setSelected(irrigazione.isAuto());
-            //if(!irrigazioneAutomatica.isSelected())avviaIrrigazione.setVisible(true); 
-        }else{
-            System.out.println("Piantagione non trovata, non è possibile caricare i dati della sua irrigazione");
-            irrigazioniData.clear();
-        }
-        
-        
 
     }
 

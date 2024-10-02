@@ -5,18 +5,14 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="piantagioneRoot" prefHeight="671.0" prefWidth="775.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unife.project.controller.PiantagioneController">
    <left>
@@ -28,8 +24,8 @@
               <VBox spacing="10.0" BorderPane.alignment="CENTER">
                   <HBox spacing="10.0">
                       <Button onAction="#handleAddPiantagione" text="Aggiungi piantagione" />
-                      <Button mnemonicParsing="false" onAction="#handleGoToIrrigazione" text="Mostra irrigazioni" />
-                      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleGoToSensori" text="Mostra sensori per la piantagione selezionata" />
+                      <Button fx:id="goToIrrigazioneButton" disable="true" mnemonicParsing="false" onAction="#handleGoToIrrigazione" text="Mostra irrigazioni" />
+                      <Button fx:id="goToSensoriButton" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleGoToSensori" text="Mostra sensori per la piantagione selezionata" />
                   </HBox>
                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="380.0">
                  <columnConstraints>
@@ -78,35 +74,6 @@
                          <NumberAxis fx:id="yAxisGuadagni" label="Guadagni" side="LEFT" />
                        </yAxis>
                      </LineChart>
-                     <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #1D1B52;">
-                       <columnConstraints>
-                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
-                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                       </columnConstraints>
-                       <rowConstraints>
-                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       </rowConstraints>
-                        <children>
-                           <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Registra una nuova cisterna" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                           </Text>
-                           <TextField maxHeight="25.0" maxWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                           <TextField maxHeight="25.0" maxWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                           <Label text="Capacità" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                           <Label text="Litri d'acqua presenti" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           <Button mnemonicParsing="false" text="Annulla" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                           <Button mnemonicParsing="false" text="Conferma" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        </children>
-                        <HBox.margin>
-                           <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                        </HBox.margin>
-                     </GridPane>
                   </children>
                </HBox>
               </VBox>

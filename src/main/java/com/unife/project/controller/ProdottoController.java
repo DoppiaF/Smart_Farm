@@ -223,38 +223,6 @@ public class ProdottoController {
         }
     }
 
-    /*public void loadProdottiDataUltimoMese() {
-        // Recupera i dati dei prodotti dell'ultimo mese
-        List<Prodotto> prodottiMese = DAOFactory.getProdottoDAO().findProdottiUltimoMese();
-
-        // Raggruppa i prodotti per tipo_prodotto e calcola la quantità totale
-        Map<String, Integer> prodottiPerTipoMese = prodottiMese.stream()
-                .collect(Collectors.groupingBy(Prodotto::getTipoProdotto, Collectors.summingInt(Prodotto::getQuantita)));
-
-        // Recupera il listino prezzi aggiornato
-        List<Listino> listino = DAOFactory.getListinoDAO().findAllPrezzoAggiornato();
-        // Crea una mappa dei prezzi per tipo_prodotto
-        Map<String, Float> prezziPerTipo = listino.stream()
-                .collect(Collectors.toMap(Listino::getTipo_prodotto, Listino::getPrezzo));
-
-        if (prodottiMese != null && !prodottiMese.isEmpty()) {
-            // Calcola il guadagno totale
-            float guadagnoTotale = (float) prodottiPerTipoMese.entrySet().stream()
-                    .mapToDouble(entry -> entry.getValue() * prezziPerTipo.getOrDefault(entry.getKey(), 0.0f))
-                    .sum();
-
-            // Aggiorna la Label con il guadagno totale
-            tot.setText(String.format("Guadagno Totale: %.2f €", guadagnoTotale));
-
-            // Popola il BarChart
-            populateBarChart(graficoProdottiMese, prodottiPerTipoMese);
-            //refreshScene();
-            System.out.println("Numero di elementi prodotti: " + prodottiMese.size());
-        } else {
-            System.out.println("Nessun elemento prodotto");
-        }
-    }*/
-
     public void setUser(Utente utente) {
         this.utente = utente;
         updateVerticalMenuBar();
@@ -268,41 +236,6 @@ public class ProdottoController {
     public void loadAnimale(Animale animaleSelezionato) {
         this.animale = animaleSelezionato;
     }
-
-
-     /*public void populateBarChart(List<Prodotto> prodotti){
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for (Prodotto prodotto : prodotti) {
-            XYChart.Data<String, Number> data = new XYChart.Data<>(prodotto.getTipoProdotto(), prodotto.getQuantita());
-            series.getData().add(data);
-            System.out.println("\n Prodotto: " + prodotto.getTipoProdotto() + " Quantità: " + prodotto.getQuantita());
-
-           
-            // Aggiungi un listener per attendere la creazione del nodo
-            data.nodeProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    // Aggiungi il prezzo al chilo sopra la barra
-                    Label label = new Label(String.format("%d kg", prodotto.getQuantita()));
-                    StackPane stackPane = (StackPane) newValue;
-                    stackPane.getChildren().add(label);
-                }
-            }); 
-            
-            graficoProdotti.getData().add(series);
-        }
-    } */
-
-    /*private void refreshScene() {
-        // Controlla se la scena è null
-        if (graficoProdotti.getScene() != null) {
-            // Forza il layout del nodo principale
-            graficoProdotti.getScene().getRoot().requestLayout();
-
-            // Riapplica la scena al palco principale
-            Stage stage = (Stage) graficoProdotti.getScene().getWindow();
-            stage.setScene(graficoProdotti.getScene());
-        }
-    }*/
 
      private void updateVerticalMenuBar(){
         try{

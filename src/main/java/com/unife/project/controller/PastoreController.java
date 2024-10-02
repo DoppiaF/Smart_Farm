@@ -61,7 +61,7 @@ public class PastoreController {
     @FXML
     private BorderPane pastoreNested;
 
-    //stabella stalle colonne
+    //colonne tabella stalle
     @FXML
     private TableView<Stalla> stalleTable;
 
@@ -418,20 +418,25 @@ public class PastoreController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            if (getTableView().getSelectionModel().isSelected(getIndex())) {
-                                setGraphic(btn);
-                            } else {
+                            int index = getIndex();
+                            if (index == -1) {
                                 setGraphic(null);
-                            }
-
-                            // Aggiungi un listener per aggiornare la visibilità del pulsante quando la selezione cambia
-                            getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                                if (newSelection == getTableView().getItems().get(getIndex())) {
+                            } else {
+                                if (getTableView().getSelectionModel().isSelected(index)) {
                                     setGraphic(btn);
                                 } else {
                                     setGraphic(null);
                                 }
-                            });
+
+                                // Add a listener to update the button visibility when the selection changes
+                                getTableView().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                                    if (index != -1 && newSelection == getTableView().getItems().get(index)) {
+                                        setGraphic(btn);
+                                    } else {
+                                        setGraphic(null);
+                                    }
+                                });
+                            }
                         }
                     }
                 };

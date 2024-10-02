@@ -42,6 +42,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
+
 //TableRow importata per cercare di impostare il menu a tendina per l'id irrigazione nelle righe della tabella
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
@@ -123,7 +124,21 @@ public class PiantagioneController {
     private NumberAxis yAxisGuadagni;
 
     @FXML
+    private Button goToIrrigazioneButton;
+    @FXML
+    private Button goToSensoriButton;
+
+
+    @FXML
     public void initialize() {
+
+        if(utente != null){
+            if(utente.getRuolo_irrigazione())
+                goToIrrigazioneButton.setDisable(false);
+            if(utente.getRuolo_raccolta())
+                goToSensoriButton.setDisable(false);
+        }
+
         // Inizializza le colonne della tabella
         //nelle property serve usare i nomi dei metodi getter del MO. es tipoPianta diventa getTipoPianta qui dentro.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -170,7 +185,6 @@ public class PiantagioneController {
                 }
             }
         });
-        //idIrrColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
          // Gestisci le modifiche delle celle
          tipoColumn.setOnEditCommit(event -> event.getRowValue().setTipoPianta(event.getNewValue()));
@@ -308,6 +322,13 @@ public class PiantagioneController {
         this.utente = utente;
         updateMenuBar();
         updateVerticalMenuBar();
+
+        if(utente != null){
+            if(utente.getRuolo_irrigazione())
+                goToIrrigazioneButton.setDisable(false);
+            if(utente.getRuolo_raccolta())
+                goToSensoriButton.setDisable(false);
+        }
     }
     
     private void updateMenuBar(){

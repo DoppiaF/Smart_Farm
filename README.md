@@ -12,9 +12,9 @@ Progetto per ingegneria del software avanzata relativo ad una fattoria digitaliz
 > installare maven
 
 Per *lanciare* l'applicazione in locale utilizzare il comando maven:
-> mvn clean compile
+>$ mvn clean compile
 
-> mvn javafx:run
+>$ mvn javafx:run
 
 
 **********************************************
@@ -26,6 +26,6 @@ Per *lanciare* l'applicazione in locale utilizzare il comando maven:
 > attivare vcxsrv
 
 Per lanciare l'applicazione containerizzata spostarsi nella cartella contenente il file docker compose:
-> > docker-compose build
+>$ docker-compose build
 
-> > docker-compose up
+>$ docker-compose up

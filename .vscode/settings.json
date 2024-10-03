@@ -2,5 +2,6 @@
     "java.configuration.updateBuildConfiguration": "disabled",
     "javafx.fxml": {
         "editor": "C:\\Users\\furin\\AppData\\Local\\SceneBuilder\\SceneBuilder.exe"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "disabled"
 }

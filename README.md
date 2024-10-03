@@ -7,7 +7,8 @@ Progetto per ingegneria del software avanzata relativo ad una fattoria digitaliz
 
 
 *Requisiti* per istallare l'applicazione in locale:
-> importare lo schema del database presente in questo repository https://github.com/DoppiaF/Smart_Farm/tree/main/database 
+> importare lo schema del database presente in questo repository https://github.com/DoppiaF/Smart_Farm/tree/main/database
+
 > installare maven
 
 Per *lanciare* l'applicazione in locale utilizzare il comando maven:
@@ -19,7 +20,8 @@ Per *lanciare* l'applicazione in locale utilizzare il comando maven:
 
 *Requisiti* per utilizzare Docker:
 > scaricare Docker
-> attivare docker desktop 
+> attivare docker desktop
+
 > scaricare vcxsrv
 > attivare vcxsrv
 
